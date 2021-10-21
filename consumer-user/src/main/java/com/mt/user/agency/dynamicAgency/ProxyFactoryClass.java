@@ -35,6 +35,7 @@ public class ProxyFactoryClass implements InvocationHandler {
         //类似tc.save()方法调用的实现，反射的方式实现方法调用method
         Object o = method.invoke(obj);//反射调用方法时可能有返回值可能没有返回值
         String name = method.getName();
+        System.out.println(name);
         //此功能给save添加
         System.out.println("new.......function");
         return o;
@@ -42,8 +43,7 @@ public class ProxyFactoryClass implements InvocationHandler {
 
     //获取代理对象
     public Object getProxy(){
-        //此处工具类+工具方法的作用有两个：一个是创建代理类、一个是创建代理对象
-        //三个参数：第一个是类加载器;第二个是目标类要实现的接口;第三个是当前类对象
+        Class<?>[] interfaces = obj.getClass().getInterfaces();
         return Proxy.newProxyInstance(obj.getClass().getClassLoader(),obj.getClass().getInterfaces(),this);
     }
 
@@ -60,9 +60,9 @@ public class ProxyFactoryClass implements InvocationHandler {
         pc.setObj(tc);
 
         //获取代理对象 -- 接口多态
-        TargetJDKClassInterface tci = (TargetJDKClassInterface) pc.getProxy();
-
+        TargetJDKClassInterface1 tci = (TargetJDKClassInterface1) pc.getProxy();
+        Object proxy = pc.getProxy();
         //代替完成功能
-        tci.save();
+        tci.savess();
     }
 }

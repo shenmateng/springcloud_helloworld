@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 /**
  * @author ：mateng
  * @version ：
- * @description ：
+ * @description ：动态代理工厂
  * @program ：springcloud_helloworld
  * @date ：Created in 2021/10/21 10:43
  * @since ：

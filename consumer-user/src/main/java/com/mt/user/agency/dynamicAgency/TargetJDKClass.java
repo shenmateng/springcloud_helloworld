@@ -9,10 +9,15 @@ package com.mt.user.agency.dynamicAgency;
  * @since ：
  */
 //当前类的对象是目标对象
-public class TargetJDKClass implements TargetJDKClassInterface {
+public class TargetJDKClass implements TargetJDKClassInterface,TargetJDKClassInterface1 {
 
     @Override
     public void save() {
+        System.out.println("target......save.......");
+    }
+
+    @Override
+    public void savess() {
         System.out.println("target......save.......");
     }
 }
