@@ -60,9 +60,9 @@ public class ProxyFactoryClass implements InvocationHandler {
         pc.setObj(tc);
 
         //获取代理对象 -- 接口多态
-        TargetJDKClassInterface1 tci = (TargetJDKClassInterface1) pc.getProxy();
+        Testma tci = (Testma) pc.getProxy();
         Object proxy = pc.getProxy();
         //代替完成功能
-        tci.savess();
+        tci.save();
     }
 }
