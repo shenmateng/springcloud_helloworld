@@ -2,7 +2,10 @@ package com.mt;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.mt.pojo.ShopifyProductDO;
+import com.mt.pojo.ShopifyProductVO;
 import com.mt.pojo.User;
+import com.mt.repository.ShopifyRepository;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -24,23 +27,36 @@ import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.ScrolledPage;
+import org.springframework.data.elasticsearch.core.query.DeleteQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
+import org.springframework.util.ObjectUtils;
 
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
@@ -51,6 +67,9 @@ class SpringbootElasticsearchApplicationTests {
 
     @Resource
     private ElasticsearchRestTemplate elasticsearchRestTemplate;
+
+    @Resource
+    private ShopifyRepository repository;
     @Test
     void contextLoads() {
     }
@@ -213,6 +232,182 @@ class SpringbootElasticsearchApplicationTests {
         for (SearchHit documentFields : hits.getHits()) {
             System.out.println(documentFields.getSourceAsMap());
         }
+    }
+
+    /**
+     * 批量保存到ES中
+     */
+    @Test
+    public void saveShopifyProducts() {
+        List<ShopifyProductDO> shopifyProductDos = new ArrayList<>();
+        for(int i = 0;i<=10;i++){
+            ShopifyProductDO shopifyProductDO = new ShopifyProductDO();
+            shopifyProductDO.setId((long)i);
+            shopifyProductDO.setSku("神马腾"+i);
+            shopifyProductDO.setSite("AU"+i);
+            shopifyProductDO.setTitle("金克斯的含义就是金克斯"+i);
+            shopifyProductDO.setProductLink("www.baidu.com"+"+"+i);
+            BigDecimal bigDecimal = new BigDecimal(9623);
+            shopifyProductDO.setPrice(bigDecimal);
+            shopifyProductDO.setMainImage("主图连接"+i);
+            shopifyProductDO.setMainAbbreviationImage("主图缩略图链接"+i);
+            shopifyProductDO.setDescription("时间不在于你拥有多少"+i);
+            shopifyProductDO.setStock(i);
+            shopifyProductDO.setColor("五颜六色"+i);
+            shopifyProductDO.setMaterial("海克斯水晶"+i);
+            shopifyProductDO.setSpecification("苹果12，256G"+i);
+            shopifyProductDO.setShopMailbox("店铺邮箱"+i);
+            shopifyProductDO.setBrand("商标"+i);
+            shopifyProductDO.setFirstLevel("一级类目"+i);
+            shopifyProductDO.setSecondLevel("二级类目"+i);
+            shopifyProductDO.setThirdLevel("三级类目"+i);
+            shopifyProductDO.setCategoryStr("类目字符串 格式：一级>二级>三级"+"+"+i);
+            shopifyProductDos.add(shopifyProductDO);
+        }
+        repository.saveAll(shopifyProductDos);
+
+    }
+
+    /**
+     * 按条件删除数据,这里删除是可以的，但是查询因为版本问题会报错，这个api只支持7.0以下的api，这里我用的是7.6.2的
+     */
+    @Test
+    public void queryAndDeleteTest() {
+        List<ShopifyProductVO> shopifyProductVoss = new ArrayList<>();
+
+        ShopifyProductVO shopifyProductVos = new ShopifyProductVO();
+        long i = 1;
+//        shopifyProductVos.setId(i);
+        shopifyProductVos.setSite("AU1");
+        shopifyProductVos.setFirstLevel("一级类目1");
+
+        //删除
+        deleteShopifyProducts(shopifyProductVos);
+        //查询
+        shopifyProductVoss.add(shopifyProductVos);
+//        List<ShopifyProductVO> byIdShopifyProduct = findByIdShopifyProduct(shopifyProductVos);
+//        System.out.println(byIdShopifyProduct);
+
+    }
+
+    /**
+     * 按条件{@link ShopifyProductVO}查询数据
+     *
+     * @param shopifyProductVo {@link ShopifyProductVO} 删除条件查询
+     * @return Boolean
+     */
+    public List<ShopifyProductVO> findByIdShopifyProduct(ShopifyProductVO shopifyProductVo) {
+
+        if (ObjectUtils.isEmpty(shopifyProductVo)) {return new ArrayList<>();}
+        SearchQuery searchQuery = new NativeSearchQueryBuilder()
+                .withIndices(ShopifyProductDO.INDEX_NAME)
+                .withTypes(ShopifyProductDO.TYPE)
+                .withQuery(matchCondition(shopifyProductVo))
+                .withPageable(PageRequest.of(0, 500))
+                .build();
+        // 搜索条件构造器构建：NativeSearchQuery
+        ScrolledPage<ShopifyProductVO> scroll = elasticsearchRestTemplate.startScroll(30000, searchQuery, ShopifyProductVO.class);
+        List<ShopifyProductVO> shopifyProductDos = new ArrayList<>();
+        shopifyProductDos.addAll(scroll.getContent());
+        while (scroll.hasContent()) {
+            scroll = elasticsearchRestTemplate.continueScroll(scroll.getScrollId(), 30000, ShopifyProductVO.class);
+            shopifyProductDos.addAll(scroll.getContent());
+        }
+        //及时释放es服务器资源
+        elasticsearchRestTemplate.clearScroll(scroll.getScrollId());
+
+        return shopifyProductDos;
+    }
+
+    /**
+     * 按条件{@link ShopifyProductVO}查询数据
+     *
+     * @param shopifyProductVos {@link ShopifyProductVO} 查询条件
+     * @return ShopifyProductVO
+     */
+    public ScrolledPage<ShopifyProductVO> findByIdShopifyProducts(List<ShopifyProductVO> shopifyProductVos) {
+
+        final int timeOut = 30000;
+
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+        for (ShopifyProductVO shopifyProductVo : shopifyProductVos) {
+            QueryBuilder query = QueryBuilders.boolQuery()
+                    .must(QueryBuilders.matchQuery("site", shopifyProductVo.getSite()))
+                    .must(QueryBuilders.matchQuery("firstLevel", shopifyProductVo.getFirstLevel()))
+                /*    .must(QueryBuilders.matchQuery("secondLevel", shopifyProductVo.getSecondLevel()))
+                    .must(QueryBuilders.matchQuery("thirdLevel", shopifyProductVo.getThirdLevel()))*/;
+
+            boolQueryBuilder.should(query);
+        }
+
+        SearchQuery searchQuery = new NativeSearchQueryBuilder()
+                .withIndices(ShopifyProductDO.INDEX_NAME)
+                .withTypes(ShopifyProductDO.TYPE)
+                .withQuery(boolQueryBuilder)
+                .withPageable(PageRequest.of(0, 500))
+                .build();
+
+        ScrolledPage<ShopifyProductVO> scroll = elasticsearchRestTemplate.startScroll(timeOut, searchQuery, ShopifyProductVO.class);
+
+
+        return scroll;
+    }
+
+    /**
+     * 按条件{@link ShopifyProductVO}删除数据
+     *
+     * @param shopifyProductVos {@link ShopifyProductVO} 删除条件
+     */
+    public void deleteShopifyProducts(ShopifyProductVO shopifyProductVos) {
+
+        if (ObjectUtils.isEmpty(shopifyProductVos)) {return;}
+
+        DeleteQuery query = new DeleteQuery();
+        query.setIndex(ShopifyProductDO.INDEX_NAME);
+        query.setType(ShopifyProductDO.TYPE);
+        query.setQuery(matchCondition(shopifyProductVos));
+
+        //删除
+        elasticsearchRestTemplate.delete(query);
+
+    }
+
+    /**
+     * 转换查询条件 (id(ProductId)/title(标题)/sku(Sku带电压)/site(站点)/shopMailbox(店铺邮箱)/firstLevel(一级类目)/secondLevel(二级类目)/thirdLevel(三级类目))
+     *
+     * @param shopifyProductVos Product
+     * @return BoolQueryBuilder
+     */
+    private BoolQueryBuilder matchCondition(ShopifyProductVO shopifyProductVos) {
+        if (ObjectUtils.isEmpty(shopifyProductVos)) {return null;}
+
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+        if (shopifyProductVos.getId() != null) {
+            boolQueryBuilder.filter(QueryBuilders.termQuery("id", shopifyProductVos.getId()));
+        }
+        if (StringUtils.isNotBlank(shopifyProductVos.getTitle())) {
+            boolQueryBuilder.filter(QueryBuilders.termsQuery("title", shopifyProductVos.getTitle()));
+        }
+        if (StringUtils.isNotBlank(shopifyProductVos.getSku())) {
+            boolQueryBuilder.filter(QueryBuilders.termsQuery("sku", shopifyProductVos.getSku()));
+        }
+        if (StringUtils.isNotBlank(shopifyProductVos.getSite())) {
+            boolQueryBuilder.filter(QueryBuilders.termsQuery("site", shopifyProductVos.getSite()));
+        }
+        if (StringUtils.isNotBlank(shopifyProductVos.getShopMailbox())) {
+            boolQueryBuilder.filter(QueryBuilders.termsQuery("shopMailbox", shopifyProductVos.getShopMailbox()));
+        }
+        if (StringUtils.isNotBlank(shopifyProductVos.getFirstLevel())) {
+            boolQueryBuilder.filter(QueryBuilders.termsQuery("firstLevel", shopifyProductVos.getFirstLevel()));
+        }
+        if (StringUtils.isNotBlank(shopifyProductVos.getSecondLevel())) {
+            boolQueryBuilder.filter(QueryBuilders.termsQuery("secondLevel", shopifyProductVos.getSecondLevel()));
+        }
+        if (StringUtils.isNotBlank(shopifyProductVos.getThirdLevel())) {
+            boolQueryBuilder.filter(QueryBuilders.termsQuery("thirdLevel", shopifyProductVos.getThirdLevel()));
+        }
+
+        return boolQueryBuilder;
     }
 
 }
