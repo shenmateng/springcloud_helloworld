@@ -19,6 +19,7 @@ public class UserController {
     @GetMapping("/user")
     public User getUser(@RequestParam("id") Integer id) {
         User user = userService.getUserById(id);
+
         return user;
     }
 
