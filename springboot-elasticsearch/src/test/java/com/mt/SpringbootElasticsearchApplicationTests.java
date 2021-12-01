@@ -6,6 +6,7 @@ import com.mt.pojo.ShopifyProductDO;
 import com.mt.pojo.ShopifyProductVO;
 import com.mt.pojo.User;
 import com.mt.repository.ShopifyRepository;
+import org.apache.commons.collections.CollectionUtils;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -33,7 +34,6 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
@@ -43,12 +43,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.ScrolledPage;
-import org.springframework.data.elasticsearch.core.query.DeleteQuery;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.SearchQuery;
+import org.springframework.data.elasticsearch.core.SearchScrollHits;
+import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
+import org.springframework.data.elasticsearch.core.query.*;
 import org.springframework.util.ObjectUtils;
 
 
@@ -282,11 +280,11 @@ class SpringbootElasticsearchApplicationTests {
         shopifyProductVos.setFirstLevel("一级类目1");
 
         //删除
-        deleteShopifyProducts(shopifyProductVos);
+//        deleteShopifyProducts(shopifyProductVos);
         //查询
-        shopifyProductVoss.add(shopifyProductVos);
-//        List<ShopifyProductVO> byIdShopifyProduct = findByIdShopifyProduct(shopifyProductVos);
-//        System.out.println(byIdShopifyProduct);
+//        shopifyProductVoss.add(shopifyProductVos);
+        List<ShopifyProductDO> byIdShopifyProduct = findByIdShopifyProduct(shopifyProductVos);
+        System.out.println(byIdShopifyProduct);
 
     }
 
@@ -296,25 +294,47 @@ class SpringbootElasticsearchApplicationTests {
      * @param shopifyProductVo {@link ShopifyProductVO} 删除条件查询
      * @return Boolean
      */
-    public List<ShopifyProductVO> findByIdShopifyProduct(ShopifyProductVO shopifyProductVo) {
+    public List<ShopifyProductDO> findByIdShopifyProduct(ShopifyProductVO shopifyProductVo) {
 
         if (ObjectUtils.isEmpty(shopifyProductVo)) {return new ArrayList<>();}
-        SearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withIndices(ShopifyProductDO.INDEX_NAME)
-                .withTypes(ShopifyProductDO.TYPE)
-                .withQuery(matchCondition(shopifyProductVo))
-                .withPageable(PageRequest.of(0, 500))
-                .build();
+//        SearchQuery searchQuery = new NativeSearchQueryBuilder()
+//                .withIndices(ShopifyProductDO.INDEX_NAME)
+//                .withTypes(ShopifyProductDO.TYPE)
+//                .withQuery(matchCondition(shopifyProductVo))
+//                .withPageable(PageRequest.of(0, 500))
+//                .build();
+//        // 搜索条件构造器构建：NativeSearchQuery
+//        ScrolledPage<ShopifyProductVO> scroll = elasticsearchRestTemplate.startScroll(30000, searchQuery, ShopifyProductVO.class);
+        // 构建搜索条件：搜索条件构造器
+        NativeSearchQueryBuilder searchQueryBuilder = new NativeSearchQueryBuilder();
+        // 分页：默认第1页的50条数据
+        searchQueryBuilder.withPageable(PageRequest.of(0, 2));
+
         // 搜索条件构造器构建：NativeSearchQuery
-        ScrolledPage<ShopifyProductVO> scroll = elasticsearchRestTemplate.startScroll(30000, searchQuery, ShopifyProductVO.class);
-        List<ShopifyProductVO> shopifyProductDos = new ArrayList<>();
-        shopifyProductDos.addAll(scroll.getContent());
-        while (scroll.hasContent()) {
-            scroll = elasticsearchRestTemplate.continueScroll(scroll.getScrollId(), 30000, ShopifyProductVO.class);
-            shopifyProductDos.addAll(scroll.getContent());
+        NativeSearchQuery searchQuery1 = searchQueryBuilder.build();
+        IndexCoordinates indexCoordinatesFor = elasticsearchRestTemplate.getIndexCoordinatesFor(ShopifyProductDO.class);
+        SearchScrollHits<ShopifyProductDO> searchHits = elasticsearchRestTemplate.searchScrollStart(30000, searchQuery1, ShopifyProductDO.class, indexCoordinatesFor);
+        List<org.springframework.data.elasticsearch.core.SearchHit<ShopifyProductDO>> searchHits1 = searchHits.getSearchHits();
+        List<ShopifyProductDO> shopifyProductDos = new ArrayList<>();
+        searchHits.forEach(o->{
+            ShopifyProductDO content = o.getContent();
+            shopifyProductDos.add(content);
+        });
+        while (searchHits.getSearchHits().size()>0) {
+            searchHits = elasticsearchRestTemplate.searchScrollContinue(searchHits.getScrollId(),30000,ShopifyProductDO.class, indexCoordinatesFor);
+            searchHits.getSearchHits().forEach(o->{
+                ShopifyProductDO content = o.getContent();
+                shopifyProductDos.add(content);
+            });
         }
-        //及时释放es服务器资源
-        elasticsearchRestTemplate.clearScroll(scroll.getScrollId());
+        System.out.println(shopifyProductDos);
+//        shopifyProductDos.addAll(scroll.getContent());
+//        while (scroll.hasContent()) {
+//            scroll = elasticsearchRestTemplate.continueScroll(scroll.getScrollId(), 30000, ShopifyProductVO.class);
+//            shopifyProductDos.addAll(scroll.getContent());
+//        }
+//        //及时释放es服务器资源
+//        elasticsearchRestTemplate.clearScroll(scroll.getScrollId());
 
         return shopifyProductDos;
     }
@@ -325,52 +345,52 @@ class SpringbootElasticsearchApplicationTests {
      * @param shopifyProductVos {@link ShopifyProductVO} 查询条件
      * @return ShopifyProductVO
      */
-    public ScrolledPage<ShopifyProductVO> findByIdShopifyProducts(List<ShopifyProductVO> shopifyProductVos) {
-
-        final int timeOut = 30000;
-
-        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
-        for (ShopifyProductVO shopifyProductVo : shopifyProductVos) {
-            QueryBuilder query = QueryBuilders.boolQuery()
-                    .must(QueryBuilders.matchQuery("site", shopifyProductVo.getSite()))
-                    .must(QueryBuilders.matchQuery("firstLevel", shopifyProductVo.getFirstLevel()))
-                /*    .must(QueryBuilders.matchQuery("secondLevel", shopifyProductVo.getSecondLevel()))
-                    .must(QueryBuilders.matchQuery("thirdLevel", shopifyProductVo.getThirdLevel()))*/;
-
-            boolQueryBuilder.should(query);
-        }
-
-        SearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withIndices(ShopifyProductDO.INDEX_NAME)
-                .withTypes(ShopifyProductDO.TYPE)
-                .withQuery(boolQueryBuilder)
-                .withPageable(PageRequest.of(0, 500))
-                .build();
-
-        ScrolledPage<ShopifyProductVO> scroll = elasticsearchRestTemplate.startScroll(timeOut, searchQuery, ShopifyProductVO.class);
-
-
-        return scroll;
-    }
-
-    /**
-     * 按条件{@link ShopifyProductVO}删除数据
-     *
-     * @param shopifyProductVos {@link ShopifyProductVO} 删除条件
-     */
-    public void deleteShopifyProducts(ShopifyProductVO shopifyProductVos) {
-
-        if (ObjectUtils.isEmpty(shopifyProductVos)) {return;}
-
-        DeleteQuery query = new DeleteQuery();
-        query.setIndex(ShopifyProductDO.INDEX_NAME);
-        query.setType(ShopifyProductDO.TYPE);
-        query.setQuery(matchCondition(shopifyProductVos));
-
-        //删除
-        elasticsearchRestTemplate.delete(query);
-
-    }
+//    public ScrolledPage<ShopifyProductVO> findByIdShopifyProducts(List<ShopifyProductVO> shopifyProductVos) {
+//
+//        final int timeOut = 30000;
+//
+//        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+//        for (ShopifyProductVO shopifyProductVo : shopifyProductVos) {
+//            QueryBuilder query = QueryBuilders.boolQuery()
+//                    .must(QueryBuilders.matchQuery("site", shopifyProductVo.getSite()))
+//                    .must(QueryBuilders.matchQuery("firstLevel", shopifyProductVo.getFirstLevel()))
+//                /*    .must(QueryBuilders.matchQuery("secondLevel", shopifyProductVo.getSecondLevel()))
+//                    .must(QueryBuilders.matchQuery("thirdLevel", shopifyProductVo.getThirdLevel()))*/;
+//
+//            boolQueryBuilder.should(query);
+//        }
+//
+//        SearchQuery searchQuery = new NativeSearchQueryBuilder()
+//                .withIndices(ShopifyProductDO.INDEX_NAME)
+//                .withTypes(ShopifyProductDO.TYPE)
+//                .withQuery(boolQueryBuilder)
+//                .withPageable(PageRequest.of(0, 500))
+//                .build();
+//
+//        ScrolledPage<ShopifyProductVO> scroll = elasticsearchRestTemplate.startScroll(timeOut, searchQuery, ShopifyProductVO.class);
+//
+//
+//        return scroll;
+//    }
+//
+//    /**
+//     * 按条件{@link ShopifyProductVO}删除数据
+//     *
+//     * @param shopifyProductVos {@link ShopifyProductVO} 删除条件
+//     */
+//    public void deleteShopifyProducts(ShopifyProductVO shopifyProductVos) {
+//
+//        if (ObjectUtils.isEmpty(shopifyProductVos)) {return;}
+//
+//        DeleteQuery query = new DeleteQuery();
+//        query.setIndex(ShopifyProductDO.INDEX_NAME);
+//        query.setType(ShopifyProductDO.TYPE);
+//        query.setQuery(matchCondition(shopifyProductVos));
+//
+//        //删除
+//        elasticsearchRestTemplate.delete(query);
+//
+//    }
 
     /**
      * 转换查询条件 (id(ProductId)/title(标题)/sku(Sku带电压)/site(站点)/shopMailbox(店铺邮箱)/firstLevel(一级类目)/secondLevel(二级类目)/thirdLevel(三级类目))
