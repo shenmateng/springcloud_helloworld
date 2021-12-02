@@ -399,7 +399,8 @@ class SpringbootElasticsearchApplicationTests {
             });
         }
         System.out.println(shopifyProductDos);
-
+        //及时释放es服务器资源
+        elasticsearchRestTemplate.searchScrollClear(Collections.singletonList(searchHits.getScrollId()));
         return shopifyProductDos;
     }
 
