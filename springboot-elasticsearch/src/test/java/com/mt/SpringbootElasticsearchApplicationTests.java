@@ -201,6 +201,7 @@ class SpringbootElasticsearchApplicationTests {
     // xxxQueryBuilder ...
     @Test
     public void testSearch() throws IOException {
+
         // 1.创建查询请求对象
         SearchRequest searchRequest = new SearchRequest();
         // 2.构建搜索条件
