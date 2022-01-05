@@ -18,7 +18,7 @@ import java.util.List;
  * @since ：
  */
 
-@  Service
+@Service
 public class SendrabbitMqService {
 
     @Resource
