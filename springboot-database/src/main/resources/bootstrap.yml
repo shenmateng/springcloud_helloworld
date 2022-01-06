@@ -37,7 +37,7 @@ spring:
         #表示开发环境：dev/test/preprod，生产环境独立部署consul服务器
         default-context: dev
         #表示consul上面的配置文件名，每个开发人员各自管理自己的配置文件
-        data-key: rabbitmq
+        data-key: database
         # watch选项为配置监视功能，主要监视配置的改变
         watch:
           enabled: true
