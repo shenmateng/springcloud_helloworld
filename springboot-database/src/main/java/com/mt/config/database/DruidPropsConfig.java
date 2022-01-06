@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author ：WangYang
+ * @author ：MaTeng
  * @version ：B1.3.0
  * @program ：bmp-prm
  * @date ：Created in 2020/12/4 13:39

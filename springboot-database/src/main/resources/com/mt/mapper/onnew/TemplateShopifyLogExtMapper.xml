@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mt.mapper.onnew.TemplateShopifyLogExtMapper">
+
+    <resultMap id="BaseResultMap" type="com.mt.database.TemplateShopifyLogDO"
+               extends="com.mt.mapper.onnew.TemplateShopifyLogMapper.BaseResultMap">
+    </resultMap>
+
+    <sql id="BaseColumn">
+             `id`,
+            `task_id`,
+            `platfrom`,
+            `site`,
+            `start_time`,
+            `end_time`,
+            `status`,
+            `success_data`,
+            `fail_data`,
+            `create_by`,
+            `update_by`,
+            `is_delete`            
+    </sql>
+
+    <!--通过TaskId修改数据-->
+    <update id="updateByTaskId">
+        update `template_shopify_log`
+        <set>
+            <if test="platfrom != null and platfrom != ''">
+                `platfrom` = #{platfrom},
+            </if>
+            <if test="site != null and site != ''">
+                `site` = #{site},
+            </if>
+            <if test="startTime != null">
+                `start_time` = #{startTime},
+            </if>
+            <if test="endTime != null">
+                `end_time` = #{endTime},
+            </if>
+            <if test="status != null">
+                `status` = #{status},
+            </if>
+            <if test="successData != null">
+                `success_data` = #{successData},
+            </if>
+            <if test="failData != null">
+                `fail_data` = #{failData},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                `create_by` = #{createBy},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                `update_by` = #{updateBy},
+            </if>
+            <if test="delete != null">
+                `is_delete` = #{delete},
+            </if>
+        </set>
+        where `task_id` = #{taskId}
+    </update>
+
+</mapper>
