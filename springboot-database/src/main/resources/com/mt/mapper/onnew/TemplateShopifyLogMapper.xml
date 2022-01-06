@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mt.mapper.onnew.TemplateShopifyLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.mt.database.TemplateShopifyLogDO">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="taskId" column="task_id" jdbcType="VARCHAR"/>
+        <result property="platfrom" column="platfrom" jdbcType="VARCHAR"/>
+        <result property="site" column="site" jdbcType="VARCHAR"/>
+        <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+        <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="successData" column="success_data" jdbcType="INTEGER"/>
+        <result property="failData" column="fail_data" jdbcType="INTEGER"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="delete" column="is_delete" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="BaseColumn">
+             `id`,
+            `task_id`,
+            `platfrom`,
+            `site`,
+            `start_time`,
+            `end_time`,
+            `status`,
+            `success_data`,
+            `fail_data`,
+            `create_by`,
+            `update_by`,
+            `is_delete`            
+    </sql>
+
+    <!--查询单个对象-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumn"/>
+        from `template_shopify_log`
+        where `id` = #{id} and `is_delete` = 0
+    </select>
+
+    <!--通过ID集合查询多条数据-->
+    <select id="queryByIds" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumn"/>
+        from `template_shopify_log`
+        <where>
+            <choose>
+                <when test="ids != null and ids.size > 0">
+                    `id` in
+                    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                        #{id}
+                    </foreach>
+                    and `is_delete` = 0
+                </when>
+                <otherwise>
+                    1 != 1
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumn"/>
+        from `template_shopify_log`
+        <where>
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="taskId != null and taskId != ''">
+                and `task_id` = #{taskId}
+            </if>
+            <if test="platfrom != null and platfrom != ''">
+                and `platfrom` = #{platfrom}
+            </if>
+            <if test="site != null and site != ''">
+                and `site` = #{site}
+            </if>
+            <if test="startTime != null">
+                and `start_time` = #{startTime}
+            </if>
+            <if test="endTime != null">
+                and `end_time` = #{endTime}
+            </if>
+            <if test="status != null">
+                and `status` = #{status}
+            </if>
+            <if test="successData != null">
+                and `success_data` = #{successData}
+            </if>
+            <if test="failData != null">
+                and `fail_data` = #{failData}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and `create_by` = #{createBy}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and `update_by` = #{updateBy}
+            </if>
+            and `is_delete` = 0
+            ORDER BY start_time DESC
+        </where>
+    </select>
+
+    <!--新增可选列-->
+    <insert id="insertSelective" keyProperty="id" useGeneratedKeys="true">
+        insert into `template_shopify_log`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                `id`,
+            </if>
+            <if test="taskId != null and taskId != ''">
+                `task_id`,
+            </if>
+            <if test="platfrom != null and platfrom != ''">
+                `platfrom`,
+            </if>
+            <if test="site != null and site != ''">
+                `site`,
+            </if>
+            <if test="startTime != null">
+                `start_time`,
+            </if>
+            <if test="endTime != null">
+                `end_time`,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="successData != null">
+                `success_data`,
+            </if>
+            <if test="failData != null">
+                `fail_data`,
+            </if>
+            <if test="createBy != null and createBy != ''">
+                `create_by`,
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                `update_by`,
+            </if>
+            <if test="delete != null">
+                `is_delete`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="taskId != null and taskId != ''">
+                #{taskId},
+            </if>
+            <if test="platfrom != null and platfrom != ''">
+                #{platfrom},
+            </if>
+            <if test="site != null and site != ''">
+                #{site},
+            </if>
+            <if test="startTime != null">
+                #{startTime},
+            </if>
+            <if test="endTime != null">
+                #{endTime},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="successData != null">
+                #{successData},
+            </if>
+            <if test="failData != null">
+                #{failData},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                #{createBy},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                #{updateBy},
+            </if>
+            <if test="delete != null">
+                #{delete},
+            </if>
+        </trim>
+    </insert>
+
+    <!--批量新增数据-->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        <if test="dataObjectList != null and dataObjectList.size > 0">
+            <foreach collection="dataObjectList" item="dataObject" separator=";">
+                insert into `template_shopify_log`
+                <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="dataObject.id != null">
+                        `id`,
+                    </if>
+                    <if test="dataObject.taskId != null and dataObject.taskId != ''">
+                        `task_id`,
+                    </if>
+                    <if test="dataObject.platfrom != null and dataObject.platfrom != ''">
+                        `platfrom`,
+                    </if>
+                    <if test="dataObject.site != null and dataObject.site != ''">
+                        `site`,
+                    </if>
+                    <if test="dataObject.startTime != null">
+                        `start_time`,
+                    </if>
+                    <if test="dataObject.endTime != null">
+                        `end_time`,
+                    </if>
+                    <if test="dataObject.status != null">
+                        `status`,
+                    </if>
+                    <if test="dataObject.successData != null">
+                        `success_data`,
+                    </if>
+                    <if test="dataObject.failData != null">
+                        `fail_data`,
+                    </if>
+                    <if test="dataObject.createBy != null and dataObject.createBy != ''">
+                        `create_by`,
+                    </if>
+                    <if test="dataObject.updateBy != null and dataObject.updateBy != ''">
+                        `update_by`,
+                    </if>
+                    <if test="dataObject.delete != null">
+                        `is_delete`,
+                    </if>
+                </trim>
+                <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="dataObject.id != null">
+                        #{dataObject.id},
+                    </if>
+                    <if test="dataObject.taskId != null and dataObject.taskId != ''">
+                        #{dataObject.taskId},
+                    </if>
+                    <if test="dataObject.platfrom != null and dataObject.platfrom != ''">
+                        #{dataObject.platfrom},
+                    </if>
+                    <if test="dataObject.site != null and dataObject.site != ''">
+                        #{dataObject.site},
+                    </if>
+                    <if test="dataObject.startTime != null">
+                        #{dataObject.startTime},
+                    </if>
+                    <if test="dataObject.endTime != null">
+                        #{dataObject.endTime},
+                    </if>
+                    <if test="dataObject.status != null">
+                        #{dataObject.status},
+                    </if>
+                    <if test="dataObject.successData != null">
+                        #{dataObject.successData},
+                    </if>
+                    <if test="dataObject.failData != null">
+                        #{dataObject.failData},
+                    </if>
+                    <if test="dataObject.createBy != null and dataObject.createBy != ''">
+                        #{dataObject.createBy},
+                    </if>
+                    <if test="dataObject.updateBy != null and dataObject.updateBy != ''">
+                        #{dataObject.updateBy},
+                    </if>
+                    <if test="dataObject.delete != null">
+                        #{dataObject.delete},
+                    </if>
+                </trim>
+            </foreach>
+        </if>
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update `template_shopify_log`
+        <set>
+            <if test="taskId != null and taskId != ''">
+                `task_id` = #{taskId},
+            </if>
+            <if test="platfrom != null and platfrom != ''">
+                `platfrom` = #{platfrom},
+            </if>
+            <if test="site != null and site != ''">
+                `site` = #{site},
+            </if>
+            <if test="startTime != null">
+                `start_time` = #{startTime},
+            </if>
+            <if test="endTime != null">
+                `end_time` = #{endTime},
+            </if>
+            <if test="status != null">
+                `status` = #{status},
+            </if>
+            <if test="successData != null">
+                `success_data` = #{successData},
+            </if>
+            <if test="failData != null">
+                `fail_data` = #{failData},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                `create_by` = #{createBy},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                `update_by` = #{updateBy},
+            </if>
+            <if test="delete != null">
+                `is_delete` = #{delete},
+            </if>
+        </set>
+        where `id` = #{id}
+    </update>
+
+    <!--批量修改数据-->
+    <update id="updateBatch">
+        <if test="dataObjectList != null and dataObjectList.size > 0">
+            <foreach collection="dataObjectList" item="dataObject" separator=";">
+                update `template_shopify_log`
+                <set>
+                    <if test="dataObject.taskId != null and dataObject.taskId != ''">
+                        `task_id` = #{dataObject.taskId},
+                    </if>
+                    <if test="dataObject.platfrom != null and dataObject.platfrom != ''">
+                        `platfrom` = #{dataObject.platfrom},
+                    </if>
+                    <if test="dataObject.site != null and dataObject.site != ''">
+                        `site` = #{dataObject.site},
+                    </if>
+                    <if test="dataObject.startTime != null">
+                        `start_time` = #{dataObject.startTime},
+                    </if>
+                    <if test="dataObject.endTime != null">
+                        `end_time` = #{dataObject.endTime},
+                    </if>
+                    <if test="dataObject.status != null">
+                        `status` = #{dataObject.status},
+                    </if>
+                    <if test="dataObject.successData != null">
+                        `success_data` = #{dataObject.successData},
+                    </if>
+                    <if test="dataObject.failData != null">
+                        `fail_data` = #{dataObject.failData},
+                    </if>
+                    <if test="dataObject.createBy != null and dataObject.createBy != ''">
+                        `create_by` = #{dataObject.createBy},
+                    </if>
+                    <if test="dataObject.updateBy != null and dataObject.updateBy != ''">
+                        `update_by` = #{dataObject.updateBy},
+                    </if>
+                    <if test="dataObject.delete != null">
+                        `is_delete` = #{dataObject.delete},
+                    </if>
+                </set>
+                where `id` = #{dataObject.id}
+            </foreach>
+        </if>
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from `template_shopify_log` where `id` = #{id}
+    </delete>
+
+    <!--通过主键集合删除多条数据-->
+    <delete id="deleteByIds">
+        delete from `template_shopify_log`
+        <where>
+            <choose>
+                <when test="ids != null and ids.size > 0">
+                    `id` in
+                    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                        #{id}
+                    </foreach>
+                </when>
+                <otherwise>
+                    1 != 1
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+    <!--通过主键逻辑删除数据,0:未删除,1:已删除-->
+    <update id="logicDeleteById">
+        update `template_shopify_log` set `is_delete` = 1 where `id` = #{id}
+    </update>
+
+    <!--通过主键集合逻辑删除数据,0:未删除,1:已删除-->
+    <update id="logicDeleteByIds">
+        update `template_shopify_log` set `is_delete` = 1
+        <where>
+            <choose>
+                <when test="ids != null and ids.size > 0">
+                    `id` in
+                    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                        #{id}
+                    </foreach>
+                </when>
+                <otherwise>
+                    1 != 1
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAlls" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumn"/>
+        from `template_shopify_log`
+        <where>
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="taskId != null and taskId != ''">
+                and `task_id` = #{taskId}
+            </if>
+            <if test="platfrom != null and platfrom != ''">
+                and `platfrom` = #{platfrom}
+            </if>
+            <if test="site != null and site != ''">
+                and `site` = #{site}
+            </if>
+            <if test="startTimes != null and site != ''">
+                and `start_time` like concat('%',#{startTimes},'%')
+            </if>
+            <if test="endTime != null">
+                and `end_time` = #{endTime}
+            </if>
+            <if test="status != null">
+                and `status` = #{status}
+            </if>
+            <if test="successData != null">
+                and `success_data` = #{successData}
+            </if>
+            <if test="failData != null">
+                and `fail_data` = #{failData}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and `create_by` = #{createBy}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and `update_by` = #{updateBy}
+            </if>
+            and `is_delete` = 0
+            ORDER BY start_time DESC
+        </where>
+    </select>
+</mapper>
+
+
+
+

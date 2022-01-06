@@ -9,6 +9,7 @@
         <module>consumer-user-feign</module>
         <module>springboot-redis</module>
         <module>springboot-rabbitmq</module>
+        <module>springboot-database</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
