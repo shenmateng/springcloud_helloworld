@@ -1,0 +1,806 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mt.mapper.onnew.BasicSkuMapper">
+    <resultMap id="BaseResultMap" type="com.mt.database.BasicSkuDO">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="goodsId" column="goods_id" jdbcType="INTEGER"/>
+        <result property="sku" column="sku" jdbcType="VARCHAR"/>
+        <result property="voltage" column="voltage" jdbcType="VARCHAR"/>
+        <result property="skuWithoutVoltage" column="sku_without_voltage" jdbcType="VARCHAR"/>
+        <result property="chineseName" column="chinese_name" jdbcType="VARCHAR"/>
+        <result property="spu" column="spu" jdbcType="VARCHAR"/>
+        <result property="spuEnName" column="spu_en_name" jdbcType="VARCHAR"/>
+        <result property="goodsName" column="goods_name" jdbcType="VARCHAR"/>
+        <result property="groupId" column="group_id" jdbcType="INTEGER"/>
+        <result property="group" column="group" jdbcType="VARCHAR"/>
+        <result property="weightKg" column="weight_kg" jdbcType="OTHER"/>
+        <result property="weightLbs" column="weight_lbs" jdbcType="NUMERIC"/>
+        <result property="lengthCm" column="length_cm" jdbcType="OTHER"/>
+        <result property="widthCm" column="width_cm" jdbcType="OTHER"/>
+        <result property="heightCm" column="height_cm" jdbcType="OTHER"/>
+        <result property="lengthInch" column="length_inch" jdbcType="NUMERIC"/>
+        <result property="widthInch" column="width_inch" jdbcType="NUMERIC"/>
+        <result property="heightInch" column="height_inch" jdbcType="NUMERIC"/>
+        <result property="color" column="color" jdbcType="VARCHAR"/>
+        <result property="images" column="images" jdbcType="VARCHAR"/>
+        <result property="backCategoryId" column="back_category_id" jdbcType="INTEGER"/>
+        <result property="skuCreateTime" column="sku_create_time" jdbcType="TIMESTAMP"/>
+        <result property="skuUpdateTime" column="sku_update_time" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="delete" column="is_delete" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="BaseColumn">
+
+                     `id`,
+                    `goods_id`,
+                    `sku`,
+                    `voltage`,
+                    `sku_without_voltage`,
+                    `chinese_name`,
+                    `spu`,
+                    `spu_en_name`,
+                    `goods_name`,
+                    `group_id`,
+                    `group`,
+                    `weight_kg`,
+                    `weight_lbs`,
+                    `length_cm`,
+                    `width_cm`,
+                    `height_cm`,
+                    `length_inch`,
+                    `width_inch`,
+                    `height_inch`,
+                    `color`,
+                    `images`,
+                    `back_category_id`,
+                    `sku_create_time`,
+                    `sku_update_time`,
+                    `create_by`,
+                    `create_time`,
+                    `update_by`,
+                    `update_time`,
+                    `is_delete`
+
+    </sql>
+
+    <!--查询单个对象-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumn"/>
+        from `basic_sku`
+        where `id` = #{id} and `is_delete` = 0
+    </select>
+
+    <!--通过ID集合查询多条数据-->
+    <select id="queryByIds" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumn"/>
+        from `basic_sku`
+        <where>
+            <choose>
+                <when test="ids != null and ids.size > 0">
+                    `id` in
+                    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                        #{id}
+                    </foreach>
+                    and `is_delete` = 0
+                </when>
+                <otherwise>
+                    1 != 1
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumn"/>
+        from `basic_sku`
+        <where>
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="goodsId != null">
+                and `goods_id` = #{goodsId}
+            </if>
+            <if test="sku != null and sku != ''">
+                and `sku` = #{sku}
+            </if>
+            <if test="voltage != null and voltage != ''">
+                and `voltage` = #{voltage}
+            </if>
+            <if test="skuWithoutVoltage != null and skuWithoutVoltage != ''">
+                and `sku_without_voltage` = #{skuWithoutVoltage}
+            </if>
+            <if test="chineseName != null and chineseName != ''">
+                and `chinese_name` = #{chineseName}
+            </if>
+            <if test="spu != null and spu != ''">
+                and `spu` = #{spu}
+            </if>
+            <if test="spuEnName != null and spuEnName != ''">
+                and `spu_en_name` = #{spuEnName}
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                and `goods_name` = #{goodsName}
+            </if>
+            <if test="groupId != null">
+                and `group_id` = #{groupId}
+            </if>
+            <if test="group != null and group != ''">
+                and `group` = #{group}
+            </if>
+            <if test="weightKg != null">
+                and `weight_kg` = #{weightKg}
+            </if>
+            <if test="weightLbs != null">
+                and `weight_lbs` = #{weightLbs}
+            </if>
+            <if test="lengthCm != null">
+                and `length_cm` = #{lengthCm}
+            </if>
+            <if test="widthCm != null">
+                and `width_cm` = #{widthCm}
+            </if>
+            <if test="heightCm != null">
+                and `height_cm` = #{heightCm}
+            </if>
+            <if test="lengthInch != null">
+                and `length_inch` = #{lengthInch}
+            </if>
+            <if test="widthInch != null">
+                and `width_inch` = #{widthInch}
+            </if>
+            <if test="heightInch != null">
+                and `height_inch` = #{heightInch}
+            </if>
+            <if test="color != null and color != ''">
+                and `color` = #{color}
+            </if>
+            <if test="images != null and images != ''">
+                and `images` = #{images}
+            </if>
+            <if test="backCategoryId != null">
+                and `back_category_id` = #{backCategoryId}
+            </if>
+            <if test="skuCreateTime != null">
+                and `sku_create_time` = #{skuCreateTime}
+            </if>
+            <if test="skuUpdateTime != null">
+                and `sku_update_time` = #{skuUpdateTime}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and `create_by` = #{createBy}
+            </if>
+            <if test="createTime != null">
+                and `create_time` = #{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and `update_by` = #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and `update_time` = #{updateTime}
+            </if>
+            and `is_delete` = 0
+        </where>
+    </select>
+
+    <!--新增可选列-->
+    <insert id="insertSelective" keyProperty="id" useGeneratedKeys="true">
+        insert into `basic_sku`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                `id`,
+            </if>
+            <if test="goodsId != null">
+                `goods_id`,
+            </if>
+            <if test="sku != null and sku != ''">
+                `sku`,
+            </if>
+            <if test="voltage != null and voltage != ''">
+                `voltage`,
+            </if>
+            <if test="skuWithoutVoltage != null and skuWithoutVoltage != ''">
+                `sku_without_voltage`,
+            </if>
+            <if test="chineseName != null and chineseName != ''">
+                `chinese_name`,
+            </if>
+            <if test="spu != null and spu != ''">
+                `spu`,
+            </if>
+            <if test="spuEnName != null and spuEnName != ''">
+                `spu_en_name`,
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                `goods_name`,
+            </if>
+            <if test="groupId != null">
+                `group_id`,
+            </if>
+            <if test="group != null and group != ''">
+                `group`,
+            </if>
+            <if test="weightKg != null">
+                `weight_kg`,
+            </if>
+            <if test="weightLbs != null">
+                `weight_lbs`,
+            </if>
+            <if test="lengthCm != null">
+                `length_cm`,
+            </if>
+            <if test="widthCm != null">
+                `width_cm`,
+            </if>
+            <if test="heightCm != null">
+                `height_cm`,
+            </if>
+            <if test="lengthInch != null">
+                `length_inch`,
+            </if>
+            <if test="widthInch != null">
+                `width_inch`,
+            </if>
+            <if test="heightInch != null">
+                `height_inch`,
+            </if>
+            <if test="color != null and color != ''">
+                `color`,
+            </if>
+            <if test="images != null and images != ''">
+                `images`,
+            </if>
+            <if test="backCategoryId != null">
+                `back_category_id`,
+            </if>
+            <if test="skuCreateTime != null">
+                `sku_create_time`,
+            </if>
+            <if test="skuUpdateTime != null">
+                `sku_update_time`,
+            </if>
+            <if test="createBy != null and createBy != ''">
+                `create_by`,
+            </if>
+            <if test="createTime != null">
+                `create_time`,
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                `update_by`,
+            </if>
+            <if test="updateTime != null">
+                `update_time`,
+            </if>
+            <if test="delete != null">
+                `is_delete`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId},
+            </if>
+            <if test="sku != null and sku != ''">
+                #{sku},
+            </if>
+            <if test="voltage != null and voltage != ''">
+                #{voltage},
+            </if>
+            <if test="skuWithoutVoltage != null and skuWithoutVoltage != ''">
+                #{skuWithoutVoltage},
+            </if>
+            <if test="chineseName != null and chineseName != ''">
+                #{chineseName},
+            </if>
+            <if test="spu != null and spu != ''">
+                #{spu},
+            </if>
+            <if test="spuEnName != null and spuEnName != ''">
+                #{spuEnName},
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                #{goodsName},
+            </if>
+            <if test="groupId != null">
+                #{groupId},
+            </if>
+            <if test="group != null and group != ''">
+                #{group},
+            </if>
+            <if test="weightKg != null">
+                #{weightKg},
+            </if>
+            <if test="weightLbs != null">
+                #{weightLbs},
+            </if>
+            <if test="lengthCm != null">
+                #{lengthCm},
+            </if>
+            <if test="widthCm != null">
+                #{widthCm},
+            </if>
+            <if test="heightCm != null">
+                #{heightCm},
+            </if>
+            <if test="lengthInch != null">
+                #{lengthInch},
+            </if>
+            <if test="widthInch != null">
+                #{widthInch},
+            </if>
+            <if test="heightInch != null">
+                #{heightInch},
+            </if>
+            <if test="color != null and color != ''">
+                #{color},
+            </if>
+            <if test="images != null and images != ''">
+                #{images},
+            </if>
+            <if test="backCategoryId != null">
+                #{backCategoryId},
+            </if>
+            <if test="skuCreateTime != null">
+                #{skuCreateTime},
+            </if>
+            <if test="skuUpdateTime != null">
+                #{skuUpdateTime},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="delete != null">
+                #{delete},
+            </if>
+        </trim>
+    </insert>
+
+    <!--批量新增数据-->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        <if test="dataObjectList != null and dataObjectList.size > 0">
+            <foreach collection="dataObjectList" item="dataObject" separator=";">
+                insert into `basic_sku`
+                <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="dataObject.id != null">
+                        `id`,
+                    </if>
+                    <if test="dataObject.goodsId != null">
+                        `goods_id`,
+                    </if>
+                    <if test="dataObject.sku != null and dataObject.sku != ''">
+                        `sku`,
+                    </if>
+                    <if test="dataObject.voltage != null and dataObject.voltage != ''">
+                        `voltage`,
+                    </if>
+                    <if test="dataObject.skuWithoutVoltage != null and dataObject.skuWithoutVoltage != ''">
+                        `sku_without_voltage`,
+                    </if>
+                    <if test="dataObject.chineseName != null and dataObject.chineseName != ''">
+                        `chinese_name`,
+                    </if>
+                    <if test="dataObject.spu != null and dataObject.spu != ''">
+                        `spu`,
+                    </if>
+                    <if test="dataObject.spuEnName != null and dataObject.spuEnName != ''">
+                        `spu_en_name`,
+                    </if>
+                    <if test="dataObject.goodsName != null and dataObject.goodsName != ''">
+                        `goods_name`,
+                    </if>
+                    <if test="dataObject.groupId != null">
+                        `group_id`,
+                    </if>
+                    <if test="dataObject.group != null and dataObject.group != ''">
+                        `group`,
+                    </if>
+                    <if test="dataObject.weightKg != null">
+                        `weight_kg`,
+                    </if>
+                    <if test="dataObject.weightLbs != null">
+                        `weight_lbs`,
+                    </if>
+                    <if test="dataObject.lengthCm != null">
+                        `length_cm`,
+                    </if>
+                    <if test="dataObject.widthCm != null">
+                        `width_cm`,
+                    </if>
+                    <if test="dataObject.heightCm != null">
+                        `height_cm`,
+                    </if>
+                    <if test="dataObject.lengthInch != null">
+                        `length_inch`,
+                    </if>
+                    <if test="dataObject.widthInch != null">
+                        `width_inch`,
+                    </if>
+                    <if test="dataObject.heightInch != null">
+                        `height_inch`,
+                    </if>
+                    <if test="dataObject.color != null and dataObject.color != ''">
+                        `color`,
+                    </if>
+                    <if test="dataObject.images != null and dataObject.images != ''">
+                        `images`,
+                    </if>
+                    <if test="dataObject.backCategoryId != null">
+                        `back_category_id`,
+                    </if>
+                    <if test="dataObject.skuCreateTime != null">
+                        `sku_create_time`,
+                    </if>
+                    <if test="dataObject.skuUpdateTime != null">
+                        `sku_update_time`,
+                    </if>
+                    <if test="dataObject.createBy != null and dataObject.createBy != ''">
+                        `create_by`,
+                    </if>
+                    <if test="dataObject.createTime != null">
+                        `create_time`,
+                    </if>
+                    <if test="dataObject.updateBy != null and dataObject.updateBy != ''">
+                        `update_by`,
+                    </if>
+                    <if test="dataObject.updateTime != null">
+                        `update_time`,
+                    </if>
+                    <if test="dataObject.delete != null">
+                        `is_delete`,
+                    </if>
+                </trim>
+                <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="dataObject.id != null">
+                        #{dataObject.id},
+                    </if>
+                    <if test="dataObject.goodsId != null">
+                        #{dataObject.goodsId},
+                    </if>
+                    <if test="dataObject.sku != null and dataObject.sku != ''">
+                        #{dataObject.sku},
+                    </if>
+                    <if test="dataObject.voltage != null and dataObject.voltage != ''">
+                        #{dataObject.voltage},
+                    </if>
+                    <if test="dataObject.skuWithoutVoltage != null and dataObject.skuWithoutVoltage != ''">
+                        #{dataObject.skuWithoutVoltage},
+                    </if>
+                    <if test="dataObject.chineseName != null and dataObject.chineseName != ''">
+                        #{dataObject.chineseName},
+                    </if>
+                    <if test="dataObject.spu != null and dataObject.spu != ''">
+                        #{dataObject.spu},
+                    </if>
+                    <if test="dataObject.spuEnName != null and dataObject.spuEnName != ''">
+                        #{dataObject.spuEnName},
+                    </if>
+                    <if test="dataObject.goodsName != null and dataObject.goodsName != ''">
+                        #{dataObject.goodsName},
+                    </if>
+                    <if test="dataObject.groupId != null">
+                        #{dataObject.groupId},
+                    </if>
+                    <if test="dataObject.group != null and dataObject.group != ''">
+                        #{dataObject.group},
+                    </if>
+                    <if test="dataObject.weightKg != null">
+                        #{dataObject.weightKg},
+                    </if>
+                    <if test="dataObject.weightLbs != null">
+                        #{dataObject.weightLbs},
+                    </if>
+                    <if test="dataObject.lengthCm != null">
+                        #{dataObject.lengthCm},
+                    </if>
+                    <if test="dataObject.widthCm != null">
+                        #{dataObject.widthCm},
+                    </if>
+                    <if test="dataObject.heightCm != null">
+                        #{dataObject.heightCm},
+                    </if>
+                    <if test="dataObject.lengthInch != null">
+                        #{dataObject.lengthInch},
+                    </if>
+                    <if test="dataObject.widthInch != null">
+                        #{dataObject.widthInch},
+                    </if>
+                    <if test="dataObject.heightInch != null">
+                        #{dataObject.heightInch},
+                    </if>
+                    <if test="dataObject.color != null and dataObject.color != ''">
+                        #{dataObject.color},
+                    </if>
+                    <if test="dataObject.images != null and dataObject.images != ''">
+                        #{dataObject.images},
+                    </if>
+                    <if test="dataObject.backCategoryId != null">
+                        #{dataObject.backCategoryId},
+                    </if>
+                    <if test="dataObject.skuCreateTime != null">
+                        #{dataObject.skuCreateTime},
+                    </if>
+                    <if test="dataObject.skuUpdateTime != null">
+                        #{dataObject.skuUpdateTime},
+                    </if>
+                    <if test="dataObject.createBy != null and dataObject.createBy != ''">
+                        #{dataObject.createBy},
+                    </if>
+                    <if test="dataObject.createTime != null">
+                        #{dataObject.createTime},
+                    </if>
+                    <if test="dataObject.updateBy != null and dataObject.updateBy != ''">
+                        #{dataObject.updateBy},
+                    </if>
+                    <if test="dataObject.updateTime != null">
+                        #{dataObject.updateTime},
+                    </if>
+                    <if test="dataObject.delete != null">
+                        #{dataObject.delete},
+                    </if>
+                </trim>
+            </foreach>
+        </if>
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update `basic_sku`
+        <set>
+            <if test="goodsId != null">
+                `goods_id` = #{goodsId},
+            </if>
+            <if test="sku != null and sku != ''">
+                `sku` = #{sku},
+            </if>
+            <if test="voltage != null and voltage != ''">
+                `voltage` = #{voltage},
+            </if>
+            <if test="skuWithoutVoltage != null and skuWithoutVoltage != ''">
+                `sku_without_voltage` = #{skuWithoutVoltage},
+            </if>
+            <if test="chineseName != null and chineseName != ''">
+                `chinese_name` = #{chineseName},
+            </if>
+            <if test="spu != null and spu != ''">
+                `spu` = #{spu},
+            </if>
+            <if test="spuEnName != null and spuEnName != ''">
+                `spu_en_name` = #{spuEnName},
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                `goods_name` = #{goodsName},
+            </if>
+            <if test="groupId != null">
+                `group_id` = #{groupId},
+            </if>
+            <if test="group != null and group != ''">
+                `group` = #{group},
+            </if>
+            <if test="weightKg != null">
+                `weight_kg` = #{weightKg},
+            </if>
+            <if test="weightLbs != null">
+                `weight_lbs` = #{weightLbs},
+            </if>
+            <if test="lengthCm != null">
+                `length_cm` = #{lengthCm},
+            </if>
+            <if test="widthCm != null">
+                `width_cm` = #{widthCm},
+            </if>
+            <if test="heightCm != null">
+                `height_cm` = #{heightCm},
+            </if>
+            <if test="lengthInch != null">
+                `length_inch` = #{lengthInch},
+            </if>
+            <if test="widthInch != null">
+                `width_inch` = #{widthInch},
+            </if>
+            <if test="heightInch != null">
+                `height_inch` = #{heightInch},
+            </if>
+            <if test="color != null and color != ''">
+                `color` = #{color},
+            </if>
+            <if test="images != null and images != ''">
+                `images` = #{images},
+            </if>
+            <if test="backCategoryId != null">
+                `back_category_id` = #{backCategoryId},
+            </if>
+            <if test="skuCreateTime != null">
+                `sku_create_time` = #{skuCreateTime},
+            </if>
+            <if test="skuUpdateTime != null">
+                `sku_update_time` = #{skuUpdateTime},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                `create_by` = #{createBy},
+            </if>
+            <if test="createTime != null">
+                `create_time` = #{createTime},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                `update_by` = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                `update_time` = #{updateTime},
+            </if>
+            <if test="delete != null">
+                `is_delete` = #{delete},
+            </if>
+        </set>
+        where `id` = #{id}
+    </update>
+
+    <!--批量修改数据-->
+    <update id="updateBatch">
+        <if test="dataObjectList != null and dataObjectList.size > 0">
+            <foreach collection="dataObjectList" item="dataObject" separator=";">
+                update `basic_sku`
+                <set>
+                    <if test="dataObject.goodsId != null">
+                        `goods_id` = #{dataObject.goodsId},
+                    </if>
+                    <if test="dataObject.sku != null and dataObject.sku != ''">
+                        `sku` = #{dataObject.sku},
+                    </if>
+                    <if test="dataObject.voltage != null and dataObject.voltage != ''">
+                        `voltage` = #{dataObject.voltage},
+                    </if>
+                    <if test="dataObject.skuWithoutVoltage != null and dataObject.skuWithoutVoltage != ''">
+                        `sku_without_voltage` = #{dataObject.skuWithoutVoltage},
+                    </if>
+                    <if test="dataObject.chineseName != null and dataObject.chineseName != ''">
+                        `chinese_name` = #{dataObject.chineseName},
+                    </if>
+                    <if test="dataObject.spu != null and dataObject.spu != ''">
+                        `spu` = #{dataObject.spu},
+                    </if>
+                    <if test="dataObject.spuEnName != null and dataObject.spuEnName != ''">
+                        `spu_en_name` = #{dataObject.spuEnName},
+                    </if>
+                    <if test="dataObject.goodsName != null and dataObject.goodsName != ''">
+                        `goods_name` = #{dataObject.goodsName},
+                    </if>
+                    <if test="dataObject.groupId != null">
+                        `group_id` = #{dataObject.groupId},
+                    </if>
+                    <if test="dataObject.group != null and dataObject.group != ''">
+                        `group` = #{dataObject.group},
+                    </if>
+                    <if test="dataObject.weightKg != null">
+                        `weight_kg` = #{dataObject.weightKg},
+                    </if>
+                    <if test="dataObject.weightLbs != null">
+                        `weight_lbs` = #{dataObject.weightLbs},
+                    </if>
+                    <if test="dataObject.lengthCm != null">
+                        `length_cm` = #{dataObject.lengthCm},
+                    </if>
+                    <if test="dataObject.widthCm != null">
+                        `width_cm` = #{dataObject.widthCm},
+                    </if>
+                    <if test="dataObject.heightCm != null">
+                        `height_cm` = #{dataObject.heightCm},
+                    </if>
+                    <if test="dataObject.lengthInch != null">
+                        `length_inch` = #{dataObject.lengthInch},
+                    </if>
+                    <if test="dataObject.widthInch != null">
+                        `width_inch` = #{dataObject.widthInch},
+                    </if>
+                    <if test="dataObject.heightInch != null">
+                        `height_inch` = #{dataObject.heightInch},
+                    </if>
+                    <if test="dataObject.color != null and dataObject.color != ''">
+                        `color` = #{dataObject.color},
+                    </if>
+                    <if test="dataObject.images != null and dataObject.images != ''">
+                        `images` = #{dataObject.images},
+                    </if>
+                    <if test="dataObject.backCategoryId != null">
+                        `back_category_id` = #{dataObject.backCategoryId},
+                    </if>
+                    <if test="dataObject.skuCreateTime != null">
+                        `sku_create_time` = #{dataObject.skuCreateTime},
+                    </if>
+                    <if test="dataObject.skuUpdateTime != null">
+                        `sku_update_time` = #{dataObject.skuUpdateTime},
+                    </if>
+                    <if test="dataObject.createBy != null and dataObject.createBy != ''">
+                        `create_by` = #{dataObject.createBy},
+                    </if>
+                    <if test="dataObject.createTime != null">
+                        `create_time` = #{dataObject.createTime},
+                    </if>
+                    <if test="dataObject.updateBy != null and dataObject.updateBy != ''">
+                        `update_by` = #{dataObject.updateBy},
+                    </if>
+                    <if test="dataObject.updateTime != null">
+                        `update_time` = #{dataObject.updateTime},
+                    </if>
+                    <if test="dataObject.delete != null">
+                        `is_delete` = #{dataObject.delete},
+                    </if>
+                </set>
+                where `id` = #{dataObject.id}
+            </foreach>
+        </if>
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from `basic_sku` where `id` = #{id}
+    </delete>
+
+    <!--通过主键集合删除多条数据-->
+    <delete id="deleteByIds">
+        delete from `basic_sku`
+        <where>
+            <choose>
+                <when test="ids != null and ids.size > 0">
+                    `id` in
+                    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                        #{id}
+                    </foreach>
+                </when>
+                <otherwise>
+                    1 != 1
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+    <!--通过主键逻辑删除数据,0:未删除,1:已删除-->
+    <update id="logicDeleteById">
+        update `basic_sku` set `is_delete` = 1 where `id` = #{id}
+    </update>
+
+    <!--通过主键集合逻辑删除数据,0:未删除,1:已删除-->
+    <update id="logicDeleteByIds">
+        update `basic_sku` set `is_delete` = 1
+        <where>
+            <choose>
+                <when test="ids != null and ids.size > 0">
+                    `id` in
+                    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                        #{id}
+                    </foreach>
+                </when>
+                <otherwise>
+                    1 != 1
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+
+    <!--查询单个对象-->
+    <select id="querySku" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BaseColumn"/>
+        FROM
+        basic_sku bs
+        WHERE
+        CONCAT( bs.sku_without_voltage, bs.voltage ) != bs.sku
+        AND bs.is_delete = 0
+    </select>
+</mapper>

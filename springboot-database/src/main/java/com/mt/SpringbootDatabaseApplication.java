@@ -8,6 +8,7 @@ public class SpringbootDatabaseApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringbootDatabaseApplication.class, args);
+        System.out.println("run方法执行完毕");
     }
 
 }

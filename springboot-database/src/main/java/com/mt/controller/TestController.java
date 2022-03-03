@@ -43,5 +43,10 @@ public class TestController {
         return ResponseResult.successPage(pageInfo.getList(), pageInfo.getTotal(), pageInfo.getPageNum(), pageInfo.getPageSize());
     }
 
+    @PostMapping(value = "/querySku")
+    public void querySku(){
+        onNewService.resku();
+    }
+
 
 }
