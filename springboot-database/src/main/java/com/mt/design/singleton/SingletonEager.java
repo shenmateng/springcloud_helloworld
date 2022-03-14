@@ -1,4 +1,4 @@
-package com.mt.designMode.singletonPattern;
+package com.mt.design.singleton;
 
 import javax.swing.*;
 import java.awt.*;
