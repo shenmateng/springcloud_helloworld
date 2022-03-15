@@ -14,6 +14,6 @@ public class PrototypeTest {
         Realizetype obj1 = new Realizetype();
         Realizetype obj2 = (Realizetype) obj1.clone();
         System.out.println("obj1==obj2?" + (obj1 == obj2));
-        System.out.println("obj1==obj2?" + (obj1.getName() == obj2.getName()));
+        System.out.println("obj1==obj2?" + (obj1.getName().equals(obj2.getName())));
     }
 }
