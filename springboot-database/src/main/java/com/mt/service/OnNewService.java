@@ -92,6 +92,7 @@ public class OnNewService {
             String dianya = sku.substring(sku.length() -2,sku.length());
             String wudianya = sku.substring(0,sku.length()-2);
             String ss = "update basic_sku set sku_without_voltage = '"+wudianya+"',voltage = '"+dianya+"' where sku = '"+sku+"' and is_delete = 0 and id = "+id+";";
+            String sss = "delete from basic_sku where id = "+ id+ ";";
             System.out.println(ss);
         });
 
