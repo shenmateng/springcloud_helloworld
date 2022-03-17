@@ -10,5 +10,7 @@ package com.mt.design.factory.abstractfactory.demo;
  */
 public interface Plant {
 
+    //抽象产品：植物类
+
     public void show();
 }
