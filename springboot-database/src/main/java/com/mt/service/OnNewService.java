@@ -86,6 +86,8 @@ public class OnNewService {
 
     public void resku(){
         List<BasicSkuDO> basicSkus = basicSkuMapper.querySku();
+        BasicSkuDO basicSkuDO = basicSkuMapper.BasicSkuMapper();
+        System.out.println(basicSkuDO);
         basicSkus.forEach(o->{
             String sku = o.getSku();
             Integer id = o.getId();

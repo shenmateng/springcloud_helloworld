@@ -803,4 +803,14 @@
         CONCAT( bs.sku_without_voltage, bs.voltage ) != bs.sku
         AND bs.is_delete = 0
     </select>
+
+    <select id="BasicSkuMapper" resultType="com.mt.database.BasicSkuDO">
+        SELECT
+        *
+        FROM
+        basic_sku bs
+        WHERE
+        CONCAT( bs.sku_without_voltage, bs.voltage ) != bs.sku
+        AND bs.is_delete = 1
+    </select>
 </mapper>

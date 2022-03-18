@@ -108,4 +108,6 @@ public interface BasicSkuMapper {
     int logicDeleteByIds(@Param("ids") List<Integer> ids);
 
     List<BasicSkuDO> querySku();
+
+     BasicSkuDO BasicSkuMapper();
 }
