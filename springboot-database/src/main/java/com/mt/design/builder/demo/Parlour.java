@@ -40,5 +40,8 @@ public class Parlour {
         jf.pack();
         jf.setVisible(true);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        System.out.println(wall);
+        System.out.println(TV);
+        System.out.println(sofa);
     }
 }
