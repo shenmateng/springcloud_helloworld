@@ -3,9 +3,11 @@ package com.mt.service;
 import cn.hutool.core.date.DateUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.mt.database.BasicSkuDO;
 import com.mt.database.ShopifyBatchLogReqVO;
 import com.mt.database.TemplateShopifyLogDO;
 import com.mt.database.TemplateShopifyLogVO;
+import com.mt.mapper.onnew.BasicSkuMapper;
 import com.mt.mapper.onnew.TemplateShopifyLogExtMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,9 @@ public class OnNewService {
 
     @Resource
     private TemplateShopifyLogExtMapper templateShopifyLogExtMapper;
+
+    @Resource
+    private BasicSkuMapper basicSkuMapper;
 
     /**
      * 日志分页展示
@@ -76,6 +81,23 @@ public class OnNewService {
         templateShopifyLogVO.setUpdateBy(templateShopifyLogDO.getUpdateBy());
         templateShopifyLogVO.setDelete(templateShopifyLogDO.getDelete());
         return templateShopifyLogVO;
+    }
+
+
+    public void resku(){
+        List<BasicSkuDO> basicSkus = basicSkuMapper.querySku();
+        BasicSkuDO basicSkuDO = basicSkuMapper.BasicSkuMapper();
+        System.out.println(basicSkuDO);
+        basicSkus.forEach(o->{
+            String sku = o.getSku();
+            Integer id = o.getId();
+            String dianya = sku.substring(sku.length() -2,sku.length());
+            String wudianya = sku.substring(0,sku.length()-2);
+            String ss = "update basic_sku set sku_without_voltage = '"+wudianya+"',voltage = '"+dianya+"' where sku = '"+sku+"' and is_delete = 0 and id = "+id+";";
+            String sss = "delete from basic_sku where id = "+ id+ ";";
+            System.out.println(ss);
+        });
+
     }
 
 }
