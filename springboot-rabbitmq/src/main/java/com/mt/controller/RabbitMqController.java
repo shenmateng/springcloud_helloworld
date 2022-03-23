@@ -31,7 +31,8 @@ public class RabbitMqController {
      */
     @PostMapping("/test1")
     public void testRabbitmq() {
-        sendrabbitMqService.testRabbitMq();
+//        sendrabbitMqService.testRabbitMq();
+        sendrabbitMqService.send("fanout_email_queue");
     }
 
 

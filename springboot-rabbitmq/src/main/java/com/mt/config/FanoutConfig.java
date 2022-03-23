@@ -36,16 +36,16 @@ public class FanoutConfig {
     public static final String DEAD_LETTER_ROUTING_KEY = "x-dead-letter-routing-key";
 
     // 邮件队列
-    private String FANOUT_EMAIL_QUEUE = "fanout_email_queue";
+    private static final String FANOUT_EMAIL_QUEUE = "fanout_email_queue";
 
     // 短信队列
-    private String FANOUT_SMS_QUEUE = "fanout_sms_queue";
+    private static final String FANOUT_SMS_QUEUE = "fanout_sms_queue";
 
     // fanout 交换机
-    private String EXCHANGE_NAME = "fanoutExchange";
+    private static final String EXCHANGE_NAME = "fanoutExchange";
 
     // 1.定义邮件队列
-    @Bean
+    @Bean(FANOUT_EMAIL_QUEUE)
     public Queue fanOutEamilQueue() {
         // 将普通队列绑定到死信队列交换机上
         Map<String, Object> args = new HashMap<>(2);
@@ -56,26 +56,28 @@ public class FanoutConfig {
     }
 
     // 2.定义短信队列
-    @Bean
+    @Bean(FANOUT_SMS_QUEUE)
     public Queue fanOutSmsQueue() {
         return new Queue(FANOUT_SMS_QUEUE);
     }
 
     // 2.定义交换机
-    @Bean
+    @Bean(EXCHANGE_NAME)
     FanoutExchange fanoutExchange() {
         return new FanoutExchange(EXCHANGE_NAME);
     }
 
+
     // 3.队列与交换机绑定邮件队列
     @Bean
-    Binding bindingExchangeEamil(Queue fanOutEamilQueue, FanoutExchange fanoutExchange) {
+    public Binding bindingExchangeEamil(@Qualifier(FANOUT_EMAIL_QUEUE) Queue fanOutEamilQueue, @Qualifier(EXCHANGE_NAME) FanoutExchange fanoutExchange) {
         return BindingBuilder.bind(fanOutEamilQueue).to(fanoutExchange);
     }
 
+
     // 4.队列与交换机绑定短信队列
     @Bean
-    Binding bindingExchangeSms(Queue fanOutSmsQueue, FanoutExchange fanoutExchange) {
+    Binding bindingExchangeSms(@Qualifier(FANOUT_SMS_QUEUE) Queue fanOutSmsQueue, @Qualifier(EXCHANGE_NAME) FanoutExchange fanoutExchange) {
         return BindingBuilder.bind(fanOutSmsQueue).to(fanoutExchange);
     }
 
@@ -84,7 +86,7 @@ public class FanoutConfig {
      *
      * @return
      */
-    @Bean
+    @Bean(deadQueueName)
     public Queue deadQueue() {
         Queue queue = new Queue(deadQueueName, true);
         return queue;
@@ -92,7 +94,7 @@ public class FanoutConfig {
     /*
      * 创建死信交换机
      */
-    @Bean
+    @Bean(deadExchangeName)
     public DirectExchange deadExchange() {
         return new DirectExchange(deadExchangeName);
     }
@@ -100,7 +102,7 @@ public class FanoutConfig {
      * 死信队列与死信交换机绑定
      */
     @Bean
-    public Binding bindingDeadExchange(Queue deadQueue, DirectExchange deadExchange) {
+    public Binding bindingDeadExchange(@Qualifier(deadQueueName) Queue deadQueue, @Qualifier(deadExchangeName) DirectExchange deadExchange) {
         return BindingBuilder.bind(deadQueue).to(deadExchange).with(deadRoutingKey);
     }
 

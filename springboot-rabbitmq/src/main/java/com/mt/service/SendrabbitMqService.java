@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.rabbitmq.client.Channel;
+
 import java.util.Map;
 import java.util.UUID;
 
@@ -43,8 +44,7 @@ public class SendrabbitMqService {
     private AmqpTemplate amqpTemplate;
 
 
-
-    public void testRabbitMq(){
+    public void testRabbitMq() {
 
         String exchange = "com_mt_exchange";
 
@@ -79,9 +79,11 @@ public class SendrabbitMqService {
         Message message = MessageBuilder.withBody(jsonString.getBytes())
                 .setContentType(MessageProperties.CONTENT_TYPE_JSON).setContentEncoding("utf-8")
                 .setMessageId(UUID.randomUUID() + "").build(); //消息id设置在请求头里面 用UUID做全局ID
-        amqpTemplate.convertAndSend(queueName, message);
+        System.out.println(message);
+        rabbitTemplate.convertAndSend("fanoutExchange", "", message);
+        //两种发送方式
+//        amqpTemplate.convertAndSend(queueName, message);
     }
-
 
 
     @RabbitListener(queues = "fanout_email_queue")
