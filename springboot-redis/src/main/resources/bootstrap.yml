@@ -1,8 +1,8 @@
 server:
-  port: 8088
+  port: 8098
 spring:
   application:
-    name: bmp-prm-service
+    name: mt-springboot-service
   cloud:
     consul:
       host: 8.142.22.143
