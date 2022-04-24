@@ -1,6 +1,7 @@
 package com.mt.service;
 
 import com.mt.database.ShopifyNewListingVO;
+import com.vevor.bmp.common.constant.RedisConstant;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.testng.annotations.Test;
@@ -27,7 +28,10 @@ public class RedisService {
 
     public void testRedis() {
         String auKey = "com:mt:redis:test:";
+        String auKey1 = "com:mt:redis:hashput";
+        String auKey3 = "com:mt:redis:put";
         List<ShopifyNewListingVO> auData = new ArrayList<>();
+        String sss = "测试hashkey";
         for (int i = 0; i < 10; i++) {
             ShopifyNewListingVO shopifyNewListingVO = new ShopifyNewListingVO();
             shopifyNewListingVO.setSiteCode("AU" + i);
@@ -38,8 +42,11 @@ public class RedisService {
             auData.add(shopifyNewListingVO);
         }
 
-        redisTemplate.opsForList().leftPushAll(auKey, auData);
-
+        redisTemplate.opsForList().leftPushAll(auKey3, auData);
+        redisTemplate.opsForHash().put(auKey1, "AU1", sss);
+        redisTemplate.opsForHash().put(auKey1, "AU2", auKey);
+        redisTemplate.opsForHash().put(auKey1, "AU3", auData.get(0));
+        redisTemplate.opsForHash().put(auKey1, "AU4", auData);
     }
 
 
