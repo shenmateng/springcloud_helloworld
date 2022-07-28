@@ -10,6 +10,7 @@
         <module>springboot-redis</module>
         <module>springboot-rabbitmq</module>
         <module>springboot-database</module>
+        <module>springboot-mybatis-plus</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
