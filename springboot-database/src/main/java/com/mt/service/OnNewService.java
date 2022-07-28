@@ -10,6 +10,7 @@ import com.mt.database.TemplateShopifyLogVO;
 import com.mt.mapper.onnew.BasicSkuMapper;
 import com.mt.mapper.onnew.TemplateShopifyLogExtMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -30,6 +31,10 @@ import java.util.List;
 @Slf4j
 public class OnNewService {
 
+    @Value("${spring.inspection.pmpath}")
+    private String url;
+    @Value("${spring.inspection.suffix}")
+    private String url1;
 
     @Resource
     private TemplateShopifyLogExtMapper templateShopifyLogExtMapper;
@@ -97,6 +102,9 @@ public class OnNewService {
             String sss = "delete from basic_sku where id = "+ id+ ";";
             System.out.println(ss);
         });
+        System.out.println(url);
+        System.out.println(url1);
+        System.out.println(url + url1);
 
     }
 

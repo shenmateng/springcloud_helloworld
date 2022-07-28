@@ -45,4 +45,6 @@ spring:
           wait-time: 30
   main:
     allow-bean-definition-overriding: true
-
+  inspection:
+    pmpath: http://127.0.0.1:9101/uap/uewebservices/services/ReportPerformanceBizcImpl
+    suffix: ?wsdl

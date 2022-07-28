@@ -76,11 +76,6 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.vevor.prm</groupId>
-            <artifactId>bmp-prm-api</artifactId>
-            <version>1.19.3-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
     <build>
