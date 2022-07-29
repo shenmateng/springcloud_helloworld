@@ -37,13 +37,13 @@ public class MybatisPlusService {
 
     public void mybatisTest(){
         List<User> vcStoreDOS = voStoreMapper.selectList(null);
-        VcStore vcStore = new VcStore();
-        vcStore.setPlatform("平台");
         User user = new User();
-        user.setName("牛马");
+        user.setId(3);
+        user.setName("牛马马楼");
         user.setAge(11);
         user.setEmail("niuma.com");
-        voStoreMapper.insert(user);
+//        voStoreMapper.insert(user);
+        voStoreMapper.updateById(user);
         System.out.println(vcStoreDOS);
     }
 }
