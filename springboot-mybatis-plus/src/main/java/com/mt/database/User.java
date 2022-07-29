@@ -4,6 +4,9 @@
 package com.mt.database;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 /**
@@ -19,6 +22,7 @@ public class User implements Serializable {
     /**
     * 主键id
     */
+    @TableId(type = IdType.AUTO)
     private Integer id;
     /**
     * 姓名

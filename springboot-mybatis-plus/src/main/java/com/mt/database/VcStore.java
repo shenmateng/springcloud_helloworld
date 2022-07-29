@@ -6,6 +6,8 @@ package com.mt.database;
 import java.util.Date;
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -23,6 +25,7 @@ public class VcStore implements Serializable {
     /**
     * 主键ID
     */
+    @TableId(type = IdType.AUTO)
     private Integer id;
     /**
     * 销售端口

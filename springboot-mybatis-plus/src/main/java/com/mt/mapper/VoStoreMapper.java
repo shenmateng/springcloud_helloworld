@@ -25,7 +25,7 @@ import org.apache.ibatis.annotations.Mapper;
  * You are not expected to understand this
  */
 @Mapper
-public interface VoStoreMapper extends BaseMapper<VcStore> {
+public interface VoStoreMapper extends BaseMapper<User> {
 
 
 }
