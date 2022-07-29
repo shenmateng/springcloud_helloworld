@@ -5,6 +5,7 @@
 package com.mt.config.database;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -32,6 +33,7 @@ public class MyBatisDataSourceConfig {
 
     protected static final String MAPPER_XML_LOCATION = "classpath*:com/mt/mapper/*Mapper.xml";
 
+
     /**
      * MyBatis 数据源事务管理器
      *
@@ -52,9 +54,12 @@ public class MyBatisDataSourceConfig {
      */
     @Bean
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
-        final SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        if(log.isInfoEnabled()){
-            log.info("初始化数据库:{}",((DruidDataSource) dataSource).getRawJdbcUrl());
+        //mybatis-plus要用这个工厂
+        final MybatisSqlSessionFactoryBean sqlSessionFactoryBean = new MybatisSqlSessionFactoryBean();
+        //mybatis用这个工厂
+        //SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+        if (log.isInfoEnabled()) {
+            log.info("初始化数据库:{}", ((DruidDataSource) dataSource).getRawJdbcUrl());
         }
         sqlSessionFactoryBean.setDataSource(dataSource);
         // 开启驼峰
