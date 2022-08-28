@@ -1,20 +1,11 @@
 package com.mt.service;
 
-import com.mt.database.User;
-import com.mt.database.VcStore;
-import com.mt.mapper.VoStoreMapper;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
-import java.util.List;
-
 /**
  * @Author: mateng
- * @program: spring-cloud
- * @Date: 2022/7/29 15:30
+ * @program:
+ * @Date: 2022/8/27 17:33
  * @Version:
- * @Description: mybatis-plus 测试service类
- * ░░░░░░░░░░░░░░░░░░░░░░░░▄░░
+ * @Description: ░░░░░░░░░░░░░░░░░░░░░░░░▄░░
  * ░░░░░░░░░▐█░░░░░░░░░░░▄▀▒▌░
  * ░░░░░░░░▐▀▒█░░░░░░░░▄▀▒▒▒▐
  * ░░░░░░░▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐
@@ -27,25 +18,17 @@ import java.util.List;
  * ▀▒▀▐▄█▄█▌▄░▀▒▒░░░░░░░░░░▒▒▒
  * You are not expected to understand this
  */
+public class test11 {
 
-@Service
-public class MybatisPlusService {
+    private static int i = 1;
 
-    @Resource
-    private VoStoreMapper voStoreMapper;
+    static {
+        ii = 10;
+        System.out.println(i);
+    }
 
-
-    public void mybatisTest(){
-        List<User> vcStoreDOS = voStoreMapper.selectList(null);
-        User user = new User();
-        user.setId(3);
-        user.setName("牛马马楼");
-        user.setAge(11);
-        user.setEmail("niuma.com");
-//        voStoreMapper.insert(user);
-        voStoreMapper.updateById(user);
-        System.out.println(vcStoreDOS);
-
-
+    private static int ii = 1;
+    public static void main(String[] args) {
+        System.out.println(ii);
     }
 }
