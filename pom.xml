@@ -18,7 +18,7 @@
         <version>2.2.7.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.offcn</groupId>
+    <groupId>com.mt</groupId>
     <artifactId>springcloud_helloworld</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>springcloud_helloworld</name>

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>springcloud_helloworld</artifactId>
-        <groupId>com.offcn</groupId>
+        <groupId>com.mt</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <groupId>com.mt</groupId>
