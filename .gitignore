@@ -33,5 +33,3 @@ build/
 .vscode/
 springboot-es/src/test/
 .gitignore
-springboot-es/pom.xml
-pom.xml
