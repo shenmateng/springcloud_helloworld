@@ -31,5 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-springboot-es/src/test/
-.gitignore
