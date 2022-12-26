@@ -39,4 +39,21 @@ spring:
         shared-configs[0]: #公用配置文件
           data-id: es-common.yml
           refresh: true
+  elasticsearch:
+    jest:
+      uris: 192.168.123.252:9200
+      connection-timeout: 60000
+      read-timeout: 60000
+      username: elastic
+      password: 123qweasdZXC
 
+elasticsearch:
+  schema: http
+  address:  192.168.123.252:9200
+  connectTimeout: 5000
+  socketTimeout: 5000
+  connectionRequestTimeout: 5000
+  maxConnectNum: 100
+  maxConnectPerRoute: 100
+  username: elastic
+  password: 123qweasdZXC
