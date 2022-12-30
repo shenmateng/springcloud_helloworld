@@ -39,6 +39,12 @@ spring:
         shared-configs[0]: #公用配置文件
           data-id: es-common.yml
           refresh: true
+        shared-configs[1]: #公用配置文件
+          data-id: mysql-common.yml
+          refresh: true #是否支持自动刷新
+        shared-configs[2]:
+          data-id: consul-common.yml
+          refresh: true
   elasticsearch:
     jest:
       uris: 192.168.123.252:9200
@@ -57,3 +63,21 @@ elasticsearch:
   maxConnectPerRoute: 100
   username: elastic
   password: 123qweasdZXC
+
+language: zh_cn
+
+task:
+  threadCoreSize: 4
+  threadMaxSize: 8
+  threadQueueSize: 100
+  pullMachineTimerCron: 0 0 0/2 * * ?
+index:
+  number_of_shards: 5
+  number_of_replicas: 0
+  max_result_window: 10000
+  refresh_interval: 1s
+  bulk_size: 500
+  bulk_update_size: 500
+  translog:
+    durability: async
+    sync_interval: 60s
