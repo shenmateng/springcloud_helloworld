@@ -6,7 +6,6 @@ import com.mt.database.AssetQueryForEs;
 import com.mt.database.GetMachinesByUserUuidP;
 import com.mt.database.es.EsZcMachine;
 import com.mt.mapper.es.BasicSkuMapper;
-import com.mt.mapper.es.ZcTagUserDao;
 import com.mt.utils.DataUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,8 +22,6 @@ import java.util.List;
 @Service
 public class EsZcMachineService {
 
-    @Resource
-    private ZcTagUserDao zcTagUserDao;
 
     @Resource
     private EsZcQueryBaseService esZcQueryBaseService;
