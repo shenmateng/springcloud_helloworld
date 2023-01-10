@@ -407,8 +407,8 @@ public class EsZcQueryBaseService {
             t.setMachineUuid(machineUuid);
             t.setMachineName("dell");
 
-            newEsZcMachine.setId("5c0ab633b880405b8cf1d69b48ac7af8");
-            newEsZcMachine.setMachineUuid("5c0ab633b880405b8cf1d69b48ac7af8");
+            newEsZcMachine.setId(machineUuid);
+            newEsZcMachine.setMachineUuid(machineUuid);
             newEsZcMachine.setMachineName("Dell一号");
             EsZcMachineSave oldEsZcMachine = null;
             try {
