@@ -1,11 +1,9 @@
 package com.mt.serivce;
 
 
-import com.mt.database.es.EsZcMachine;
 import com.mt.database.es.EsZcMachineSave;
 import io.searchbox.client.JestClient;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 

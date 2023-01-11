@@ -95,7 +95,7 @@ public class EsZcMachineSave extends EsZcBase {
     private Integer newFlag;
     private Integer ifDelete;
     private String jspAgent;
-    private String zcType = "zc_machine";
+    private String zcType = "zc_machine_1";
 
     public String getJspAgent() {
         return jspAgent;

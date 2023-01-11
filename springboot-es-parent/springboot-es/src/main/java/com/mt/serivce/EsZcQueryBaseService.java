@@ -1,6 +1,7 @@
 package com.mt.serivce;
 
 import com.alibaba.fastjson.JSON;
+import com.mt.bean.page.I18nUtil;
 import com.mt.constant.ResponseCode;
 import com.mt.database.es.*;
 import com.mt.exception.JowtoException;
@@ -410,6 +411,16 @@ public class EsZcQueryBaseService {
             newEsZcMachine.setId(machineUuid);
             newEsZcMachine.setMachineUuid(machineUuid);
             newEsZcMachine.setMachineName("Dell一号");
+            newEsZcMachine.setMachineIp("sdfsdfsf");
+            List<UserData> userDataList = new ArrayList<>();
+            UserData userData = new UserData();
+            userData.setUserUuid(machineUuid);
+            List<String> machineTagList = new ArrayList<>();
+            machineTagList.add("123");
+            machineTagList.add("789");
+            userData.setMachineTags(machineTagList);
+            userDataList.add(userData);
+            newEsZcMachine.setUserDatas(userDataList);
             EsZcMachineSave oldEsZcMachine = null;
             try {
                 oldEsZcMachine = this.zcJestApiService.searchDocById(t);
