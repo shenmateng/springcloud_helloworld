@@ -404,22 +404,31 @@ public class EsZcQueryBaseService {
                 continue;
             }
             EsZcMachineSave t = new EsZcMachineSave();
-            t.setId(machineUuid);
+            t.setId(machineUuid+"100");
             t.setMachineUuid(machineUuid);
             t.setMachineName("dell");
 
-            newEsZcMachine.setId(machineUuid);
+            newEsZcMachine.setId(machineUuid+"100");
             newEsZcMachine.setMachineUuid(machineUuid);
-            newEsZcMachine.setMachineName("Dell一号");
-            newEsZcMachine.setMachineIp("sdfsdfsf");
+            newEsZcMachine.setMachineName("nested查询数据3");
+            newEsZcMachine.setMachineIp("8.142.22.145");
             List<UserData> userDataList = new ArrayList<>();
             UserData userData = new UserData();
+            UserData userData1 = new UserData();
             userData.setUserUuid(machineUuid);
+            userData.setSku("烧烤架");
+            userData1.setUserUuid("nested30");
+            userData1.setSku("手机");
             List<String> machineTagList = new ArrayList<>();
-            machineTagList.add("123");
-            machineTagList.add("789");
+            List<String> machineTagList1 = new ArrayList<>();
+            machineTagList.add("分组13");
+            machineTagList.add("分组14");
+            machineTagList1.add("分组15");
+            machineTagList1.add("分组16");
             userData.setMachineTags(machineTagList);
+            userData1.setMachineTags(machineTagList1);
             userDataList.add(userData);
+            userDataList.add(userData1);
             newEsZcMachine.setUserDatas(userDataList);
             EsZcMachineSave oldEsZcMachine = null;
             try {

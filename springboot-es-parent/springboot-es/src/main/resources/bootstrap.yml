@@ -47,7 +47,7 @@ spring:
           refresh: false
   elasticsearch:
     jest:
-      uris: 192.168.123.252:9200
+      uris: 8.142.22.143:9200
       connection-timeout: 60000
       read-timeout: 60000
       username: elastic
