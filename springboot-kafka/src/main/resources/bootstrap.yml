@@ -1,0 +1,33 @@
+server:
+  port: 8099
+spring:
+  application:
+    #配置文件名
+    name: bmp-prm-kafka
+  kafka:
+    bootstrap-servers: 47.94.153.183:9092
+    listener:
+      concurrency: 3                       #设置消费的线程数
+      #      poll-timeout: 1500                   #自动提交设置，如果消息队列中没有消息，等待timeout毫秒后，调用poll()方法。如果队列中有消息，立即消费消息，每次消费的消息的多少可以通过max.poll.records配置。
+      missing-topics-fatal: false
+      ack-mode: MANUAL_IMMEDIATE
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      properties:
+#        max.request.size: 20000000
+#        #        buffer.memory: 33554432
+#        sasl.mechanism: PLAIN
+#        security.protocol: SASL_PLAINTEXT
+#        sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="jowto1234";
+    consumer:
+      group-id: push-service-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      properties:
+#        sasl.mechanism: PLAIN
+#        security.protocol: SASL_PLAINTEXT
+#        sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="jowto1234";
+      fetch-min-size: 1000
+      max-poll-records: 500

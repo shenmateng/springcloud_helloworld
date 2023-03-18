@@ -11,6 +11,7 @@
         <module>springboot-rabbitmq</module>
         <module>springboot-database</module>
         <module>springboot-mybatis-plus</module>
+        <module>springboot-kafka</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
