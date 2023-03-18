@@ -26,4 +26,8 @@ public class UserData implements Serializable {
      * G01 Agent安装权限: 1有该权限，0无该权限
      */
     private Integer agentInstall;
+    /**
+     * G01 Agent安装权限: 1有该权限，0无该权限
+     */
+    private String sku;
 }

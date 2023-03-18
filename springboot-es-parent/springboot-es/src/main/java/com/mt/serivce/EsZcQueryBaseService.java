@@ -1,16 +1,16 @@
 package com.mt.serivce;
 
+import com.alibaba.fastjson.JSON;
+import com.mt.bean.page.I18nUtil;
 import com.mt.constant.ResponseCode;
-import com.mt.database.es.EsZcMachineIp;
-import com.mt.database.es.EsZcMachinePrimaryIp;
-import com.mt.database.es.UserData;
+import com.mt.database.es.*;
+import com.mt.exception.JowtoException;
 import com.mt.exception.JowtoRuntimeException;
 import com.mt.utils.*;
 import com.mt.bean.ResponseForPage;
 import com.mt.config.AssetConfig;
 import com.mt.constant.Constant;
 import com.mt.database.AssetQueryForEs;
-import com.mt.database.es.EsZcMachine;
 import io.searchbox.client.JestClient;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
@@ -24,7 +24,9 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.BucketOrder;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -40,6 +42,15 @@ public class EsZcQueryBaseService {
 
     @Autowired
     private JestClient jestClient;
+
+    @Autowired
+    private JestApiService jestApiService;
+
+    @Autowired
+    private EsZcMachineServiceImpl esZcMachineService;
+
+    @Autowired
+    private ZcJestApiService zcJestApiService;
 
     /**
      * 资产列表
@@ -74,6 +85,7 @@ public class EsZcQueryBaseService {
                     queryBuilder.filter(QueryBuilders.termsQuery(Constant.USER_DATAS_MACHINETAGS_KEYWORD, Arrays.asList(assetQueryForEs.getMachineTags().split(","))));
                 }
             }
+            //组合嵌套查询条件
             QueryBuilder nestedQuery = QueryBuilders.nestedQuery(Constant.USER_DATAS, queryBuilder
                     , ScoreMode.None);
             boolQueryBuilder.filter(nestedQuery);
@@ -344,4 +356,134 @@ public class EsZcQueryBaseService {
         }*/
         return t;
     }
+
+
+    @Async("assetThreadPool")
+    public void upsertZcMachine(UpsertZcMachineP upsertZcMachineP) throws JowtoException {
+        log.info("upsertZcMachine:" + JSON.toJSONString(upsertZcMachineP));
+        EsZcMachineSave esZcMachineSave = new EsZcMachineSave();
+        esZcMachineSave.setId(upsertZcMachineP.getUuid());
+        esZcMachineSave = jestApiService.searchDocById(esZcMachineSave);
+
+        long start = System.currentTimeMillis();
+        //机器
+        ZcMachine zcMachine = new ZcMachine();
+        BeanUtils.copyProperties(upsertZcMachineP, zcMachine);
+        //更新机器其他
+        saveEsMachineOther(zcMachine);
+        log.info("添加或更新机器结束:" + upsertZcMachineP.getUuid() + "-CostTime:" + (System.currentTimeMillis() - start));
+
+    }
+
+
+    public void saveEsMachineOther(ZcMachine zcMachine) {
+        try {
+            List<EsZcMachineSave> esZcMachines = getNeedUpsertEsZcMachines(DataUtils.asList(zcMachine));
+            log.info("ES更新：" + 1 + ":实际更新:" + esZcMachines.size());
+            log.info("实际更新集合:" + JSON.toJSONString(esZcMachines));
+            if (!CollectionUtils.isEmpty(esZcMachines)) {
+                esZcMachineService.saveBatch(esZcMachines);
+                for (EsZcMachineSave esZcMachine : esZcMachines) {
+                    //按别名更新各类索引
+                    zcJestApiService.updateEsZcCommanBy(EsZcMachineSave.sAlias(), EsZcMachineSave.sType(), esZcMachine.getMachineUuid(), esZcMachine);
+                }
+            }
+        } catch (Exception ex) {
+            log.error("", ex);
+        }
+    }
+
+
+
+    public List<EsZcMachineSave> getNeedUpsertEsZcMachines(List<ZcMachine> zcMachines) {
+        List<EsZcMachineSave> needUpserts = new ArrayList<>();
+        for (ZcMachine zcMachine : zcMachines) {
+            String machineUuid = zcMachine.getUuid();
+            EsZcMachineSave newEsZcMachine = new EsZcMachineSave();
+            if (newEsZcMachine == null) {
+                continue;
+            }
+            EsZcMachineSave t = new EsZcMachineSave();
+            t.setId(machineUuid+"100");
+            t.setMachineUuid(machineUuid);
+            t.setMachineName("dell");
+
+            newEsZcMachine.setId(machineUuid+"100");
+            newEsZcMachine.setMachineUuid(machineUuid);
+            newEsZcMachine.setMachineName("nested查询数据3");
+            newEsZcMachine.setMachineIp("8.142.22.145");
+            List<UserData> userDataList = new ArrayList<>();
+            UserData userData = new UserData();
+            UserData userData1 = new UserData();
+            userData.setUserUuid(machineUuid);
+            userData.setSku("烧烤架");
+            userData1.setUserUuid("nested30");
+            userData1.setSku("手机");
+            List<String> machineTagList = new ArrayList<>();
+            List<String> machineTagList1 = new ArrayList<>();
+            machineTagList.add("分组13");
+            machineTagList.add("分组14");
+            machineTagList1.add("分组15");
+            machineTagList1.add("分组16");
+            userData.setMachineTags(machineTagList);
+            userData1.setMachineTags(machineTagList1);
+            userDataList.add(userData);
+            userDataList.add(userData1);
+            newEsZcMachine.setUserDatas(userDataList);
+            EsZcMachineSave oldEsZcMachine = null;
+            try {
+                oldEsZcMachine = this.zcJestApiService.searchDocById(t);
+            } catch (Exception ex) {
+                log.error("", ex);
+            }
+            if (oldEsZcMachine == null) {
+                needUpserts.add(newEsZcMachine);
+            } else {
+                EsZcMachineSave newEsZcMachine2 = new EsZcMachineSave();
+                EsZcMachineSave oldEsZcMachine2 = new EsZcMachineSave();
+                Field[] fields = newEsZcMachine.getClass().getDeclaredFields();
+                for (Field field : fields) {
+                    try {
+                        field.setAccessible(true);
+                        if (field.getName().equals("serialVersionUID")
+                                || field.getName().equals("updateTime"))
+                            continue;
+                        Object val1 = field.get(newEsZcMachine);
+                        Object val2 = field.get(oldEsZcMachine);
+                        if (val1 != null) {
+                            field.set(newEsZcMachine2, val1);
+                            field.set(oldEsZcMachine2, val2);
+                        }
+                    } catch (Exception ex) {
+                        log.error("", ex);
+                    }
+                }
+                String str1 = JSON.toJSONString(newEsZcMachine2);
+                String str2 = JSON.toJSONString(oldEsZcMachine2);
+                long v1 = DigitUtils.getCrc32(str1);
+                long v2 = DigitUtils.getCrc32(str2);
+                if (v1 != v2) {
+                    log.info("newEsZcMachine2:" + str1);
+                    log.info("oldEsZcMachine2:" + str2);
+                    needUpserts.add(newEsZcMachine);
+                    break;
+                }
+            }
+        }
+        return needUpserts;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

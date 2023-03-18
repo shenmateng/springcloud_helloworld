@@ -20,9 +20,9 @@ spring:
         #表示注册时使用ip而不是hostname
         prefer-ip-address: true
         #配置健康检查时间间隔
-        health-check-interval: 10s
+        health-check-interval: 30s
         #健康检查失败多长时间取消注册
-        health-check-critical-timeout: 30s
+        health-check-critical-timeout: 300s
         #配置健康检查路径  与控制器中@GetMapping("/health")或者@RequestMapping(value ="/health")对应
         health-check-path: /health
         #配置实例id
@@ -38,31 +38,32 @@ spring:
         file-extension: yml
         shared-configs[0]: #公用配置文件
           data-id: es-common.yml
-          refresh: true
+          refresh: false
         shared-configs[1]: #公用配置文件
           data-id: mysql-common.yml
-          refresh: true #是否支持自动刷新
+          refresh: false #是否支持自动刷新
         shared-configs[2]:
           data-id: consul-common.yml
-          refresh: true
+          refresh: false
   elasticsearch:
     jest:
-      uris: 192.168.123.252:9200
+      uris: 8.142.22.143:9200
       connection-timeout: 60000
       read-timeout: 60000
       username: elastic
       password: 123qweasdZXC
 
-elasticsearch:
-  schema: http
-  address:  192.168.123.252:9200
-  connectTimeout: 5000
-  socketTimeout: 5000
-  connectionRequestTimeout: 5000
-  maxConnectNum: 100
-  maxConnectPerRoute: 100
-  username: elastic
-  password: 123qweasdZXC
+##两种连接es的方式，这种方式是搭配es-head依赖一起使用的，如果要使用上面的方式连接，需要删除es-head依赖，不然会出现冲突，导致上面的方式连接不上es
+#elasticsearch:
+#  schema: http
+#  address:  192.168.123.252:9200
+#  connectTimeout: 5000
+#  socketTimeout: 5000
+#  connectionRequestTimeout: 5000
+#  maxConnectNum: 100
+#  maxConnectPerRoute: 100
+#  username: elastic
+#  password: 123qweasdZXC
 
 language: zh_cn
 
@@ -81,3 +82,12 @@ index:
   translog:
     durability: async
     sync_interval: 60s
+# 日志配置
+logging:
+  config: classpath:logback-config/logback-spring.xml
+  file:
+    path: /home/vevor/logs/bmp/prm
+  level:
+    root: info
+    com.mt: debug
+    com.mt.tools: debug
