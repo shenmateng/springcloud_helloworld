@@ -13,4 +13,6 @@ public class GetMachinesByUserUuidP {
 
     private String tagUuid;
 
+    private String driverVersion;
+
 }

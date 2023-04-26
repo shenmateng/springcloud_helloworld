@@ -17,6 +17,7 @@ import io.searchbox.core.SearchResult;
 import io.searchbox.core.search.aggregation.TermsAggregation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.lucene.search.join.ScoreMode;
 import org.elasticsearch.index.query.*;
 import org.elasticsearch.script.Script;
@@ -107,7 +108,11 @@ public class EsZcQueryBaseService {
         }else if(assetQueryForEs.getSelectFlag() == 1){
             assetQueryForEs.setMaxResults(AssetConfig.INDEX_MAX_RESULT_WINDOW);
         }
-
+        if (ObjectUtils.isNotEmpty(assetQueryForEs.getDriverVersion())) {
+            boolQueryBuilder.filter(QueryBuilders.termsQuery("driverVersion.keyword", assetQueryForEs.getDriverVersion()));
+        }else {
+            boolQueryBuilder.mustNot(QueryBuilders.existsQuery("driverVersion"));
+        }
         //模糊查询
         if (!StringUtils.isEmpty(assetQueryForEs.getKeyWord()) && !CollectionUtils.isEmpty(assetQueryForEs.getKeys())) {
             BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
@@ -410,8 +415,9 @@ public class EsZcQueryBaseService {
 
             newEsZcMachine.setId(machineUuid+"100");
             newEsZcMachine.setMachineUuid(machineUuid);
-            newEsZcMachine.setMachineName("nested查询数据3");
+            newEsZcMachine.setMachineName("qq飞车");
             newEsZcMachine.setMachineIp("8.142.22.145");
+            newEsZcMachine.setDriverVersion("1234");
             List<UserData> userDataList = new ArrayList<>();
             UserData userData = new UserData();
             UserData userData1 = new UserData();

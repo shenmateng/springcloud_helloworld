@@ -35,6 +35,7 @@ public class EsZcMachineService {
         assetQueryForEs.setCurrentPage(1);
         assetQueryForEs.setMaxResults(AssetConfig.INDEX_MAX_RESULT_WINDOW);
         assetQueryForEs.setUserUuid(getMachinesByUserUuidP.getUserUuid());
+        assetQueryForEs.setDriverVersion(getMachinesByUserUuidP.getDriverVersion());
         assetQueryForEs.setOrgQueryFlag(0);
         if(StringUtils.isNotBlank(getMachinesByUserUuidP.getTagUuid())) {
             List<String> tagNames = basicSkuMapper.selectTagNamesByTagUuid(getMachinesByUserUuidP.getTagUuid());

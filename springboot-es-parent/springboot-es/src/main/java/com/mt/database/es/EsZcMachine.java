@@ -802,7 +802,7 @@ public class EsZcMachine extends EsZcBase {
 
     @Override
     public String index() {
-        return "zc_machine";
+        return "zc_machine_1";
     }
 
     @Override
