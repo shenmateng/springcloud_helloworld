@@ -3,13 +3,11 @@ package com.mt.service;
 import cn.hutool.core.date.DateUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.mt.database.BasicSkuDO;
-import com.mt.database.ShopifyBatchLogReqVO;
-import com.mt.database.TemplateShopifyLogDO;
-import com.mt.database.TemplateShopifyLogVO;
+import com.mt.database.*;
 import com.mt.mapper.onnew.BasicSkuMapper;
 import com.mt.mapper.onnew.TemplateShopifyLogExtMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -106,6 +104,56 @@ public class OnNewService {
         System.out.println(url1);
         System.out.println(url + url1);
 
+
+        List<ZcMachine> offMachineByAll = basicSkuMapper.findOffMachineByAll();
+        String value = "30";
+        long pushTime = Long.parseLong(value);
+        Date date = new Date();
+        List<ZcMachine> pushOffMachine = new ArrayList<>();
+        offMachineByAll.forEach(o -> {
+            if (ObjectUtils.isNotEmpty(o.getOnlineTime())) {
+                Date onlineTime = o.getOnlineTime();
+                String datePoor = getDatePoor(onlineTime, date);
+                System.out.println(datePoor);
+                long dateTimePoor = getDateTimePoor(onlineTime, date);
+                if (dateTimePoor > pushTime) {
+                    pushOffMachine.add(o);
+                }
+            }
+        });
+
+
     }
+
+
+    public static long getDateTimePoor( Date startDate ,Date endDate ) {
+        long nm = 1000 * 60;
+        // 获得两个时间的毫秒时间差异
+        long diff = endDate.getTime() - startDate.getTime();
+        // 计算差多少分钟
+        return diff / nm;  //520分钟
+    }
+
+    public static String getDatePoor( Date startDate ,Date endDate ) {
+
+        long nd = 1000 * 24 * 60 * 60;
+        long nh = 1000 * 60 * 60;
+        long nm = 1000 * 60;
+        long ns = 1000 ;
+        // long ns = 1000;
+        // 获得两个时间的毫秒时间差异
+        long diff = endDate.getTime() - startDate.getTime();
+        // 计算差多少天
+        //long day = diff / nd;
+        // 计算差多少小时
+        long hour = diff  / nh;
+        // 计算差多少分钟
+        long min = diff  % nh / nm;
+
+        // 计算差多少秒//输出结果
+        long sec = diff  % nh % nm / ns;
+        return   hour + "时" + min + "分"+ sec + "秒";  //17时20分32秒
+    }
+
 
 }

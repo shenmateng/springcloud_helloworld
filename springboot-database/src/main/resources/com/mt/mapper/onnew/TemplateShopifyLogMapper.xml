@@ -445,6 +445,50 @@
             ORDER BY start_time DESC
         </where>
     </select>
+
+
+    <select id="listUuids" resultType="java.lang.String">
+        select
+        <include refid="BaseColumn"/>
+        from `template_shopify_log`
+        <where>
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="taskId != null and taskId != ''">
+                and `task_id` = #{taskId}
+            </if>
+            <if test="platfrom != null and platfrom != ''">
+                and `platfrom` = #{platfrom}
+            </if>
+            <if test="site != null and site != ''">
+                and `site` = #{site}
+            </if>
+            <if test="startTimes != null and site != ''">
+                and `start_time` like concat('%',#{startTimes},'%')
+            </if>
+            <if test="endTime != null">
+                and `end_time` = #{endTime}
+            </if>
+            <if test="status != null">
+                and `status` = #{status}
+            </if>
+            <if test="successData != null">
+                and `success_data` = #{successData}
+            </if>
+            <if test="failData != null">
+                and `fail_data` = #{failData}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and `create_by` = #{createBy}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and `update_by` = #{updateBy}
+            </if>
+            and `is_delete` = 0
+            ORDER BY start_time DESC
+        </where>
+    </select>
 </mapper>
 
 

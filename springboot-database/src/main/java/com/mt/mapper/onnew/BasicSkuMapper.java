@@ -5,6 +5,7 @@
 package com.mt.mapper.onnew;
 
 import com.mt.database.BasicSkuDO;
+import com.mt.database.ZcMachine;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -108,6 +109,8 @@ public interface BasicSkuMapper {
     int logicDeleteByIds(@Param("ids") List<Integer> ids);
 
     List<BasicSkuDO> querySku();
+
+    List<ZcMachine> findOffMachineByAll();
 
      BasicSkuDO BasicSkuMapper();
 }

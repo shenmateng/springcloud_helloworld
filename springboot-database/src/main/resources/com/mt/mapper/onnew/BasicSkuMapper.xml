@@ -804,6 +804,36 @@
         AND bs.is_delete = 0
     </select>
 
+    <select id="findOffMachineByAll" resultMap="zcMachineMap" parameterType="map">
+        select
+        zm.uuid,machine_name,mac,extranet_ip,intranet_ip,online_status,os_type,
+        operating_system,software_version,install_time,update_time,online_time,
+        offline_time,if_delete,bind_uuid,machine_type,driver_version
+        from zc_machine zm
+        where if_delete= 0 and  online_status = 0
+    </select>
+
+    <resultMap id="zcMachineMap" type="com.mt.database.ZcMachine">
+        <id property="uuid" column="uuid"/>
+        <result property="machineName" column="machine_name"/>
+        <result property="mac" column="mac"/>
+        <result property="extranetIp" column="extranet_ip"/>
+        <result property="intranetIp" column="intranet_ip"/>
+        <result property="onlineStatus" column="online_status"/>
+        <result property="osType" column="os_type"/>
+        <result property="operatingSystem" column="operating_system"/>
+        <result property="softwareVersion" column="software_version"/>
+        <result property="installTime" column="install_time"/>
+        <result property="installationTime" column="installation_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="onlineTime" column="online_time"/>
+        <result property="offlineTime" column="offline_time"/>
+        <result property="ifDelete" column="if_delete"/>
+        <result property="bindUuid" column="bind_uuid"/>
+        <result property="machineType" column="machine_type"/>
+        <result property="driverVersion" column="driver_version"/>
+    </resultMap>
+
     <select id="BasicSkuMapper" resultType="com.mt.database.BasicSkuDO">
         SELECT
         *
