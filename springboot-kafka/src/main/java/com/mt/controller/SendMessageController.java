@@ -2,15 +2,15 @@ package com.mt.controller;
 
 
 import com.mt.database.AspectKafkaDomain;
+import com.mt.database.TemplateShopifyLogVO;
 import com.mt.service.SendFileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author mateng
@@ -40,4 +40,21 @@ public class SendMessageController {
         log.info("分中心推送kafka结束");
     }
 
+    @GetMapping(value = "/queryStudent")
+    public List<TemplateShopifyLogVO> queryStudent(){
+        List<TemplateShopifyLogVO> templateShopifyLogVOS = new ArrayList<>();
+
+
+        for(int i = 0; i<3;i++){
+            TemplateShopifyLogVO templateShopifyLogVO = new TemplateShopifyLogVO();
+
+            templateShopifyLogVO.setId(i);
+            templateShopifyLogVO.setCreateBy("shenmateng"+ i);
+            templateShopifyLogVO.setStatus(i+10);
+            templateShopifyLogVOS.add(templateShopifyLogVO);
+        }
+
+
+        return templateShopifyLogVOS;
+    }
 }
