@@ -83,9 +83,12 @@
             <optional>true</optional>
         </dependency>
 
+        <!--23版本的idea中内嵌套了lombok插件，版本为233.14475.28，所以去settings中下载的时候，找不到，需要手动去官网上下载，我这里下载的是233.14475.39-->
+        <!--这里项目启动的时候，会报一个路径找不到的错，应该是idea内嵌的lombok与依赖的不兼容导致的吧-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.28</version>
             <optional>true</optional>
         </dependency>
         <dependency>
