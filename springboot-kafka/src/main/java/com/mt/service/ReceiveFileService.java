@@ -36,20 +36,19 @@ public class ReceiveFileService {
 
 
     @KafkaListeners({
-            @KafkaListener(topics = {"shenmateng"},groupId = "mt"),
-            @KafkaListener(topics = {"tianyibukewei"}),
-            @KafkaListener(topics = {"dahuaxiyou"})
+            @KafkaListener(topics = {"syslog1"},groupId = "tian2"),
+
     })
     public void ConsumerMessage(ConsumerRecord<?, ?> record , Acknowledgment ack) {
         sendMessage(record,ack);
     }
 
     public void sendMessage (ConsumerRecord<?, ?> record , Acknowledgment ack) {
-        log.info("进入客户端kafka消费者监听");
         // 消费的哪个topic、partition的消息,打印出消息内容
         AspectKafkaDomain transfer = new AspectKafkaDomain();
         transfer.setTopical(record.topic());
-        transfer.setData(record.value());
+        transfer.setIfAll(record.partition());
+        System.out.println("第一个消费者----"+transfer);
         ack.acknowledge();
     }
 }

@@ -1,15 +1,12 @@
 package com.mt.service;
 
 import com.mt.database.ShopifyNewListingVO;
-import com.vevor.bmp.common.constant.RedisConstant;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.testng.annotations.Test;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author ：mateng

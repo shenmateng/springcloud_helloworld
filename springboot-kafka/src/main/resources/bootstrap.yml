@@ -21,7 +21,7 @@ spring:
 #        security.protocol: SASL_PLAINTEXT
 #        sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="jowto1234";
     consumer:
-      group-id: push-service-group
+      group-id: tian
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer

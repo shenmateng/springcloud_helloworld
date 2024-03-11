@@ -32,11 +32,11 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class ReceiveFileService1 {
-
+public class ReceiveFileService4 {
+    int i = 0;
 
     @KafkaListeners({
-            @KafkaListener(topics = {"syslog1"},groupId = "tian1"),
+            @KafkaListener(topics = {"syslog1"},groupId = "tian2"),
 
     })
     public void ConsumerMessage(ConsumerRecord<?, ?> record , Acknowledgment ack) {
@@ -48,7 +48,7 @@ public class ReceiveFileService1 {
         AspectKafkaDomain transfer = new AspectKafkaDomain();
         transfer.setTopical(record.topic());
         transfer.setIfAll(record.partition());
-        System.out.println("第二个消费者----"+transfer);
+        System.out.println("第四个消费者----"+transfer);
         ack.acknowledge();
     }
 }

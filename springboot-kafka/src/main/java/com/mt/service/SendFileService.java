@@ -23,12 +23,15 @@ import javax.annotation.Resource;
 public class SendFileService {
 
     @Resource
-    private KafkaTemplate<String,String> kafkaTemplate;
+    private KafkaTemplate<String, String> kafkaTemplate;
 
     public void sendKafkaMessage(AspectKafkaDomain aspectKafkaDomain) {
         log.info("放入kafka开始");
-        ListenableFuture<SendResult<String, String>> send = this.kafkaTemplate.send(aspectKafkaDomain.getTopical(), JSON.toJSONString(aspectKafkaDomain));
-        System.out.println(send);
+        for (int i = 0; i < 1; i++) {
+            aspectKafkaDomain.setOperate(i);
+            ListenableFuture<SendResult<String, String>> send = this.kafkaTemplate.send(aspectKafkaDomain.getTopical(), JSON.toJSONString(aspectKafkaDomain));
+            System.out.println(send);
+        }
         log.info("放入kafka结束");
     }
 
