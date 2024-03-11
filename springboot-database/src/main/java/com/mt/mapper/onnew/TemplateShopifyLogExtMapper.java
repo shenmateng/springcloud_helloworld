@@ -3,7 +3,12 @@ package com.mt.mapper.onnew;/*
  */
 
 
+import com.mt.database.SystemWhiteListAndMachine;
 import com.mt.database.TemplateShopifyLogDO;
+import com.mt.database.ZcMachineTagName;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author ：makejava
@@ -20,6 +25,14 @@ public interface TemplateShopifyLogExtMapper extends TemplateShopifyLogMapper {
      * @return 影响行数
      */
     int updateByTaskId(TemplateShopifyLogDO templateShopifyLogDO);
+
+    /**
+     * 查询这个用户管理了哪些机器(用户创建了这些分组，分组选了这些机器；并且还要是这个用户管理了这些机器)
+     */
+    List<ZcMachineTagName> selectMachineUuidsByTagName(@Param("userUuid") String userUuid, @Param("tagName") String tagName, @Param("onlineStatus") Integer onlineStatus);
+
+    List<SystemWhiteListAndMachine> listByAllIds(@Param("whiteListId") List<String> whiteListId);
+
 
 
 }

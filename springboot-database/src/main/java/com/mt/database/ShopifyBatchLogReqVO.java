@@ -26,7 +26,7 @@ public class ShopifyBatchLogReqVO {
     /**
      * 开始时间
      */
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date startTime;
 
     /**

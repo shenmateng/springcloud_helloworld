@@ -4,6 +4,7 @@
 
 package com.mt.database;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -38,10 +39,12 @@ public class TemplateShopifyLogVO implements Serializable {
     /**
      * 开始时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date startTime;
     /**
      * 结束时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date endTime;
     /**
      * 状态(0:处理中  1:完成  2:错误)

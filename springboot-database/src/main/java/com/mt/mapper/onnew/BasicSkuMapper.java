@@ -5,6 +5,7 @@
 package com.mt.mapper.onnew;
 
 import com.mt.database.BasicSkuDO;
+import com.mt.database.ProtectConfBackupsMachine;
 import com.mt.database.ZcMachine;
 import org.apache.ibatis.annotations.Param;
 
@@ -113,4 +114,12 @@ public interface BasicSkuMapper {
     List<ZcMachine> findOffMachineByAll();
 
      BasicSkuDO BasicSkuMapper();
+
+    /**
+     * 通过主表ID查询附表机器集合数据
+     *
+     * @param proId 主键
+     * @return 实例对象
+     */
+    List<ProtectConfBackupsMachine> queryByProIdAndMachineUuid(@Param("proId") String proId, @Param("ids") List<String> ids);
 }

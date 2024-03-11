@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mt.mapper.onnew.SystemWhiteListGroupMachineMapper">
+
+    <resultMap id="BaseResultMap" type="com.mt.database.SystemWhiteListGroupMachineDO">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="whiteListId" column="white_list_id" jdbcType="VARCHAR"/>
+        <result property="machineUuid" column="machine_uuid" jdbcType="VARCHAR"/>
+        <result property="groupName" column="group_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="BaseColumn">
+            `id`,
+            `white_list_id`,
+            `machine_uuid`,
+            `group_name`
+    </sql>
+    <sql id="BaseColumn1">
+            `id`,
+            `event_whitelist_uuid`,
+            `user_uuid`,
+            `machine_tag`,
+            `create_by`,
+            `create_time`
+    </sql>
+
+    <!--查询单个对象-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+            <include refid="BaseColumn1"/>
+        from `system_white_list_group_machine`
+        where `id` = #{id} 
+    </select>
+
+    <!--通过ID集合查询多条数据-->
+    <select id="queryByIds" resultMap="BaseResultMap">
+       select
+           <include refid="BaseColumn"/>
+       from `system_white_list_group_machine`
+       <where>
+           <choose>
+           		<when test="ids != null and ids.size > 0">
+            		`id` in
+            		<foreach collection="ids" item="id" open="(" close=")" separator=",">
+             	 		#{id}
+            		</foreach>
+					
+           		</when>
+           		<otherwise>
+           			1 != 1
+           		</otherwise>
+           </choose>    
+       </where>
+    </select>
+    
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+            <include refid="BaseColumn"/>
+        from `system_white_list_group_machine`
+        <where>
+        <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="whiteListId != null and whiteListId != ''">
+                and `white_list_id` = #{whiteListId}
+            </if>
+            <if test="machineUuid != null and machineUuid != ''">
+                and `machine_uuid` = #{machineUuid}
+            </if>
+            <if test="groupName != null and groupName != ''">
+                and `group_name` = #{groupName}
+            </if>
+        </where>
+    </select>
+
+    <!--新增可选列-->
+    <insert id="insertSelective" keyProperty="id" useGeneratedKeys="true">
+     insert into `system_white_list_group_machine`
+         <trim prefix="(" suffix=")" suffixOverrides=",">
+                   		  <if test="id != null">
+                `id`,
+            </if>
+      		  <if test="whiteListId != null and whiteListId != ''">
+                `white_list_id`,
+            </if>
+      		  <if test="machineUuid != null and machineUuid != ''">
+                `machine_uuid`,
+            </if>
+      		  <if test="groupName != null and groupName != ''">
+                `group_name`,
+            </if>
+         </trim>
+         <trim prefix="values (" suffix=")" suffixOverrides=",">
+          	        		  <if test="id != null">
+                #{id},
+            </if>
+      		  <if test="whiteListId != null and whiteListId != ''">
+                #{whiteListId},
+            </if>
+      		  <if test="machineUuid != null and machineUuid != ''">
+                #{machineUuid},
+            </if>
+      		  <if test="groupName != null and groupName != ''">
+                #{groupName},
+            </if>
+         </trim>
+    </insert>
+
+           <!--批量新增数据-->
+    <insert id="insertAllColumnBatch" keyProperty="id" useGeneratedKeys="true">
+    insert into `system_white_list_group_machine`
+         <trim prefix="(" suffix=") values " suffixOverrides=",">
+             
+                           			                            
+                 `white_list_id`,
+              			                            
+                 `machine_uuid`,
+              			                            
+                 `group_name`,
+              						
+         </trim>
+    	<foreach collection="list" item="dataObject" separator=",">	
+         <trim prefix="(" suffix=")" suffixOverrides=",">
+             
+          	            	            
+          	  <if test="dataObject.whiteListId != null and dataObject.whiteListId != ''">
+                #{dataObject.whiteListId},
+          	  </if>
+          	  <if test="dataObject.whiteListId == null or dataObject.whiteListId == ''">
+                ,
+          	  </if>
+              
+          	  <if test="dataObject.machineUuid != null and dataObject.machineUuid != ''">
+                #{dataObject.machineUuid},
+          	  </if>
+          	  <if test="dataObject.machineUuid == null or dataObject.machineUuid == ''">
+                ,
+          	  </if>
+              
+          	  <if test="dataObject.groupName != null and dataObject.groupName != ''">
+                #{dataObject.groupName},
+          	  </if>
+          	  <if test="dataObject.groupName == null or dataObject.groupName == ''">
+                '',
+          	  </if>
+              
+         </trim>
+         </foreach>      
+    </insert>
+    
+       <!--批量新增数据-->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+   		<if test="list != null and list.size > 0">   
+			<foreach collection="list" item="dataObject" separator=";">
+	        insert into `system_white_list_group_machine`
+         <trim prefix="(" suffix=")" suffixOverrides=",">
+                   		  <if test="dataObject.id != null">
+                `id`,
+            </if>
+      		  <if test="dataObject.whiteListId != null and dataObject.whiteListId != ''">
+                `white_list_id`,
+            </if>
+      		  <if test="dataObject.machineUuid != null and dataObject.machineUuid != ''">
+                `machine_uuid`,
+            </if>
+      		  <if test="dataObject.groupName != null and dataObject.groupName != ''">
+                `group_name`,
+            </if>
+         </trim>
+         <trim prefix="values (" suffix=")" suffixOverrides=",">
+          	        		  <if test="dataObject.id != null">
+                #{dataObject.id},
+            </if>
+      		  <if test="dataObject.whiteListId != null and dataObject.whiteListId != ''">
+                #{dataObject.whiteListId},
+            </if>
+      		  <if test="dataObject.machineUuid != null and dataObject.machineUuid != ''">
+                #{dataObject.machineUuid},
+            </if>
+      		  <if test="dataObject.groupName != null and dataObject.groupName != ''">
+                #{dataObject.groupName},
+            </if>
+         </trim>            	
+            </foreach>    
+        </if>
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update `system_white_list_group_machine`
+        <set>
+            <if test="whiteListId != null and whiteListId != ''">
+                `white_list_id` = #{whiteListId},
+            </if>
+            <if test="machineUuid != null and machineUuid != ''">
+                `machine_uuid` = #{machineUuid},
+            </if>
+            <if test="groupName != null and groupName != ''">
+                `group_name` = #{groupName},
+            </if>
+        </set>
+        where `id` = #{id}
+    </update>
+
+  <!--批量修改数据-->
+    <update id="updateBatch">
+        <if test="list != null and list.size > 0">
+             <foreach collection="list" item="dataObject" separator=";">
+       		 	update `system_white_list_group_machine`
+        		<set>
+
+            		<if test="dataObject.whiteListId != null and dataObject.whiteListId != ''">
+                        `white_list_id` = #{dataObject.whiteListId},
+            		</if>
+
+            		<if test="dataObject.machineUuid != null and dataObject.machineUuid != ''">
+                        `machine_uuid` = #{dataObject.machineUuid},
+            		</if>
+
+            		<if test="dataObject.groupName != null and dataObject.groupName != ''">
+                        `group_name` = #{dataObject.groupName},
+            		</if>
+       			</set>
+        			where `id` = #{dataObject.id}			
+             </foreach>
+        </if>
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from `system_white_list_group_machine` where `id` = #{id}
+    </delete>
+
+    <!--通过主键集合删除多条数据-->
+    <delete id="deleteByIds">
+       delete from `system_white_list_group_machine`
+       <where>
+           <choose>
+           		<when test="ids != null and ids.size > 0">
+            		`id` in
+            		<foreach collection="ids" item="id" open="(" close=")" separator=",">
+             	 		#{id}
+            		</foreach>
+           		</when>
+           		<otherwise>
+           			1 != 1
+           		</otherwise>
+           </choose>    
+       </where>
+    </delete>
+
+    <select id="listByAllIds" resultType="com.mt.database.SystemWhiteListGroupMachineDO">
+        select
+        <include refid="BaseColumn"/>
+         from system_white_list_group_machine
+        where white_list_id in
+        <foreach collection="whiteListId" item="sysid" open="(" close=")" separator=",">
+            #{sysid}
+        </foreach>
+    </select>
+
+
+    <update id = "insertBatch1" parameterType="list">
+        <foreach separator=";" index="index" item="item" collection="ZcTagFixUserIps" close="" open="">
+            insert into zc_tag_fix_user_ip
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.uuid != null">
+                    `uuid`,
+                </if>
+                <if test="item.userUuid != null">
+                    `user_uuid`,
+                </if>
+                <if test="item.tagName != null">
+                    `tag_name`,
+                </if>
+                <if test="item.tagUuid != null">
+                    `tag_uuid`,
+                </if>
+                <if test="item.ipRange != null">
+                    `ip_range`,
+                </if>
+                <if test="item.ipStartIndex != null">
+                    `ip_start_index`,
+                </if>
+                <if test="item.ipEndIndex != null">
+                    `ip_end_index`,
+                </if>
+                <if test="item.createTime != null">
+                    `create_time`,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.uuid != null">
+                    #{item.uuid},
+                </if>
+                <if test="item.userUuid != null">
+                    #{item.userUuid},
+                </if>
+                <if test="item.tagName != null">
+                    #{item.tagName},
+                </if>
+                <if test="item.tagUuid != null">
+                    #{item.tagUuid},
+                </if>
+                <if test="item.ipRange != null">
+                    #{item.ipRange},
+                </if>
+                <if test="item.ipStartIndex != null">
+                    #{item.ipStartIndex},
+                </if>
+                <if test="item.ipEndIndex != null">
+                    #{item.ipEndIndex},
+                </if>
+                <if test="item.createTime != null">
+                    #{item.createTime},
+                </if>
+            </trim>
+        </foreach>
+    </update>
+
+
+    <update id = "insertBatch2" parameterType="list">
+        <foreach separator=";" index="index" item="item" collection="ZcTagUserIps" close="" open="">
+            insert into zc_tag_user_ip
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.uuid != null">
+                    `uuid`,
+                </if>
+                <if test="item.userUuid != null">
+                    `user_uuid`,
+                </if>
+                <if test="item.tagName != null">
+                    `tag_name`,
+                </if>
+                <if test="item.tagUuid != null">
+                    `tag_uuid`,
+                </if>
+                <if test="item.ipRange != null">
+                    `ip_range`,
+                </if>
+                <if test="item.ipStartIndex != null">
+                    `ip_start_index`,
+                </if>
+                <if test="item.ipEndIndex != null">
+                    `ip_end_index`,
+                </if>
+                <if test="item.createTime != null">
+                    `create_time`,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.uuid != null">
+                    #{item.uuid},
+                </if>
+                <if test="item.userUuid != null">
+                    #{item.userUuid},
+                </if>
+                <if test="item.tagName != null">
+                    #{item.tagName},
+                </if>
+                <if test="item.tagUuid != null">
+                    #{item.tagUuid},
+                </if>
+                <if test="item.ipRange != null">
+                    #{item.ipRange},
+                </if>
+                <if test="item.ipStartIndex != null">
+                    #{item.ipStartIndex},
+                </if>
+                <if test="item.ipEndIndex != null">
+                    #{item.ipEndIndex},
+                </if>
+                <if test="item.createTime != null">
+                    #{item.createTime},
+                </if>
+            </trim>
+        </foreach>
+    </update>
+
+    <delete id="deleteByMachineUuidAndUserUuidList">
+        delete from zc_machine_user
+        <where>
+            <choose>
+                <when test="deleteZcMachineBasic != null and deleteZcMachineBasic.size > 0">
+                    (`machine_uuid`, user_uuid) in
+                    <foreach collection="deleteZcMachineBasic" item="dataObject" open="(" close=")" separator=",">
+                        (#{dataObject.machineUuid},#{dataObject.userUuid})
+                    </foreach>
+                </when>
+                <otherwise>
+                    1 != 1
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+
+    <resultMap id="userInfoMap" type="com.mt.database.UserInfo">
+        <id property="id" column="id"/>
+        <id property="uuid" column="uuid"/>
+        <result property="systemRoleUuid" column="system_role_uuid"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="status" column="status"/>
+        <result property="ifResetPassword" column="if_reset_password"/>
+        <result property="createUuid" column="create_uuid"/>
+        <result property="createTime" column="create_time"/>
+        <result property="lastLoginTime" column="last_login_time"/>
+        <result property="lastLoginIp" column="last_login_ip"/>
+        <result property="bindUuid" column="bind_uuid"/>
+        <result property="isPass" column="is_pass"/>
+        <result property="orgUuid" column="org_uuid"/>
+        <result property="orgName" column="org_name"/>
+        <result property="ifDoubleAuthen" column="if_double_authen"/>
+        <result property="roleName" column="roleName"/>
+    </resultMap>
+
+    <select id="getUsersByUserUuidLists" resultMap="userInfoMap" parameterType="string">
+        select
+        ui.id,
+        ui.uuid,
+        ui.system_role_uuid,
+        (select name from system_role sr where sr.uuid=ui.system_role_uuid) roleName,
+        (select system_uuid from system_role sr where sr.uuid=ui.system_role_uuid) systemUuid,
+        ui.username,
+        ui.password,
+        ui.name,
+        ui.phone,
+        ui.email,
+        ui.status,
+        ui.if_reset_password,
+        ui.create_uuid,
+        ui.create_time,
+        ui.last_login_time,
+        ui.last_login_ip,
+        ui.bind_uuid,
+        ui.is_pass
+        from user_info ui
+        where ui.uuid in
+        <foreach collection="userUuidLists" item="uuid" open="(" separator="," close=")">
+            <foreach collection="uuid.split(',')" item="item" index="index" separator=",">
+                #{item}
+            </foreach>
+        </foreach>
+    </select>
+
+<!--    <select id="selectMachineTagsList" resultType="com.mt.database.ZcMachineTagDO" >-->
+<!--        select-->
+<!--        ztu.tag_name,-->
+<!--        ztu.user_uuid,-->
+<!--        zmt.machine_uuid-->
+<!--        from zc_machine_tag zmt-->
+<!--        join zc_tag_user ztu on ztu.uuid = zmt.tag_uuid-->
+<!--        join (-->
+<!--        select zmu.machine_uuid from zc_machine_user zmu-->
+<!--        join zc_machine zm on zm.uuid = zmu.machine_uuid-->
+<!--        where-->
+<!--        (zmu.user_uuid,zmu.machine_uuid) in-->
+<!--        <foreach collection="userInfos" item="dataObject" open="(" close=")" separator=",">-->
+<!--            (#{dataObject.uuid},#{dataObject.machineUuid})-->
+<!--        </foreach>-->
+<!--        and zm.if_delete = 0-->
+<!--        ) t on zmt.machine_uuid = t.machine_uuid-->
+<!--        where-->
+<!--        (ztu.user_uuid, zmt.machine_uuid) in-->
+<!--        <foreach collection="userInfos" item="dataObject" open="(" close=")" separator=",">-->
+<!--            (#{dataObject.uuid},#{dataObject.machineUuid})-->
+<!--        </foreach>-->
+<!--    </select>-->
+
+    <select id="selectMachineTagsList" resultType="com.mt.database.ZcMachineTagDO" >
+        select
+        ztu.tag_name,
+        ztu.user_uuid,
+        zmt.machine_uuid
+        from zc_machine_tag zmt
+        join zc_tag_user ztu on ztu.uuid = zmt.tag_uuid
+        join (
+        select zmu.machine_uuid from zc_machine_user zmu
+        join zc_machine zm on zm.uuid = zmu.machine_uuid
+        <where>
+            <choose>
+                <when test="userInfos != null and userInfos.size > 0">
+                    (zmu.user_uuid, zmu.machine_uuid) in
+                    <foreach collection="userInfos" item="dataObject" open="(" close=")" separator=",">
+                        (#{dataObject.uuid},#{dataObject.machineUuid})
+                    </foreach>
+                </when>
+                <otherwise>
+                    1 != 1
+                </otherwise>
+            </choose>
+        </where>
+        and zm.if_delete = 0
+        ) t on zmt.machine_uuid = t.machine_uuid
+        <where>
+            <choose>
+                <when test="userInfos != null and userInfos.size > 0">
+                    (ztu.user_uuid, zmt.machine_uuid) in
+                    <foreach collection="userInfos" item="dataObject" open="(" close=")" separator=",">
+                        (#{dataObject.uuid},#{dataObject.machineUuid})
+                    </foreach>
+                </when>
+                <otherwise>
+                    1 != 1
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <resultMap id="BaseResultMap1" type="com.mt.database.EventWhitelistAutoAdd">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="eventWhitelistUuid" column="event_whitelist_uuid" jdbcType="VARCHAR"/>
+        <result property="userUuid" column="user_uuid" jdbcType="VARCHAR"/>
+        <result property="machineTag" column="machine_tag" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个对象-->
+    <select id="queryByEventWhiteId" resultMap="BaseResultMap1">
+        select
+        <include refid="BaseColumn1"/>
+        from `event_whitelist_auto_add`
+        where `event_whitelist_uuid` = #{eventWhiteId}
+    </select>
+
+
+
+    </mapper>

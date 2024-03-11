@@ -33,6 +33,17 @@
         <result property="delete" column="is_delete" jdbcType="INTEGER"/>
     </resultMap>
 
+
+    <resultMap id="BaseResultMap1" type="com.mt.database.ProtectConfBackupsMachine">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="proId" column="pro_id" jdbcType="VARCHAR"/>
+        <result property="machineUuid" column="machine_uuid" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="OTHER"/>
+        <result property="reason" column="reason" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
     <sql id="BaseColumn">
 
                      `id`,
@@ -842,5 +853,28 @@
         WHERE
         CONCAT( bs.sku_without_voltage, bs.voltage ) != bs.sku
         AND bs.is_delete = 1
+    </select>
+
+
+    <!--通过主表ID查询附表机器集合数据-->
+    <select id="queryByProIdAndMachineUuid" resultMap="BaseResultMap1">
+        select
+        *
+        from `protect_conf_backups_machine`
+        <where>
+            <choose>
+                <when test="ids != null and ids.size > 0">
+                    `machine_uuid` in
+                    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                        #{id}
+                    </foreach>
+                    and `pro_id` = #{proId}
+                </when>
+                <otherwise>
+                    1 != 1
+                </otherwise>
+            </choose>
+        </where>
+
     </select>
 </mapper>

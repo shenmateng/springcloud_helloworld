@@ -59,4 +59,45 @@
         where `task_id` = #{taskId}
     </update>
 
+    <resultMap id="ZcMachineTagName" type="com.mt.database.ZcMachineTagName">
+        <result property="tagName" column="tag_name"/>
+        <collection property="macUuids"
+                    ofType="com.mt.database.ZcMachineTagName1">
+            <result property="uuid" column="machine_uuid"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectMachineUuidsByTagName" resultMap="ZcMachineTagName" parameterType="map">
+        select
+        ztu.tag_name,
+        zmt.machine_uuid
+        from zc_machine_tag zmt
+        join zc_tag_user ztu on zmt.tag_uuid = ztu.uuid
+        join (
+        select zmu.machine_uuid from zc_machine_user zmu
+        join zc_machine zm on zm.uuid = zmu.machine_uuid
+        where
+        zmu.user_uuid = #{userUuid}
+        and zm.if_delete = 0
+        <if test="onlineStatus != null">
+            and zm.online_status = #{onlineStatus}
+        </if>
+        ) t on zmt.machine_uuid = t.machine_uuid
+        where  ztu.user_uuid = #{userUuid}
+        <if test="tagName != null and tagName !=''">
+            and ztu.tag_name in
+            <foreach collection="tagName.split(',')" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="listByAllIds" resultType="com.mt.database.SystemWhiteListAndMachine">
+        select id, white_list_id as whiteListId, machine_uuid as machineUuid from system_white_list_and_machine
+        where white_list_id in
+        <foreach collection="whiteListId" item="sysid" open="(" close=")" separator=",">
+            #{sysid}
+        </foreach>
+    </select>
+
 </mapper>

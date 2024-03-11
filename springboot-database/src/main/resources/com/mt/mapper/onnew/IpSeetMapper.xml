@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mt.mapper.onnew.IpSeetMapper">
+
+    <resultMap id="BaseResultMap" type="com.mt.database.IpSeet">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="minip" column="minip" jdbcType="VARCHAR"/>
+        <result property="maxip" column="maxip" jdbcType="VARCHAR"/>
+        <result property="position" column="position" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="BaseColumn">
+            `id`,
+            `minip`,
+            `maxip`,
+            `position`
+    </sql>
+
+    <!--查询单个对象-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+            <include refid="BaseColumn"/>
+        from `ip_seet`
+        where `id` = #{id} 
+    </select>
+
+    <!--通过ID集合查询多条数据-->
+    <select id="queryByIds" resultMap="BaseResultMap">
+       select
+           <include refid="BaseColumn"/>
+       from `ip_seet`
+       <where>
+           <choose>
+           		<when test="ids != null and ids.size > 0">
+            		`id` in
+            		<foreach collection="ids" item="id" open="(" close=")" separator=",">
+             	 		#{id}
+            		</foreach>
+					
+           		</when>
+           		<otherwise>
+           			1 != 1
+           		</otherwise>
+           </choose>    
+       </where>
+    </select>
+    
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+            <include refid="BaseColumn"/>
+        from `ip_seet`
+        <where>
+        <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="minip != null and minip != ''">
+                and `minip` = #{minip}
+            </if>
+            <if test="maxip != null and maxip != ''">
+                and `maxip` = #{maxip}
+            </if>
+            <if test="position != null and position != ''">
+                and `position` = #{position}
+            </if>
+        </where>
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAllIn" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumn"/>
+        from `ip_seet` limit 10000000
+    </select>
+
+    <!--新增可选列-->
+    <insert id="insertSelective" keyProperty="id" useGeneratedKeys="true">
+     insert into `ip_seet`
+         <trim prefix="(" suffix=")" suffixOverrides=",">
+                   		  <if test="id != null">
+                `id`,
+            </if>
+      		  <if test="minip != null and minip != ''">
+                `minip`,
+            </if>
+      		  <if test="maxip != null and maxip != ''">
+                `maxip`,
+            </if>
+      		  <if test="position != null and position != ''">
+                `position`,
+            </if>
+         </trim>
+         <trim prefix="values (" suffix=")" suffixOverrides=",">
+          	        		  <if test="id != null">
+                #{id},
+            </if>
+      		  <if test="minip != null and minip != ''">
+                #{minip},
+            </if>
+      		  <if test="maxip != null and maxip != ''">
+                #{maxip},
+            </if>
+      		  <if test="position != null and position != ''">
+                #{position},
+            </if>
+         </trim>
+    </insert>
+
+           <!--批量新增数据-->
+    <insert id="insertAllColumnBatch" keyProperty="id" useGeneratedKeys="true">
+    insert into `ip_seet`
+         <trim prefix="(" suffix=") values " suffixOverrides=",">
+             
+                           			                            
+                 `minip`,
+              			                            
+                 `maxip`,
+              			                            
+                 `position`,
+              						
+         </trim>
+    	<foreach collection="list" item="dataObject" separator=",">	
+         <trim prefix="(" suffix=")" suffixOverrides=",">
+             
+          	            	            
+          	  <if test="dataObject.minip != null and dataObject.minip != ''">
+                #{dataObject.minip},
+          	  </if>
+          	  <if test="dataObject.minip == null or dataObject.minip == ''">
+                ,
+          	  </if>
+              
+          	  <if test="dataObject.maxip != null and dataObject.maxip != ''">
+                #{dataObject.maxip},
+          	  </if>
+          	  <if test="dataObject.maxip == null or dataObject.maxip == ''">
+                ,
+          	  </if>
+              
+          	  <if test="dataObject.position != null and dataObject.position != ''">
+                #{dataObject.position},
+          	  </if>
+          	  <if test="dataObject.position == null or dataObject.position == ''">
+                ,
+          	  </if>
+              
+         </trim>
+         </foreach>      
+    </insert>
+    
+       <!--批量新增数据-->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+   		<if test="list != null and list.size > 0">   
+			<foreach collection="list" item="dataObject" separator=";">
+	        insert into `ip_seet`
+         <trim prefix="(" suffix=")" suffixOverrides=",">
+                   		  <if test="dataObject.id != null">
+                `id`,
+            </if>
+      		  <if test="dataObject.minip != null and dataObject.minip != ''">
+                `minip`,
+            </if>
+      		  <if test="dataObject.maxip != null and dataObject.maxip != ''">
+                `maxip`,
+            </if>
+      		  <if test="dataObject.position != null and dataObject.position != ''">
+                `position`,
+            </if>
+         </trim>
+         <trim prefix="values (" suffix=")" suffixOverrides=",">
+          	        		  <if test="dataObject.id != null">
+                #{dataObject.id},
+            </if>
+      		  <if test="dataObject.minip != null and dataObject.minip != ''">
+                #{dataObject.minip},
+            </if>
+      		  <if test="dataObject.maxip != null and dataObject.maxip != ''">
+                #{dataObject.maxip},
+            </if>
+      		  <if test="dataObject.position != null and dataObject.position != ''">
+                #{dataObject.position},
+            </if>
+         </trim>            	
+            </foreach>    
+        </if>
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update `ip_seet`
+        <set>
+            <if test="minip != null and minip != ''">
+                `minip` = #{minip},
+            </if>
+            <if test="maxip != null and maxip != ''">
+                `maxip` = #{maxip},
+            </if>
+            <if test="position != null and position != ''">
+                `position` = #{position},
+            </if>
+        </set>
+        where `id` = #{id}
+    </update>
+
+  <!--批量修改数据-->
+    <update id="updateBatch">
+        <if test="list != null and list.size > 0">
+             <foreach collection="list" item="dataObject" separator=";">
+       		 	update `ip_seet`
+        		<set>
+
+            		<if test="dataObject.minip != null and dataObject.minip != ''">
+                        `minip` = #{dataObject.minip},
+            		</if>
+
+            		<if test="dataObject.maxip != null and dataObject.maxip != ''">
+                        `maxip` = #{dataObject.maxip},
+            		</if>
+
+            		<if test="dataObject.position != null and dataObject.position != ''">
+                        `position` = #{dataObject.position},
+            		</if>
+       			</set>
+        			where `id` = #{dataObject.id}			
+             </foreach>
+        </if>
+    </update>
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryip" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumn"/>
+        from `ip_seet`
+        <where>
+                 `minip` &lt;= #{ip}
+                and `maxip` &gt;= #{ip}
+        </where>
+    </select>
+
+    </mapper>

@@ -2,14 +2,10 @@ package com.mt.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.mt.ResponseResult.ResponseResult;
-import com.mt.database.ShopifyBatchLogReqVO;
-import com.mt.database.TemplateShopifyLogVO;
+import com.mt.database.*;
 import com.mt.service.OnNewService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -43,10 +39,42 @@ public class TestController {
         return ResponseResult.successPage(pageInfo.getList(), pageInfo.getTotal(), pageInfo.getPageNum(), pageInfo.getPageSize());
     }
 
+
+
     @PostMapping(value = "/querySku")
     public void querySku(){
         onNewService.resku();
     }
 
 
+
+    @GetMapping(value = "/queryStudent")
+    public List<TemplateShopifyLogVO> queryStudent(){
+        return onNewService.queryStudent();
+    }
+
+
+
+    @RequestMapping("/selectMachineUuidsByTagName")
+    public void selectMachineUuidsByTagName(@RequestBody @Valid SelectMachineUuidsByTagUuidTagP selectMachineUuidsByTagUuidTagP) {
+        onNewService.selectMachineUuidsByTagName(selectMachineUuidsByTagUuidTagP);
+
+    }
+
+
+    @PostMapping(value = "/selectIp")
+    public List<TemplateShopifyLogVO> selectIp(){
+        return onNewService.selectIp();
+    }
+
+
+    /**
+     * 匹配ip库方法
+     */
+    @RequestMapping("/toIpData")
+    @ResponseBody
+    public String toIpData() throws Exception {
+        onNewService.toIpData();
+        return "成功";
+    }
 }
