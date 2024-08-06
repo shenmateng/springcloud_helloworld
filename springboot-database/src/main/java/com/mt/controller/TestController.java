@@ -68,6 +68,16 @@ public class TestController {
     }
 
 
+    @PostMapping(value = "/selectIp1")
+    public List<TemplateShopifyLogVO> selectIp1(){
+        return onNewService.selectIp1();
+    }
+
+    @PostMapping(value = "/selectIp2")
+    public List<TemplateShopifyLogVO> selectIp2(){
+        return onNewService.selectIp2();
+    }
+
     /**
      * 匹配ip库方法
      */
@@ -75,6 +85,16 @@ public class TestController {
     @ResponseBody
     public String toIpData() throws Exception {
         onNewService.toIpData();
+        return "成功";
+    }
+
+    /**
+     * 匹配ip库方法
+     */
+    @RequestMapping("/deleteMachineUuid")
+    @ResponseBody
+    public String deleteMachineUuid() throws Exception {
+        onNewService.deleteMachineUuid();
         return "成功";
     }
 }

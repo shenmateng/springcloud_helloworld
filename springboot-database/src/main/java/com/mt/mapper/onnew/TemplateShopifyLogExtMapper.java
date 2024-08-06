@@ -3,9 +3,7 @@ package com.mt.mapper.onnew;/*
  */
 
 
-import com.mt.database.SystemWhiteListAndMachine;
-import com.mt.database.TemplateShopifyLogDO;
-import com.mt.database.ZcMachineTagName;
+import com.mt.database.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -34,5 +32,7 @@ public interface TemplateShopifyLogExtMapper extends TemplateShopifyLogMapper {
     List<SystemWhiteListAndMachine> listByAllIds(@Param("whiteListId") List<String> whiteListId);
 
 
+    List<ZcMachineUser> searchAllZcMachineUser();
 
+    UserInfo selectBySystemStatus(String bindUuid);
 }

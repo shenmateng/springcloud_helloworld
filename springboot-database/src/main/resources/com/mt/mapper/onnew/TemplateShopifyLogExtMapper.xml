@@ -6,6 +6,64 @@
                extends="com.mt.mapper.onnew.TemplateShopifyLogMapper.BaseResultMap">
     </resultMap>
 
+    <resultMap id="zcMachineUserMap" type="com.mt.database.ZcMachineUser">
+        <id property="uuid" column="uuid"/>
+        <result property="bindUuid" column="bind_uuid"/>
+        <result property="machineUuid" column="machine_uuid"/>
+        <result property="userUuid" column="user_uuid"/>
+        <result property="unit" column="unit"/>
+        <result property="industry" column="industry"/>
+        <result property="systemSign" column="system_sign"/>
+        <result property="department" column="department"/>
+        <result property="email" column="email"/>
+        <result property="phone" column="phone"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <resultMap id="userInfoMap" type="com.mt.database.UserInfo">
+        <id property="id" column="id"/>
+        <id property="uuid" column="uuid"/>
+        <result property="systemRoleUuid" column="system_role_uuid"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="wechatId" column="wechat_id"/>
+        <result property="status" column="status"/>
+        <result property="ifResetPassword" column="if_reset_password"/>
+        <result property="createTime" column="create_time"/>
+        <result property="lastLoginTime" column="last_login_time"/>
+        <result property="lastLoginIp" column="last_login_ip"/>
+        <result property="bindUuid" column="bind_uuid"/>
+        <result property="orgUuid" column="org_uuid"/>
+        <result property="orgName" column="org_name"/>
+        <result property="ifDoubleAuthen" column="if_double_authen"/>
+        <result property="isBindWx" column="is_bind_wx"/>
+        <result property="registerCode" column="register_code"/>
+        <result property="address" column="address"/>
+        <result property="department" column="department"/>
+        <result property="dutuies" column="dutuies"/>
+        <result property="cityCode" column="city_code"/>
+        <result property="areaCode" column="area_code"/>
+        <result property="provinceCode" column="province_code"/>
+        <result property="remark" column="remark"/>
+        <result property="agencyName" column="agency_name"/>
+        <result property="unit" column="unit"/>
+        <result property="industry" column="industry"/>
+        <result property="validTime" column="valid_time"/>
+        <result property="todayInstallCount" column="todayInstallCount"/>
+        <result property="allInstallCount" column="allInstallCount"/>
+        <result property="systemSign" column="system_sign"/>
+        <result property="bindUuid" column="bind_uuid"/>
+        <result property="accessCode" column="access_code"/>
+        <result property="authType" column="auth_type"/>
+        <result property="beginTime" column="begin_time"/>
+        <result property="installNumber" column="install_number"/>
+        <result property="lastStatusErrorTime" column="last_status_error_time"/>
+    </resultMap>
+
     <sql id="BaseColumn">
              `id`,
             `task_id`,
@@ -98,6 +156,54 @@
         <foreach collection="whiteListId" item="sysid" open="(" close=")" separator=",">
             #{sysid}
         </foreach>
+    </select>
+
+
+    <select id="searchAllZcMachineUser" resultMap="zcMachineUserMap">
+        select zm.bind_uuid,zmu.* from prm_test.zc_machine_user zmu
+                              JOIN prm_test.zc_machine zm ON zm.uuid = zmu.machine_uuid
+        where
+            zm.if_delete = 0
+          AND zmu.user_uuid IN ( SELECT DISTINCT ui.uuid FROM prm_test.user_info ui JOIN prm_test.system_agency sa ON sa.access_code = ui.access_code )
+          and zmu.machine_uuid in (select t.machine_uuid
+                                   from
+                                       (SELECT
+                                            zmu.machine_uuid,
+                                            count( 1 ) AS count
+                                        FROM
+                                            prm_test.zc_machine_user zmu
+                                            JOIN prm_test.zc_machine zm ON zm.uuid = zmu.machine_uuid
+                                        WHERE
+                                            zm.if_delete = 0
+                                          AND zmu.user_uuid IN ( SELECT DISTINCT ui.uuid FROM prm_test.user_info ui JOIN prm_test.system_agency sa ON sa.access_code = ui.access_code )
+                                        GROUP BY
+                                            zmu.machine_uuid HAVING count >= 2) t)
+    </select>
+
+
+    <select id="selectBySystemStatus" resultMap="userInfoMap">
+        select ui.id,
+               ui.uuid,
+               ui.system_role_uuid,
+               ui.username,
+               ui.password,
+               ui.name,
+               ui.phone,
+               ui.email,
+               ui.unit,
+               ui.wechat_id,
+               ui.system_sign,
+               ui.status,
+               ui.if_reset_password,
+               ui.create_time,
+               ui.last_login_time,
+               ui.last_login_ip,
+               ui.register_code,
+               ui.access_code,
+               ui.install_number,
+               ui.bind_uuid
+        from user_info ui
+        where ui.bind_uuid = #{bindUuid}
     </select>
 
 </mapper>

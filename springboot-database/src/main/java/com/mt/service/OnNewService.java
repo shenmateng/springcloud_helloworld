@@ -30,6 +30,7 @@ import java.lang.reflect.Type;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author ：mateng
@@ -409,14 +410,42 @@ public class OnNewService {
 
 
     public List<TemplateShopifyLogVO> selectIp(){
-        List<IpSeet> ipSeets = ipSeetMapper.queryip(16777473L);
+//        List<IpSeet> ipSeets = ipSeetMapper.queryip(16777473L);
+        List<IpSeet> ipSeets = new ArrayList<>();
+        for(long i = 0; i<22000000; i++){
+            IpSeet ipSeet = new IpSeet();
+            ipSeets.add(ipSeet);
+        }
+
+        System.out.println("创造对象完毕");
+//        System.gc();
         return new ArrayList<>();
 
     }
 
 
 
+    public List<TemplateShopifyLogVO> selectIp1(){
+        List<IpSeet> ipSeets = new ArrayList<>();
+        for(long i = 0; i<3000000; i++){
+            IpSeet ipSeet = new IpSeet();
+            ipSeets.add(ipSeet);
+        }
+//       System.gc();
+       return new ArrayList<>();
 
+    }
+
+
+    public List<TemplateShopifyLogVO> selectIp2(){
+        List<IpSeet> ipSeets = new ArrayList<>();
+        for(long i = 0; i<300000000; i++){
+            IpSeet ipSeet = new IpSeet();
+            ipSeets.add(ipSeet);
+        }
+        return new ArrayList<>();
+
+    }
 
 
 
@@ -427,6 +456,7 @@ public class OnNewService {
         String source = "D:\\data\\"+ "yun15" ;
         File sourceDir = new File(source);
         File[] files = sourceDir.listFiles();
+
 
         for(File excel:files){
             // 结果集汇总
@@ -570,5 +600,37 @@ public class OnNewService {
         Gson gson = new Gson();
         return gson.fromJson(json, SsqVO.class);
     }
+
+
+    public void deleteMachineUuid() throws Exception {
+        List<ZcMachineUser> zcMachineUsers = templateShopifyLogExtMapper.searchAllZcMachineUser();
+        Map<String, List<ZcMachineUser>> collect = zcMachineUsers.stream().collect(Collectors.groupingBy(ZcMachineUser::getMachineUuid));
+        List<String> list = new ArrayList<>();
+        List<String> list1 = new ArrayList<>();
+        collect.forEach((k,v)->{
+            v.forEach(zmu->{
+                String bindUuid = zmu.getBindUuid();
+                UserInfo userInfos = templateShopifyLogExtMapper.selectBySystemStatus(bindUuid);
+                String uuid = userInfos.getUuid();
+                if(uuid.equals(zmu.getUserUuid())){
+                    list.add(zmu.getUuid());
+                }else {
+                    list1.add(zmu.getUuid());
+                }
+            });
+        });
+
+        System.out.println(list);
+        System.out.println(list1);
+        String s = "(";
+        StringBuffer stringBuffer = new StringBuffer();
+        list1.forEach(o->{
+            stringBuffer.append(o);
+            stringBuffer.append("\",\"");
+
+        });
+        System.out.println(stringBuffer.toString());
+    }
+
 
 }

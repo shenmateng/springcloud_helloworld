@@ -7,6 +7,13 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 用户信息
+ *
+ * @author Volcano
+ * @version 1.0
+ * @date 2021/12/14
+ */
 public class UserInfo extends BaseDomain {
 
     private static final long serialVersionUID = 1L;
@@ -16,6 +23,10 @@ public class UserInfo extends BaseDomain {
      * 主键
      */
     private String uuid;
+    /**
+     * 统一身份认证用户id
+     */
+    private String unifiedUuid;
     /**
      * 角色表(system_role)主键
      */
@@ -42,9 +53,19 @@ public class UserInfo extends BaseDomain {
      */
     private String email;
     /**
+     * 微信OpenId
+     */
+    private String wechatId;
+    /**
      * 状态，1-启用；0-禁用
      */
     private Integer status;
+
+    /**
+     * 最后禁用的时间
+     */
+    private Date lastStatusErrorTime;
+
     /**
      * 是否重置密码，1-是；0-否
      */
@@ -59,7 +80,7 @@ public class UserInfo extends BaseDomain {
      */
     private String createUuid;
     /**
-     * 创建时间
+     * 创建时间1
      */
     private Date createTime;
     /**
@@ -75,6 +96,10 @@ public class UserInfo extends BaseDomain {
      * 角色名称
      */
     private String roleName;
+    /**
+     * 角色Code
+     */
+    private String roleCode;
     /**
      * 角色类型（0 应用管理员，1 系统管理员）
      */
@@ -99,7 +124,6 @@ public class UserInfo extends BaseDomain {
      * 组织结构名称
      */
     private String orgName;
-
     /**
      * agent绑定的uuid
      */
@@ -112,28 +136,508 @@ public class UserInfo extends BaseDomain {
 
     private String systemUuid;
 
-    private List<String> usernameList;
+    /**
+     * 详细地址
+     */
+    private String address;
 
-    private String machineUuid;
+    /**
+     * 部门
+     */
+    private String department;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    /**
+     * 职务
+     */
+    private String dutuies;
+
+    /**
+     * 注册码
+     */
+    private String registerCode;
+
+    /**
+     * 是否绑定公众号
+     */
+    private Boolean isBindWx;
+
+    /**
+     * 市code
+     */
+    private String cityCode;
+
+    /**
+     * 市名称
+     */
+    private String cityName;
+
+    /**
+     * 区code
+     */
+    private String areaCode;
+
+    /**
+     * 区名称
+     */
+    private String areaName;
+
+    /**
+     * 省code
+     */
+    private String provinceCode;
+
+    /**
+     * 省名称
+     */
+    private String provinceName;
+
+    /**
+     * 备注
+     */
+    private String remark;
+    /**
+     * 单位
+     */
+    private String unit;
+
+    /**
+     * 用户单位
+     */
+    private String userUnit;
+
+    /**
+     * 有效时间
+     */
+    private Date validTime;
+
+    /**
+     * 所属系统标识
+     */
+    private String systemSign;
+    /**
+     * 服务站名称
+     */
+    private String agencyName;
+    /**
+     * 账号设置权重
+     */
+    private String account;
+    /**
+     * 专家协助权重
+     */
+    private String assist;
+    /**
+     * 时间分析权重
+     */
+    private String event;
+    /**
+     * 安全月报权重
+     */
+    private String monthly;
+    /**
+     * 安装与配置权重
+     */
+    private String allocation;
+    /**
+     * 模板配置权重
+     */
+    private String template;
+
+    private String industry;
+
+
+    private String accessCode;
+    private String ministry;
+
+    private String creator;
+
+    private Date beginTime;
+    private Integer authNumber;
+    private Integer useAuthNumber;
+    private Integer authType;
+
+    /**
+     * 剩余天数
+     */
+    private Integer differentDays;
+
+    /**
+     * 逾期天数
+     */
+    private Integer overdueDays;
+    /**
+     * 系统模板使用数量
+     */
+    private Integer systModelUseNum = 0;
+    /**
+     * 堡垒锁模板使用数量
+     */
+    private Integer sysFortModelUseNum = 0;
+    /**
+     * 应用模板使用数量
+     */
+    private Integer appModelUseNum = 0;
+    /**
+     * 专项模板使用数量
+     */
+    private Integer zxModelUseNum = 0;
+    /**
+     * 总安装数
+     */
+    private Long allInstallCount = 0L;
+    /**
+     * 今日安装数
+     */
+    private Long todayInstallCount = 0L;
+
+    private Integer installNumber;
+
+    private Date lastInstallTime;
+
+
+    public String getUserUnit() {
+        return userUnit;
     }
 
-    public String getMachineUuid() {
-        return machineUuid;
+    public void setUserUnit(String userUnit) {
+        this.userUnit = userUnit;
+    }
+    public String getWechatId() {
+        return wechatId;
     }
 
-    public void setMachineUuid(String machineUuid) {
-        this.machineUuid = machineUuid;
+    public void setWechatId(String wechatId) {
+        this.wechatId = wechatId;
     }
 
-    public List<String> getUsernameList() {
-        return usernameList;
+    public Integer getOverdueDays() {
+        return overdueDays;
     }
 
-    public void setUsernameList(List<String> usernameList) {
-        this.usernameList = usernameList;
+    public void setOverdueDays(Integer overdueDays) {
+        this.overdueDays = overdueDays;
+    }
+
+    public Date getLastStatusErrorTime() {
+        return lastStatusErrorTime;
+    }
+
+    public void setLastStatusErrorTime(Date lastStatusErrorTime) {
+        this.lastStatusErrorTime = lastStatusErrorTime;
+    }
+
+    public Date getLastInstallTime() {
+        return lastInstallTime;
+    }
+
+    public void setLastInstallTime(Date lastInstallTime) {
+        this.lastInstallTime = lastInstallTime;
+    }
+
+    public Integer getInstallNumber() {
+        return installNumber;
+    }
+
+    public void setInstallNumber(Integer installNumber) {
+        this.installNumber = installNumber;
+    }
+
+    public Integer getSystModelUseNum() {
+        return systModelUseNum;
+    }
+
+    public void setSystModelUseNum(Integer systModelUseNum) {
+        this.systModelUseNum = systModelUseNum;
+    }
+
+    public Integer getSysFortModelUseNum() {
+        return sysFortModelUseNum;
+    }
+
+    public void setSysFortModelUseNum(Integer sysFortModelUseNum) {
+        this.sysFortModelUseNum = sysFortModelUseNum;
+    }
+
+    public Integer getAppModelUseNum() {
+        return appModelUseNum;
+    }
+
+    public void setAppModelUseNum(Integer appModelUseNum) {
+        this.appModelUseNum = appModelUseNum;
+    }
+
+    public Integer getZxModelUseNum() {
+        return zxModelUseNum;
+    }
+
+    public void setZxModelUseNum(Integer zxModelUseNum) {
+        this.zxModelUseNum = zxModelUseNum;
+    }
+
+    public String getMinistry() {
+        return ministry;
+    }
+
+    public void setMinistry(String ministry) {
+        this.ministry = ministry;
+    }
+
+    public Integer getUseAuthNumber() {
+        return useAuthNumber;
+    }
+
+    public void setUseAuthNumber(Integer useAuthNumber) {
+        this.useAuthNumber = useAuthNumber;
+    }
+
+    public Integer getDifferentDays() {
+        return differentDays;
+    }
+
+    public void setDifferentDays(Integer differentDays) {
+        this.differentDays = differentDays;
+    }
+
+    public Integer getAuthType() {
+        return authType;
+    }
+
+    public void setAuthType(Integer authType) {
+        this.authType = authType;
+    }
+
+    public Date getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(Date beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public Integer getAuthNumber() {
+        return authNumber;
+    }
+
+    public void setAuthNumber(Integer authNumber) {
+        this.authNumber = authNumber;
+    }
+
+    public String getAgencyName() {
+        return agencyName;
+    }
+
+    public void setAgencyName(String agencyName) {
+        this.agencyName = agencyName;
+    }
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getAssist() {
+        return assist;
+    }
+
+    public void setAssist(String assist) {
+        this.assist = assist;
+    }
+
+    public String getEvent() {
+        return event;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
+    }
+
+    public String getMonthly() {
+        return monthly;
+    }
+
+    public void setMonthly(String monthly) {
+        this.monthly = monthly;
+    }
+
+    public String getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(String template) {
+        this.template = template;
+    }
+
+    public String getAllocation() {
+        return allocation;
+    }
+
+    public void setAllocation(String allocation) {
+        this.allocation = allocation;
+    }
+
+    public String getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public Long getAllInstallCount() {
+        return allInstallCount;
+    }
+
+    public void setAllInstallCount(Long allInstallCount) {
+        this.allInstallCount = allInstallCount;
+    }
+
+    public Long getTodayInstallCount() {
+        return todayInstallCount;
+    }
+
+    public void setTodayInstallCount(Long todayInstallCount) {
+        this.todayInstallCount = todayInstallCount;
+    }
+
+    public String getAccessCode() {
+        return accessCode;
+    }
+
+    public void setAccessCode(String accessCode) {
+        this.accessCode = accessCode;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Date getValidTime() {
+        return validTime;
+    }
+
+    public void setValidTime(Date validTime) {
+        this.validTime = validTime;
+    }
+
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
+
+    public String getProvinceCode() {
+        return provinceCode;
+    }
+
+    public void setProvinceCode(String provinceCode) {
+        this.provinceCode = provinceCode;
+    }
+
+    public Boolean getBindWx() {
+        return isBindWx;
+    }
+
+    public void setBindWx(Boolean bindWx) {
+        isBindWx = bindWx;
+    }
+
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getDutuies() {
+        return dutuies;
+    }
+
+    public void setDutuies(String dutuies) {
+        this.dutuies = dutuies;
+    }
+
+    public String getRegisterCode() {
+        return registerCode;
+    }
+
+    public void setRegisterCode(String registerCode) {
+        this.registerCode = registerCode;
     }
 
     public Integer getIsPass() {
@@ -336,25 +840,23 @@ public class UserInfo extends BaseDomain {
     public interface GetUserByUsername {
     }
 
-    public static UserInfo extendUserInfo(UserInfo userInfo){
-        if(userInfo != null) {
+    public static UserInfo extendUserInfo(UserInfo userInfo) {
+        if (userInfo != null) {
             if (StringUtils.isNotBlank(userInfo.getRoleName()) && "应用管理员".equals(userInfo.getRoleName())) {
                 userInfo.setRoleFlag(0);
-            }
-            else if (StringUtils.isNotBlank(userInfo.getRoleName()) && "系统管理员".equals(userInfo.getRoleName())) {
+            } else if (StringUtils.isNotBlank(userInfo.getRoleName()) && "系统管理员".equals(userInfo.getRoleName())) {
                 userInfo.setRoleFlag(1);
-            }
-            else if ("0".equals(userInfo.getSystemUuid())) {
+            } else if ("0".equals(userInfo.getSystemUuid())) {
                 userInfo.setRoleFlag(2);
-            }else{
+            } else {
                 userInfo.setRoleFlag(-1);
             }
         }
         return userInfo;
     }
 
-    public static List<UserInfo> extendUserInfos(List<UserInfo> userInfos){
-        if(!CollectionUtils.isEmpty(userInfos)){
+    public static List<UserInfo> extendUserInfos(List<UserInfo> userInfos) {
+        if (!CollectionUtils.isEmpty(userInfos)) {
             userInfos.forEach(userInfo -> {
                 extendUserInfo(userInfo);
             });
@@ -368,5 +870,21 @@ public class UserInfo extends BaseDomain {
 
     public void setIfDoubleAuthen(Integer ifDoubleAuthen) {
         this.ifDoubleAuthen = ifDoubleAuthen;
+    }
+
+    public String getSystemSign() {
+        return systemSign;
+    }
+
+    public void setSystemSign(String systemSign) {
+        this.systemSign = systemSign;
+    }
+
+    public String getUnifiedUuid() {
+        return unifiedUuid;
+    }
+
+    public void setUnifiedUuid(String unifiedUuid) {
+        this.unifiedUuid = unifiedUuid;
     }
 }
