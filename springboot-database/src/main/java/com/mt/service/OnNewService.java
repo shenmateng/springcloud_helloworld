@@ -210,6 +210,7 @@ public class OnNewService {
         machineUuids = templateShopifyLogExtMapper.selectMachineUuidsByTagName(userUuid, tagUuid, onlineStatus);
         List<String> whiteListId = new ArrayList<>();
         whiteListId.add("D93FA07017044C46873D23E07797AAB0");
+        log.info("我就是单纯的测试一下");
         List<SystemWhiteListAndMachine> systemWhiteListAndMachines = templateShopifyLogExtMapper.listByAllIds(whiteListId);
         Map<String,List<String>> tagUuidsMap = new HashMap<>();
         machineUuids.forEach(o->{
