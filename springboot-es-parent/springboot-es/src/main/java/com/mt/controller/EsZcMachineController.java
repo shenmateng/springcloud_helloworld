@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -55,4 +56,17 @@ public class EsZcMachineController {
         return new Result();
     }
 
+
+    /**
+     * 修改机器信息
+     * @param
+     * @return
+     * @throws JowtoException
+     */
+    @JowtoResponseBody
+    @PostMapping("/outreachMachineAgg")
+    public Result outreachMachineAgg() throws JowtoException, IOException {
+        esZcQueryBaseService.outreachMachineAgg2();
+        return new Result();
+    }
 }

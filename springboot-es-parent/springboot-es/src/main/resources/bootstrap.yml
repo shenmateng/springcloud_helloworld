@@ -45,6 +45,10 @@ spring:
         shared-configs[2]:
           data-id: consul-common.yml
           refresh: false
+#     可选：使用身份验证配置
+      username: nacos
+      password: mateng962396475
+  #这个配置和写在nacos里的是一样的，如果nacos里配置了，则优先nacos里的配置
   elasticsearch:
     jest:
       uris: 8.142.22.143:9200

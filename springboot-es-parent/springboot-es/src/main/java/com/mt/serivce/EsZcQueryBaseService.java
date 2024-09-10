@@ -1,8 +1,10 @@
 package com.mt.serivce;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.mt.bean.page.I18nUtil;
 import com.mt.constant.ResponseCode;
+import com.mt.database.*;
 import com.mt.database.es.*;
 import com.mt.exception.JowtoException;
 import com.mt.exception.JowtoRuntimeException;
@@ -10,12 +12,17 @@ import com.mt.utils.*;
 import com.mt.bean.ResponseForPage;
 import com.mt.config.AssetConfig;
 import com.mt.constant.Constant;
-import com.mt.database.AssetQueryForEs;
+import io.searchbox.action.BulkableAction;
 import io.searchbox.client.JestClient;
+import io.searchbox.client.JestResult;
+import io.searchbox.client.JestResultHandler;
+import io.searchbox.core.Bulk;
+import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.search.aggregation.TermsAggregation;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.lucene.search.join.ScoreMode;
@@ -381,6 +388,251 @@ public class EsZcQueryBaseService {
     }
 
 
+    @Async("assetThreadPool")
+    public void outreachMachineAgg() throws JowtoException {
+        List<BulkableAction> eventInfos = new ArrayList<>();
+
+        for(int i = 0;i<20010;i++){
+            OutreachInfo outreachInfo = new OutreachInfo();
+            outreachInfo.setUuid(UUIDUtils.uuid());
+            outreachInfo.setServiceId(UUIDUtils.uuid());
+            outreachInfo.setStandardTimestamp(new Date().getTime());
+            outreachInfo.setEventInputTime(new Date().toString());
+            outreachInfo.setLocalTimestamp(new Date().getTime());
+            outreachInfo.setEventInputTime(new Date().toString());
+            outreachInfo.setAgentInputTime("1721892508");
+            outreachInfo.setCountTime(new Date().getTime());
+            outreachInfo.setInnerIp("10.20.0.240");
+            outreachInfo.setMachineUuid("e80da55f1cb319f8fb7de43453f8f104");
+            outreachInfo.setMarkName("undefined");
+            List<String> lists = new ArrayList<>();
+            lists.add("1");
+            outreachInfo.setOutreachIpAnDomain(lists);
+            ObjectEntity objectEntity = new ObjectEntity();
+            objectEntity.setDomain("sqm.telemetry.microsoft.com");
+            objectEntity.setIp("65.55.252.93:443");
+            outreachInfo.setObject(objectEntity);
+
+            outreachInfo.setOutreachAddress("(美国x)");
+            outreachInfo.setOutreachCount(i);
+            outreachInfo.setOutreachIp("65.55.252.93");
+
+            IpAddress ipAddress = new IpAddress();
+            ipAddress.setCity("昆西x");
+            ipAddress.setCountry("美国z");
+            ipAddress.setCountryOrCity("美国z");
+            ipAddress.setRegion("华盛顿州x");
+            ipAddress.setType("外国x");
+            outreachInfo.setOutreachIpAddress(ipAddress);
+
+            UserSettingForAgg userAndSetting = new UserSettingForAgg();
+            userAndSetting.setUserUuid("463051604aef4125824c322264ff3ca3");
+            userAndSetting.setCompany("guoyu");
+            userAndSetting.setUnit("迁移测试单位2");
+            outreachInfo.setUserAndSettings(userAndSetting);
+
+            Index build = new Index.Builder(outreachInfo).index("ys_outreach_machine_agg" + "-" + "2024-09-09").build();
+            eventInfos.add(build);
+        }
+
+        List<BulkableAction> copyEventInfos = Collections.unmodifiableList(eventInfos);
+
+        List<List<BulkableAction>> eventList = splitList(copyEventInfos, 2000);
+        for (List<BulkableAction> list : eventList) {
+            Bulk bulk = new Bulk.Builder().addAction(list).build();
+            jestClient.executeAsync(bulk, new JestResultHandler<JestResult>() {
+                @Override
+                public void completed(JestResult jestResult) {
+                }
+
+                @Override
+                public void failed(Exception e) {
+
+                }
+            });
+        }
+
+    }
+
+
+    @Async("assetThreadPool")
+    public void outreachMachineAgg1() throws JowtoException {
+        List<BulkableAction> eventInfos = new ArrayList<>();
+
+        for(int i = 0;i<20010;i++){
+            OutreachInfo outreachInfo = new OutreachInfo();
+            outreachInfo.setUuid(UUIDUtils.uuid());
+            outreachInfo.setServiceId(UUIDUtils.uuid());
+            outreachInfo.setAgentInputTime("1721892508");
+            outreachInfo.setCountTime(new Date().getTime());
+            outreachInfo.setInnerIp("10.20.0.240");
+            outreachInfo.setIpAndDomain("sqm.telemetry.microsoft.com");
+            outreachInfo.setStandardTimestamp(new Date().getTime());
+            outreachInfo.setEventInputTime(new Date().toString());
+            outreachInfo.setLocalTimestamp(new Date().getTime());
+            outreachInfo.setEventInputTime(new Date().toString());
+            outreachInfo.setMachineUuid("e80da55f1cb319f8fb7de43453f8f104");
+            outreachInfo.setMarkName("undefined");
+            List<String> lists = new ArrayList<>();
+            lists.add("1");
+            outreachInfo.setMaliciousList(lists);
+            ObjectEntity objectEntity = new ObjectEntity();
+            objectEntity.setDomain("sqm.telemetry.microsoft.com");
+            objectEntity.setIp("65.55.252.93:443");
+            outreachInfo.setObject(objectEntity);
+
+            outreachInfo.setOutreachAddress("(美国x)");
+            outreachInfo.setOutreachCount(i);
+            outreachInfo.setOutreachIp("65.55.252.93");
+
+            IpAddress ipAddress = new IpAddress();
+            ipAddress.setCity("昆西x");
+            ipAddress.setCountry("美国z");
+            ipAddress.setCountryOrCity("美国z");
+            ipAddress.setRegion("华盛顿州x");
+            ipAddress.setType("外国x");
+            outreachInfo.setOutreachIpAddress(ipAddress);
+            List<String> machines = new ArrayList<>();
+            List<String> ports = new ArrayList<>();
+            machines.add("e80da55f1cb319f8fb7de43453f8f104");
+            ports.add("443");
+            outreachInfo.setOutreachMachine(machines);
+            outreachInfo.setPorts(ports);
+            Subject subject = new Subject();
+            subject.setbVerify("no");
+            subject.setCompany("Microsoft Corporation");
+            subject.setPid("616");
+            subject.setProcHash("eb833bb4df2cf5a4a7d1789c3add75dc");
+            subject.setProcUuid("2ff914f7d234b90ba329f72b9c3fe3ff");
+            subject.setProcess("\"\"C:\\windows\\system32\\wsqmcons.exe\"\"");
+            subject.setType("2ff914f7d234b90ba329f72b9c3fe3ff");
+            subject.setUser("NT AUTHORITY\\\\SYSTEM");
+            outreachInfo.setSubject(subject);
+
+            UserSettingForAgg userAndSetting = new UserSettingForAgg();
+            userAndSetting.setUserUuid("463051604aef4125824c322264ff3ca3");
+            userAndSetting.setCompany("guoyu");
+            userAndSetting.setUnit("迁移测试单位2");
+            outreachInfo.setUserAndSettings(userAndSetting);
+
+            Index build = new Index.Builder(outreachInfo).index("ys_outreach_ip_domain_agg" + "-" + "2024-09-09").build();
+            eventInfos.add(build);
+        }
+
+        List<BulkableAction> copyEventInfos = Collections.unmodifiableList(eventInfos);
+
+        List<List<BulkableAction>> eventList = splitList(copyEventInfos, 2000);
+        for (List<BulkableAction> list : eventList) {
+            Bulk bulk = new Bulk.Builder().addAction(list).build();
+            jestClient.executeAsync(bulk, new JestResultHandler<JestResult>() {
+                @Override
+                public void completed(JestResult jestResult) {
+                }
+
+                @Override
+                public void failed(Exception e) {
+
+                }
+            });
+        }
+
+    }
+
+
+    public void outreachMachineAgg2() throws IOException {
+        List<BulkableAction> eventInfos = new ArrayList<>();
+
+        for(int i = 0;i<1;i++){
+            String json = "{\n" +
+                    "    \"action\": {\n" +
+                    "        \"text\": \"10.0.0.28(局域网)（计算机名localhost.localdomain）使用账号 root ssh远程登录服务器 10.20.0.206。来源：系统登录审计\"\n" +
+                    "    },\n" +
+                    "    \"agencyName\": \"总服务站\",\n" +
+                    "    \"date\": \"2024-09-09\",\n" +
+                    "    \"description\": \"ʧ��\",\n" +
+                    "    \"ignoreStatus\": 1,\n" +
+                    "    \"industry\": \"广电\",\n" +
+                    "    \"innerIp\": \"10.20.0.206\",\n" +
+                    "    \"ip\": \"10.0.0.28\",\n" +
+                    "    \"ipv4\": \"10.20.0.206\",\n" +
+                    "    \"localTimestamp\": 1725846305000,\n" +
+                    "    \"loginName\": \"root\",\n" +
+                    "    \"machine\": {\n" +
+                    "        \"currentPage\": 1,\n" +
+                    "        \"extranetIp\": \"10.20.0.206\",\n" +
+                    "        \"intranetIp\": \"10.20.0.206\",\n" +
+                    "        \"machineName\": \"localhost.localdomain\",\n" +
+                    "        \"maxResults\": 10,\n" +
+                    "        \"onlineStatus\": 1,\n" +
+                    "        \"operatingSystem\": \"CentOS Linux release 7.9.2009 (Core)\",\n" +
+                    "        \"osType\": 1,\n" +
+                    "        \"uuid\": \"85b3d237dc28ca49924750924c1c68e3\"\n" +
+                    "    },\n" +
+                    "    \"machineUuid\": \"02e55654dbdfaef65fe6a1f0ba73c393\",\n" +
+                    "    \"mainIp\": \"5.5.5.5\",\n" +
+                    "    \"newDataFlag\": 1,\n" +
+                    "    \"operateStatus\": 0,\n" +
+                    "    \"operation\": \"system_login\",\n" +
+                    "    \"operationDesc\": \"系统登录\",\n" +
+                    "    \"operationExtra\": \"ʧ��\",\n" +
+                    "    \"result\": 2,\n" +
+                    "    \"sourceIpAddress\": {\n" +
+                    "        \"city\": \"\",\n" +
+                    "        \"country\": \"局域网\",\n" +
+                    "        \"ip\": \"10.0.0.28\",\n" +
+                    "        \"region\": \"\",\n" +
+                    "        \"type\": \"局域网\"\n" +
+                    "    },\n" +
+                    "    \"standardTimestamp\": 1725846304000,\n" +
+                    "    \"subject\": {\n" +
+                    "        \"process\": \"\",\n" +
+                    "        \"type\": \"ssh\",\n" +
+                    "        \"user\": \"\"\n" +
+                    "    },\n" +
+                    "    \"typeName\": \"系统登录\",\n" +
+                    "    \"unit\": \"cs002\",\n" +
+                    "    \"updateStatus\": 0,\n" +
+                    "    \"userUuid\": \"463051604aef4125824c322264ff3ca3\",\n" +
+                    "    \"uuid\": \"ff332eca6ee94fd4bc32675f2614bde7\"\n" +
+                    "}";
+
+            SuspiciousLoginVO suspiciousLoginVO = JSONObject.parseObject(json, SuspiciousLoginVO.class);
+            suspiciousLoginVO.setUuid(UUIDUtils.uuid());
+            suspiciousLoginVO.setId(UUIDUtils.uuid());
+            Index build = new Index.Builder(suspiciousLoginVO).index("suspicious_login").build();
+            eventInfos.add(build);
+        }
+
+        List<BulkableAction> copyEventInfos = Collections.unmodifiableList(eventInfos);
+
+        List<List<BulkableAction>> eventList = splitList(copyEventInfos, 2000);
+        int i = 1;
+        for (List<BulkableAction> list : eventList) {
+            Bulk bulk = new Bulk.Builder().addAction(list).build();
+            JestResult result = jestClient.execute(bulk);
+            System.out.println("执行次数+"+i);
+            i++;
+        }
+        System.out.println("执行完毕");
+
+    }
+
+
+
+    public static <T> List<List<T>> splitList(List<T> list, int len) {
+        if (list == null || list.size() == 0 || len < 1) {
+            return null;
+        }
+        List<List<T>> result = new ArrayList<>();
+        int size = list.size();
+        int count = (size + len - 1) / len;
+        for (int i = 0; i < count; i++) {
+            List<T> subList = list.subList(i * len, ((i + 1) * len > size ? size : len * (i + 1)));
+            result.add(subList);
+        }
+        return result;
+    }
+
     public void saveEsMachineOther(ZcMachine zcMachine) {
         try {
             List<EsZcMachineSave> esZcMachines = getNeedUpsertEsZcMachines(DataUtils.asList(zcMachine));
@@ -478,8 +730,6 @@ public class EsZcQueryBaseService {
         }
         return needUpserts;
     }
-
-
 
 
 
