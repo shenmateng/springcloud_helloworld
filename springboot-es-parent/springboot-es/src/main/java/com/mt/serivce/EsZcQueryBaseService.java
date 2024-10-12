@@ -8,6 +8,7 @@ import com.mt.database.*;
 import com.mt.database.es.*;
 import com.mt.exception.JowtoException;
 import com.mt.exception.JowtoRuntimeException;
+import com.mt.init.EsIndexInitJob;
 import com.mt.utils.*;
 import com.mt.bean.ResponseForPage;
 import com.mt.config.AssetConfig;
@@ -59,6 +60,9 @@ public class EsZcQueryBaseService {
 
     @Autowired
     private ZcJestApiService zcJestApiService;
+
+    @Autowired
+    private EsIndexInitJob esIndexInitJob;
 
     /**
      * 资产列表
@@ -618,6 +622,16 @@ public class EsZcQueryBaseService {
     }
 
 
+    public void createIndex() throws IOException {
+        this.esIndexInitJob.initIndex(Constant.YS_OUTREACH, System.currentTimeMillis(), false);
+        this.esIndexInitJob.initAggIndex(Constant.YS_OUTREACH_MACHINE_AGG, System.currentTimeMillis(), false, true);
+        this.esIndexInitJob.initAggIndex(Constant.YS_OUTREACH_MACHINE_PROCESS_AGG, System.currentTimeMillis(), false, true);
+        this.esIndexInitJob.initAggIndex(Constant.YS_OUTREACH_IP_DOMAIN_AGG, System.currentTimeMillis(), false, true);
+        this.esIndexInitJob.initAggIndex(Constant.YS_OUTREACH_IP_DOMAIN_PROCESS_AGG, System.currentTimeMillis(), false, true);
+
+        System.out.println("执行完毕");
+
+    }
 
     public static <T> List<List<T>> splitList(List<T> list, int len) {
         if (list == null || list.size() == 0 || len < 1) {

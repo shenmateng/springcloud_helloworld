@@ -90,7 +90,7 @@ index:
 logging:
   config: classpath:logback-config/logback-spring.xml
   file:
-    path: /home/vevor/logs/bmp/prm
+    path: /Users/mateng/logs/home/vevor/logs/bmp/prm
   level:
     root: info
     com.mt: debug

@@ -3,11 +3,11 @@ package com.mt.service;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.google.gson.JsonElement;
 import com.mt.database.raspconfig.Behavior;
-import com.mt.database.raspconfig.Connect;
 import com.mt.database.raspconfig.RaspSwitchsStatus;
 import org.apache.commons.lang3.ObjectUtils;
+
+import java.math.BigDecimal;
 
 /**
  * @Author: mateng
@@ -238,122 +238,122 @@ public class test111 {
                 "\t\t\t\t\"desc\": \"命令执行\",\n" +
                 "\t\t\t\t\"all\": {\n" +
                 "\t\t\t\t\t\"desc\": \"1、禁止所有WEB请求执行命令\",\n" +
-                "\t\t\t\t\t\"switch\": 2\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"reflect\": {\n" +
                 "\t\t\t\t\t\"desc\": \"2、禁止通过反射执行命令\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"deserialize\": {\n" +
                 "\t\t\t\t\t\"desc\": \"3、禁止通过反序列化执行命令\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"expression\": {\n" +
                 "\t\t\t\t\t\"desc\": \"4、禁止通过表达式执行命令\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"any\": {\n" +
                 "\t\t\t\t\t\"desc\": \"5、禁止通过请求参数执行命令\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"webshell\": {\n" +
                 "\t\t\t\t\t\"desc\": \"6、禁止通过 Webshell 执行命令\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"other\": {\n" +
                 "\t\t\t\t\t\"desc\": \"7、禁止通过特定规则执行命令\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t}\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"file_read\": {\n" +
                 "\t\t\t\t\"desc\": \"任意文件读取\",\n" +
                 "\t\t\t\t\"deserialize\": {\n" +
                 "\t\t\t\t\t\"desc\": \"1、禁止通过反序列化读取文件\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"expression\": {\n" +
                 "\t\t\t\t\t\"desc\": \"2、禁止通过表达式读取文件\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"any\": {\n" +
                 "\t\t\t\t\t\"desc\": \"3、禁止通过请求参数读取文件\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"webshell\": {\n" +
                 "\t\t\t\t\t\"desc\": \"4、禁止通过 Webshell 读取文件\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"other\": {\n" +
                 "\t\t\t\t\t\"desc\": \"5、禁止通过特定规则读取文件\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t}\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"file_write\": {\n" +
                 "\t\t\t\t\"desc\": \"任意文件写入\",\n" +
                 "\t\t\t\t\"reflect\": {\n" +
                 "\t\t\t\t\t\"desc\": \"1、禁止通过反射写文件\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"deserialize\": {\n" +
                 "\t\t\t\t\t\"desc\": \"2、禁止通过反序列化写文件\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"expression\": {\n" +
                 "\t\t\t\t\t\"desc\": \"3、禁止通过表达式写文件\",\n" +
-                "\t\t\t\t\t\"switch\": 2\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"any\": {\n" +
                 "\t\t\t\t\t\"desc\": \"4、禁止通过请求参数写文件\",\n" +
-                "\t\t\t\t\t\"switch\": 2\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"webshell\": {\n" +
                 "\t\t\t\t\t\"desc\": \"5、禁止通过 Webshell 写文件\",\n" +
-                "\t\t\t\t\t\"switch\": 2\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"other\": {\n" +
                 "\t\t\t\t\t\"desc\": \"6、禁止通过特定规则写文件\",\n" +
-                "\t\t\t\t\t\"switch\": 2\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t}\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"file_read_write\": {\n" +
                 "\t\t\t\t\"desc\": \"任意文件读写\",\n" +
                 "\t\t\t\t\"reflect\": {\n" +
                 "\t\t\t\t\t\"desc\": \"1、禁止通过反射写文件\",\n" +
-                "\t\t\t\t\t\"switch\": 2\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"deserialize\": {\n" +
                 "\t\t\t\t\t\"desc\": \"2、禁止通过反序列化读写文件\",\n" +
-                "\t\t\t\t\t\"switch\": 2\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"expression\": {\n" +
                 "\t\t\t\t\t\"desc\": \"3、禁止通过表达式读写文件\",\n" +
-                "\t\t\t\t\t\"switch\": 3\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"any\": {\n" +
                 "\t\t\t\t\t\"desc\": \"4、禁止通过请求参数读写文件\",\n" +
-                "\t\t\t\t\t\"switch\": 3\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"webshell\": {\n" +
                 "\t\t\t\t\t\"desc\": \"5、禁止通过 Webshell 读写文件\",\n" +
-                "\t\t\t\t\t\"switch\": 4\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"other\": {\n" +
                 "\t\t\t\t\t\"desc\": \"6、禁止通过特定规则读写文件\",\n" +
-                "\t\t\t\t\t\"switch\": 4\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t}\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"file_upload\": {\n" +
                 "\t\t\t\t\"desc\": \"任意文件上传\",\n" +
                 "\t\t\t\t\"script\": {\n" +
                 "\t\t\t\t\t\"desc\": \"1、禁止通过 multipart/form-data 方式上传脚本文件\",\n" +
-                "\t\t\t\t\t\"switch\": 4\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t}\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"jndi\": {\n" +
                 "\t\t\t\t\"desc\": \"JNDI注入防护\",\n" +
                 "\t\t\t\t\"rmi\": {\n" +
                 "\t\t\t\t\t\"desc\": \"1、禁止通过JNDI发起 rmi 外连\",\n" +
-                "\t\t\t\t\t\"switch\": 4\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"ldap\": {\n" +
                 "\t\t\t\t\t\"desc\": \"2、禁止通过JNDI发起 ldap 外连\",\n" +
@@ -361,163 +361,163 @@ public class test111 {
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"dns\": {\n" +
                 "\t\t\t\t\t\"desc\": \"3、禁止通过JNDI发起 dns 查询\",\n" +
-                "\t\t\t\t\t\"switch\": 4\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"iiop\": {\n" +
                 "\t\t\t\t\t\"desc\": \"4、禁止通过JNDI发起 iiop 外连\",\n" +
-                "\t\t\t\t\t\"switch\": 4\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t}\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"dns\": {\n" +
                 "\t\t\t\t\"desc\": \"DNS 查询防护\",\n" +
                 "\t\t\t\t\"all\": {\n" +
                 "\t\t\t\t\t\"desc\": \"1、禁止黑名单内的域名查询(如 dnslog.cn、ceye.io 等)\",\n" +
-                "\t\t\t\t\t\"switch\": 5\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t}\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"xxe\": {\n" +
                 "\t\t\t\t\"desc\": \"XXE外部实体加载\",\n" +
                 "\t\t\t\t\"all\": {\n" +
                 "\t\t\t\t\t\"desc\": \"1、禁止外部实体加载\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"protocol\": {\n" +
                 "\t\t\t\t\t\"desc\": \"2、禁止 ftp:// 等异常协议加载外部实体\",\n" +
-                "\t\t\t\t\t\"switch\": 5\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"deserialize\": {\n" +
                 "\t\t\t\t\t\"desc\": \"3、禁止通过反序列化加载外部实体\",\n" +
-                "\t\t\t\t\t\"switch\": 5\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t}\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"connect\": {\n" +
                 "\t\t\t\t\"desc\": \"非法外连防护\",\n" +
                 "\t\t\t\t\"all\": {\n" +
                 "\t\t\t\t\t\"desc\": \"1、禁止所有WEB请求发起外连\",\n" +
-                "\t\t\t\t\t\"switch\": 5\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"deserialize\": {\n" +
                 "\t\t\t\t\t\"desc\": \"2、禁止通过反序列化发起外连\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"expression\": {\n" +
                 "\t\t\t\t\t\"desc\": \"3、禁止通过表达式发起外连\",\n" +
-                "\t\t\t\t\t\"switch\": 5\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"webshell\": {\n" +
                 "\t\t\t\t\t\"desc\": \"4、禁止通过 Webshell 发起外连\",\n" +
-                "\t\t\t\t\t\"switch\": 5\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"other\": {\n" +
                 "\t\t\t\t\t\"desc\": \"5、禁止通过特定规则发起外连\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t}\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"ssrf\": {\n" +
                 "\t\t\t\t\"desc\": \"SSRF 请求伪造防护\",\n" +
                 "\t\t\t\t\"http\": {\n" +
                 "\t\t\t\t\t\"desc\": \"1、禁止伪造 http 请求\",\n" +
-                "\t\t\t\t\t\"switch\": 5\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"gopher\": {\n" +
                 "\t\t\t\t\t\"desc\": \"2、禁止伪造 gopher 请求\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t}\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"ognl\": {\n" +
                 "\t\t\t\t\"desc\": \"ognl 表达式获取信息\",\n" +
                 "\t\t\t\t\"all\": {\n" +
                 "\t\t\t\t\t\"desc\": \"1、禁止通过 ognl 获取信息\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t}\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"memshell\": {\n" +
                 "\t\t\t\t\"desc\": \"内存马注入防护\",\n" +
                 "\t\t\t\t\"deserialize\": {\n" +
                 "\t\t\t\t\t\"desc\": \"1、禁止通过反序列化注入内存马\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"expression\": {\n" +
                 "\t\t\t\t\t\"desc\": \"2、禁止通过表达式注入内存马\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"webshell\": {\n" +
                 "\t\t\t\t\t\"desc\": \"3、禁止通过 Webshell 注入内存马\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t}\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"jni\": {\n" +
                 "\t\t\t\t\"desc\": \"JNI 方式绕过 rasp\",\n" +
                 "\t\t\t\t\"webshell\": {\n" +
                 "\t\t\t\t\t\"desc\": \"1、禁止通过 Webshell 加载共享库\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t}\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"sqli\": {\n" +
                 "\t\t\t\t\"desc\": \"SQL注入漏洞防护\",\n" +
                 "\t\t\t\t\"all\": {\n" +
                 "\t\t\t\t\t\"desc\": \"1、禁止 SQL 注入漏洞利用\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t}\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"jrmp\": {\n" +
                 "\t\t\t\t\"desc\": \"JRMP 注入防护\",\n" +
                 "\t\t\t\t\"deserialize\": {\n" +
                 "\t\t\t\t\t\"desc\": \"1、禁止通过反序列化注入JRMP\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"expression\": {\n" +
                 "\t\t\t\t\t\"desc\": \"2、禁止通过表达式注入JRMP\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"webshell\": {\n" +
                 "\t\t\t\t\t\"desc\": \"3、禁止通过 Webshell 注入JRMP\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t}\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"reflect\": {\n" +
                 "\t\t\t\t\"desc\": \"非法反射防护\",\n" +
                 "\t\t\t\t\"field\": {\n" +
                 "\t\t\t\t\t\"desc\": \"1、禁止通过反射访问指定的字段\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t}\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"list_file\": {\n" +
                 "\t\t\t\t\"desc\": \"目录遍历防护\",\n" +
                 "\t\t\t\t\"deserialize\": {\n" +
                 "\t\t\t\t\t\"desc\": \"1、禁止通过反序列化遍历目录\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"expression\": {\n" +
                 "\t\t\t\t\t\"desc\": \"2、禁止通过表达式遍历目录\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"webshell\": {\n" +
                 "\t\t\t\t\t\"desc\": \"3、禁止通过 Webshell 遍历目录\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t}\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"file_delete\": {\n" +
                 "\t\t\t\t\"desc\": \"任意文件删除\",\n" +
                 "\t\t\t\t\"deserialize\": {\n" +
                 "\t\t\t\t\t\"desc\": \"1、禁止通过反序列化删除文件\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"expression\": {\n" +
                 "\t\t\t\t\t\"desc\": \"2、禁止通过表达式删除文件\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"any\": {\n" +
                 "\t\t\t\t\t\"desc\": \"3、禁止通过请求参数删除文件\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"webshell\": {\n" +
                 "\t\t\t\t\t\"desc\": \"4、禁止通过 Webshell 删除文件\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t},\n" +
                 "\t\t\t\t\"other\": {\n" +
                 "\t\t\t\t\t\"desc\": \"5、禁止通过特定规则删除文件\",\n" +
-                "\t\t\t\t\t\"switch\": 1\n" +
+                "\t\t\t\t\t\"switch\": 6\n" +
                 "\t\t\t\t}\n" +
                 "\t\t\t}\n" +
                 "\n" +
@@ -1376,31 +1376,438 @@ public class test111 {
         JSONObject newBehavior = JSONObject.parse(newRaspConfig).getJSONObject("switchs").getJSONObject("behavior");
         Behavior newBehaviorObj = JSONObject.parseObject(newBehavior.toJSONString(), Behavior.class);
 
+        //command_exec
         if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getCommand_exec())){
-          if(ObjectUtils.isNotEmpty(oldBehaviorObj.getCommand_exec().getAll())){
-              RaspSwitchsStatus all = oldBehaviorObj.getCommand_exec().getAll();
-              newBehaviorObj.getCommand_exec().getAll().setSwitchStatus(all.getSwitchStatus());
-          }
+            if(ObjectUtils.isNotEmpty(oldBehaviorObj.getCommand_exec().getAll())){
+                RaspSwitchsStatus all = oldBehaviorObj.getCommand_exec().getAll();
+                newBehaviorObj.getCommand_exec().getAll().setSwitchStatus(all.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getCommand_exec().getAny())) {
+                RaspSwitchsStatus any = oldBehaviorObj.getCommand_exec().getAny();
+                newBehaviorObj.getCommand_exec().getAny().setSwitchStatus(any.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getCommand_exec().getDeserialize())) {
+                RaspSwitchsStatus deserialize = oldBehaviorObj.getCommand_exec().getDeserialize();
+                newBehaviorObj.getCommand_exec().getDeserialize().setSwitchStatus(deserialize.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getCommand_exec().getExpression())) {
+                RaspSwitchsStatus expression = oldBehaviorObj.getCommand_exec().getExpression();
+                newBehaviorObj.getCommand_exec().getExpression().setSwitchStatus(expression.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getCommand_exec().getOther())) {
+                RaspSwitchsStatus other = oldBehaviorObj.getCommand_exec().getOther();
+                newBehaviorObj.getCommand_exec().getOther().setSwitchStatus(other.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getCommand_exec().getReflect())) {
+                RaspSwitchsStatus reflect = oldBehaviorObj.getCommand_exec().getReflect();
+                newBehaviorObj.getCommand_exec().getReflect().setSwitchStatus(reflect.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getCommand_exec().getWebshell())) {
+                RaspSwitchsStatus webshell = oldBehaviorObj.getCommand_exec().getWebshell();
+                newBehaviorObj.getCommand_exec().getWebshell().setSwitchStatus(webshell.getSwitchStatus());
+            }
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getConnect())){
+            if(ObjectUtils.isNotEmpty(oldBehaviorObj.getConnect().getAll())){
+                RaspSwitchsStatus all = oldBehaviorObj.getConnect().getAll();
+                newBehaviorObj.getConnect().getAll().setSwitchStatus(all.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getConnect().getDeserialize())) {
+                RaspSwitchsStatus deserialize = oldBehaviorObj.getConnect().getDeserialize();
+                newBehaviorObj.getConnect().getDeserialize().setSwitchStatus(deserialize.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getConnect().getExpression())) {
+                RaspSwitchsStatus expression = oldBehaviorObj.getConnect().getExpression();
+                newBehaviorObj.getConnect().getExpression().setSwitchStatus(expression.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getConnect().getOther())) {
+                RaspSwitchsStatus other = oldBehaviorObj.getConnect().getOther();
+                newBehaviorObj.getConnect().getOther().setSwitchStatus(other.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getConnect().getWebshell())) {
+                RaspSwitchsStatus webshell = oldBehaviorObj.getConnect().getWebshell();
+                newBehaviorObj.getConnect().getWebshell().setSwitchStatus(webshell.getSwitchStatus());
+            }
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getExpression())){
+            if(ObjectUtils.isNotEmpty(oldBehaviorObj.getExpression().getBcel())){
+                RaspSwitchsStatus bcel = oldBehaviorObj.getExpression().getBcel();
+                newBehaviorObj.getExpression().getBcel().setSwitchStatus(bcel.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getExpression().getFreemarker())) {
+                RaspSwitchsStatus freemarker = oldBehaviorObj.getExpression().getFreemarker();
+                newBehaviorObj.getExpression().getFreemarker().setSwitchStatus(freemarker.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getExpression().getGroovy())) {
+                RaspSwitchsStatus groovy = oldBehaviorObj.getExpression().getGroovy();
+                newBehaviorObj.getExpression().getGroovy().setSwitchStatus(groovy.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getExpression().getJavax())) {
+                RaspSwitchsStatus javax = oldBehaviorObj.getExpression().getJavax();
+                newBehaviorObj.getExpression().getJavax().setSwitchStatus(javax.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getExpression().getJexl3())) {
+                RaspSwitchsStatus jexl3 = oldBehaviorObj.getExpression().getJexl3();
+                newBehaviorObj.getExpression().getJexl3().setSwitchStatus(jexl3.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getExpression().getJxpath())) {
+                RaspSwitchsStatus jxpath = oldBehaviorObj.getExpression().getJxpath();
+                newBehaviorObj.getExpression().getJxpath().setSwitchStatus(jxpath.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getExpression().getMvel())) {
+                RaspSwitchsStatus mvel = oldBehaviorObj.getExpression().getMvel();
+                newBehaviorObj.getExpression().getMvel().setSwitchStatus(mvel.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getExpression().getOgnl())) {
+                RaspSwitchsStatus ognl = oldBehaviorObj.getExpression().getOgnl();
+                newBehaviorObj.getExpression().getOgnl().setSwitchStatus(ognl.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getExpression().getScript())) {
+                RaspSwitchsStatus script = oldBehaviorObj.getExpression().getScript();
+                newBehaviorObj.getExpression().getScript().setSwitchStatus(script.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getExpression().getSpel())) {
+                RaspSwitchsStatus spel = oldBehaviorObj.getExpression().getSpel();
+                newBehaviorObj.getExpression().getSpel().setSwitchStatus(spel.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getExpression().getVelocity())) {
+                RaspSwitchsStatus velocity = oldBehaviorObj.getExpression().getVelocity();
+                newBehaviorObj.getExpression().getVelocity().setSwitchStatus(velocity.getSwitchStatus());
+            }
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_copy())){
+            if(ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_copy().getAny())){
+                RaspSwitchsStatus any = oldBehaviorObj.getFile_copy().getAny();
+                newBehaviorObj.getFile_copy().getAny().setSwitchStatus(any.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_copy().getOther())) {
+                RaspSwitchsStatus other = oldBehaviorObj.getFile_copy().getOther();
+                newBehaviorObj.getFile_copy().getOther().setSwitchStatus(other.getSwitchStatus());
+            }
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_delete())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_delete().getAny())) {
+                RaspSwitchsStatus any = oldBehaviorObj.getFile_delete().getAny();
+                newBehaviorObj.getFile_delete().getAny().setSwitchStatus(any.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_delete().getDeserialize())) {
+                RaspSwitchsStatus deserialize = oldBehaviorObj.getFile_delete().getDeserialize();
+                newBehaviorObj.getFile_delete().getDeserialize().setSwitchStatus(deserialize.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_delete().getExpression())) {
+                RaspSwitchsStatus expression = oldBehaviorObj.getFile_delete().getExpression();
+                newBehaviorObj.getFile_delete().getExpression().setSwitchStatus(expression.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_delete().getOther())) {
+                RaspSwitchsStatus other = oldBehaviorObj.getFile_delete().getOther();
+                newBehaviorObj.getFile_delete().getOther().setSwitchStatus(other.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_delete().getWebshell())) {
+                RaspSwitchsStatus webshell = oldBehaviorObj.getFile_delete().getWebshell();
+                newBehaviorObj.getFile_delete().getWebshell().setSwitchStatus(webshell.getSwitchStatus());
+            }
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_move())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_move().getAny())) {
+                RaspSwitchsStatus any = oldBehaviorObj.getFile_move().getAny();
+                newBehaviorObj.getFile_move().getAny().setSwitchStatus(any.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_move().getOther())) {
+                RaspSwitchsStatus other = oldBehaviorObj.getFile_move().getOther();
+                newBehaviorObj.getFile_move().getOther().setSwitchStatus(other.getSwitchStatus());
+            }
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_read())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_read().getAny())) {
+                RaspSwitchsStatus any = oldBehaviorObj.getFile_read().getAny();
+                newBehaviorObj.getFile_read().getAny().setSwitchStatus(any.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_read().getDeserialize())) {
+                RaspSwitchsStatus deserialize = oldBehaviorObj.getFile_read().getDeserialize();
+                newBehaviorObj.getFile_read().getDeserialize().setSwitchStatus(deserialize.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_read().getExpression())) {
+                RaspSwitchsStatus expression = oldBehaviorObj.getFile_read().getExpression();
+                newBehaviorObj.getFile_read().getExpression().setSwitchStatus(expression.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_read().getOther())) {
+                RaspSwitchsStatus other = oldBehaviorObj.getFile_read().getOther();
+                newBehaviorObj.getFile_read().getOther().setSwitchStatus(other.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_read().getWebshell())) {
+                RaspSwitchsStatus webshell = oldBehaviorObj.getFile_read().getWebshell();
+                newBehaviorObj.getFile_read().getWebshell().setSwitchStatus(webshell.getSwitchStatus());
+            }
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_read_write())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_read_write().getAny())) {
+                RaspSwitchsStatus any = oldBehaviorObj.getFile_read_write().getAny();
+                newBehaviorObj.getFile_read_write().getAny().setSwitchStatus(any.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_read_write().getDeserialize())) {
+                RaspSwitchsStatus deserialize = oldBehaviorObj.getFile_read_write().getDeserialize();
+                newBehaviorObj.getFile_read_write().getDeserialize().setSwitchStatus(deserialize.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_read_write().getExpression())) {
+                RaspSwitchsStatus expression = oldBehaviorObj.getFile_read_write().getExpression();
+                newBehaviorObj.getFile_read_write().getExpression().setSwitchStatus(expression.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_read_write().getOther())) {
+                RaspSwitchsStatus other = oldBehaviorObj.getFile_read_write().getOther();
+                newBehaviorObj.getFile_read_write().getOther().setSwitchStatus(other.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_read_write().getWebshell())) {
+                RaspSwitchsStatus webshell = oldBehaviorObj.getFile_read_write().getWebshell();
+                newBehaviorObj.getFile_read_write().getWebshell().setSwitchStatus(webshell.getSwitchStatus());
+            }
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_upload())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_upload().getWar())) {
+                RaspSwitchsStatus war = oldBehaviorObj.getFile_upload().getWar();
+                newBehaviorObj.getFile_upload().getWar().setSwitchStatus(war.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_upload().getScript())) {
+                RaspSwitchsStatus script = oldBehaviorObj.getFile_upload().getScript();
+                newBehaviorObj.getFile_upload().getScript().setSwitchStatus(script.getSwitchStatus());
+            }
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_write())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_write().getAny())) {
+                RaspSwitchsStatus any = oldBehaviorObj.getFile_write().getAny();
+                newBehaviorObj.getFile_write().getAny().setSwitchStatus(any.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_write().getDeserialize())) {
+                RaspSwitchsStatus deserialize = oldBehaviorObj.getFile_write().getDeserialize();
+                newBehaviorObj.getFile_write().getDeserialize().setSwitchStatus(deserialize.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_write().getExpression())) {
+                RaspSwitchsStatus expression = oldBehaviorObj.getFile_write().getExpression();
+                newBehaviorObj.getFile_write().getExpression().setSwitchStatus(expression.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_write().getOther())) {
+                RaspSwitchsStatus other = oldBehaviorObj.getFile_write().getOther();
+                newBehaviorObj.getFile_write().getOther().setSwitchStatus(other.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_write().getWebshell())) {
+                RaspSwitchsStatus webshell = oldBehaviorObj.getFile_write().getWebshell();
+                newBehaviorObj.getFile_write().getWebshell().setSwitchStatus(webshell.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getFile_write().getReflect())) {
+                RaspSwitchsStatus reflect = oldBehaviorObj.getFile_write().getReflect();
+                newBehaviorObj.getFile_write().getReflect().setSwitchStatus(reflect.getSwitchStatus());
+            }
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getJndi())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getJndi().getDns())) {
+                RaspSwitchsStatus dns = oldBehaviorObj.getJndi().getDns();
+                newBehaviorObj.getJndi().getDns().setSwitchStatus(dns.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getJndi().getIiop())) {
+                RaspSwitchsStatus iiop = oldBehaviorObj.getJndi().getIiop();
+                newBehaviorObj.getJndi().getIiop().setSwitchStatus(iiop.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getJndi().getRmi())) {
+                RaspSwitchsStatus rmi = oldBehaviorObj.getJndi().getRmi();
+                newBehaviorObj.getJndi().getRmi().setSwitchStatus(rmi.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getJndi().getLdap())) {
+                RaspSwitchsStatus ldap = oldBehaviorObj.getJndi().getLdap();
+                newBehaviorObj.getJndi().getLdap().setSwitchStatus(ldap.getSwitchStatus());
+            }
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getJni())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getJni().getWebshell())) {
+                RaspSwitchsStatus webshell = oldBehaviorObj.getJni().getWebshell();
+                newBehaviorObj.getJni().getWebshell().setSwitchStatus(webshell.getSwitchStatus());
+            }
+
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getJrmp())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getJrmp().getDeserialize())) {
+                RaspSwitchsStatus deserialize = oldBehaviorObj.getJrmp().getDeserialize();
+                newBehaviorObj.getJrmp().getDeserialize().setSwitchStatus(deserialize.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getJrmp().getExpression())) {
+                RaspSwitchsStatus expression = oldBehaviorObj.getJrmp().getExpression();
+                newBehaviorObj.getJrmp().getExpression().setSwitchStatus(expression.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getJrmp().getWebshell())) {
+                RaspSwitchsStatus webshell = oldBehaviorObj.getJrmp().getWebshell();
+                newBehaviorObj.getJrmp().getWebshell().setSwitchStatus(webshell.getSwitchStatus());
+            }
+
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getList_file())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getList_file().getDeserialize())) {
+                RaspSwitchsStatus deserialize = oldBehaviorObj.getList_file().getDeserialize();
+                newBehaviorObj.getList_file().getDeserialize().setSwitchStatus(deserialize.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getList_file().getExpression())) {
+                RaspSwitchsStatus expression = oldBehaviorObj.getList_file().getExpression();
+                newBehaviorObj.getList_file().getExpression().setSwitchStatus(expression.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getList_file().getWebshell())) {
+                RaspSwitchsStatus webshell = oldBehaviorObj.getList_file().getWebshell();
+                newBehaviorObj.getList_file().getWebshell().setSwitchStatus(webshell.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getList_file().getAny())) {
+                RaspSwitchsStatus any = oldBehaviorObj.getList_file().getAny();
+                newBehaviorObj.getList_file().getAny().setSwitchStatus(any.getSwitchStatus());
+            }
+
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getMemshell())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getMemshell().getDeserialize())) {
+                RaspSwitchsStatus deserialize = oldBehaviorObj.getMemshell().getDeserialize();
+                newBehaviorObj.getMemshell().getDeserialize().setSwitchStatus(deserialize.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getMemshell().getExpression())) {
+                RaspSwitchsStatus expression = oldBehaviorObj.getMemshell().getExpression();
+                newBehaviorObj.getMemshell().getExpression().setSwitchStatus(expression.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getMemshell().getWebshell())) {
+                RaspSwitchsStatus webshell = oldBehaviorObj.getMemshell().getWebshell();
+                newBehaviorObj.getMemshell().getWebshell().setSwitchStatus(webshell.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getMemshell().getBind())) {
+                RaspSwitchsStatus bind = oldBehaviorObj.getMemshell().getBind();
+                newBehaviorObj.getMemshell().getBind().setSwitchStatus(bind.getSwitchStatus());
+            }
+
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getOgnl())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getOgnl().getAll())) {
+                RaspSwitchsStatus all = oldBehaviorObj.getOgnl().getAll();
+                newBehaviorObj.getOgnl().getAll().setSwitchStatus(all.getSwitchStatus());
+            }
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getReflect())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getReflect().getField())) {
+                RaspSwitchsStatus field = oldBehaviorObj.getReflect().getField();
+                newBehaviorObj.getReflect().getField().setSwitchStatus(field.getSwitchStatus());
+            }
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getSqli())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getSqli().getAll())) {
+                RaspSwitchsStatus all = oldBehaviorObj.getSqli().getAll();
+                newBehaviorObj.getSqli().getAll().setSwitchStatus(all.getSwitchStatus());
+            }
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getSsrf())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getSsrf().getHttp())) {
+                RaspSwitchsStatus http = oldBehaviorObj.getSsrf().getHttp();
+                newBehaviorObj.getSsrf().getHttp().setSwitchStatus(http.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getSsrf().getGopher())) {
+                RaspSwitchsStatus gopher = oldBehaviorObj.getSsrf().getGopher();
+                newBehaviorObj.getSsrf().getGopher().setSwitchStatus(gopher.getSwitchStatus());
+            }
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getThread())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getThread().getAll())) {
+                RaspSwitchsStatus all = oldBehaviorObj.getThread().getAll();
+                newBehaviorObj.getThread().getAll().setSwitchStatus(all.getSwitchStatus());
+            }
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getTraversal())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getTraversal().getAll())) {
+                RaspSwitchsStatus all = oldBehaviorObj.getTraversal().getAll();
+                newBehaviorObj.getTraversal().getAll().setSwitchStatus(all.getSwitchStatus());
+            }
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getXpathi())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getXpathi().getAll())) {
+                RaspSwitchsStatus all = oldBehaviorObj.getXpathi().getAll();
+                newBehaviorObj.getXpathi().getAll().setSwitchStatus(all.getSwitchStatus());
+            }
+        }
+
+        if(ObjectUtils.isNotEmpty(oldBehaviorObj) && ObjectUtils.isNotEmpty(oldBehaviorObj.getXxe())){
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getXxe().getAll())) {
+                RaspSwitchsStatus all = oldBehaviorObj.getXxe().getAll();
+                newBehaviorObj.getXxe().getAll().setSwitchStatus(all.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getXxe().getDeserialize())) {
+                RaspSwitchsStatus deserialize = oldBehaviorObj.getXxe().getDeserialize();
+                newBehaviorObj.getXxe().getDeserialize().setSwitchStatus(deserialize.getSwitchStatus());
+            }
+            if (ObjectUtils.isNotEmpty(oldBehaviorObj.getXxe().getProtocol())) {
+                RaspSwitchsStatus protocol = oldBehaviorObj.getXxe().getProtocol();
+                newBehaviorObj.getXxe().getProtocol().setSwitchStatus(protocol.getSwitchStatus());
+            }
+        }
+
+        String jsonString = JSON.toJSONString(newBehaviorObj);
+        JSONObject newBehavior1 = JSONObject.parse(jsonString);
+        System.out.println(newBehavior1);
+
+        JSONObject switchs = JSONObject.parse(newRaspConfig).getJSONObject("switchs");
+        switchs.put("behavior", newBehavior1);
+        JSONObject parse1 = JSONObject.parse(newRaspConfig);
+        parse1.put("switchs",switchs);
+        System.out.println(parse1.toJSONString());
+
+
+        com.alibaba.fastjson.JSONObject midViewRaspProtectItemVOJson = new com.alibaba.fastjson.JSONObject();// 回显给前端的防护项json
+        midViewRaspProtectItemVOJson.put("midRaspProtectItemVOList", "sssss");
+        midViewRaspProtectItemVOJson.put("midRaspProtectItemVOList", "ttttt");
+        System.out.println(midViewRaspProtectItemVOJson);
+
+
+        System.out.println("完成");
+//        for (String key : newBehavior.keySet()) {
+//            Object o = oldBehavior.get(key);
+//            System.out.println(key + ": " + o);
+//        }
+//        System.out.println(jsonObject2);
+
+
+        String oldRaspVersion = "1.2.0";
+        String newRaspVersion = "1.6.0";
+
+
+        int result = compareVersion(oldRaspVersion, newRaspVersion);
+        if(result < 0){
+            System.out.println("需要升级");
         }
 
 
+    }
 
 
+    public static int compareVersion(String version1, String version2) {
+        String[] v1Parts = version1.split("\\.");
+        String[] v2Parts = version2.split("\\.");
 
+        int length = Math.max(v1Parts.length, v2Parts.length);
+        for (int i = 0; i < length; i++) {
+            int v1 = i < v1Parts.length ? Integer.parseInt(v1Parts[i]) : 0;
+            int v2 = i < v2Parts.length ? Integer.parseInt(v2Parts[i]) : 0;
 
-//        suspiciousLoginVO.getConnect().getAll().setSwitchStatus(3);
-//        String jsonString = JSON.toJSONString(suspiciousLoginVO);
-//        JSONObject parse1 = JSONObject.parse(jsonString);
-//        System.out.println(suspiciousLoginVO);
-        for (String key : newBehavior.keySet()) {
-            Object o = oldBehavior.get(key);
-            System.out.println(key + ": " + o);
+            if (v1 < v2) return -1;
+            if (v1 > v2) return 1;
         }
-        System.out.println(jsonObject2);
-
-
-
-
-
+        return 0;
     }
 }

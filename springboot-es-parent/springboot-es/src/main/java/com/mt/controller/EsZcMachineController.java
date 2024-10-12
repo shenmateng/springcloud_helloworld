@@ -69,4 +69,18 @@ public class EsZcMachineController {
         esZcQueryBaseService.outreachMachineAgg2();
         return new Result();
     }
+
+
+    /**
+     * 修改机器信息
+     * @param
+     * @return
+     * @throws JowtoException
+     */
+    @JowtoResponseBody
+    @PostMapping("/createIndex")
+    public Result createIndex() throws JowtoException, IOException {
+        esZcQueryBaseService.createIndex();
+        return new Result();
+    }
 }

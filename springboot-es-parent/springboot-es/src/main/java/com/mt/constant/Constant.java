@@ -424,4 +424,11 @@ public class Constant {
      */
     public static final String IF_DELETE = "ifDelete";
 
+
+    public static final String YS_OUTREACH = "ys_outreach";
+    public static final String YS_OUTREACH_MACHINE_AGG = "ys_outreach_machine_agg";
+    public static final String YS_OUTREACH_MACHINE_PROCESS_AGG = "ys_outreach_machine_process_agg";
+    public static final String YS_OUTREACH_IP_DOMAIN_AGG = "ys_outreach_ip_domain_agg";
+    public static final String YS_OUTREACH_IP_DOMAIN_PROCESS_AGG = "ys_outreach_ip_domain_process_agg";
+
 }

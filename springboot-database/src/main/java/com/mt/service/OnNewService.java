@@ -119,8 +119,6 @@ public class OnNewService {
         List<String> machineUuid = new ArrayList<>();
         machineUuid.add("235d59763454ae901badfdaea87afd06");
         String id = "045b2851ec914b62896ac6faaa0cc798";
-        List<ProtectConfBackupsMachine> protectConfBackupsMachines = basicSkuMapper.queryByProIdAndMachineUuid(id, machineUuid);
-        System.out.println(basicSkuDO);
         basicSkus.forEach(o->{
             String sku = o.getSku();
             Integer id1 = o.getId();
@@ -130,6 +128,8 @@ public class OnNewService {
             String sss = "delete from basic_sku where id = "+ id1+ ";";
             System.out.println(ss);
         });
+        List<ProtectConfBackupsMachine> protectConfBackupsMachines = basicSkuMapper.queryByProIdAndMachineUuid(id, machineUuid);
+        System.out.println(basicSkuDO);
         System.out.println(url);
         System.out.println(url1);
         System.out.println(url + url1);
@@ -405,7 +405,6 @@ public class OnNewService {
         String ssss = "1ec1821b74234167bc28c34199ef6c65";
         EventWhitelistAutoAdd eventWhitelistAutoAdd = systemWhiteListGroupMachineMapper.queryByEventWhiteId(ssss);
         System.out.println(systemWhiteListGroupMachineDOS1);
-
         return null;
     }
 
