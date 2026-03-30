@@ -2,6 +2,7 @@ package com.mt.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.mt.ResponseResult.ResponseResult;
+import com.mt.ai.MyThread;
 import com.mt.database.*;
 import com.mt.service.OnNewService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,12 @@ public class TestController {
 
     @Resource
     private OnNewService onNewService;
+
+//    @Resource
+//    private XunFeiAiUtils xunFeiAiUtils;
+
+    @Resource
+    private MyThread myThread;
 
     /**
      * 日志分页展示
@@ -97,4 +104,13 @@ public class TestController {
         onNewService.deleteMachineUuid();
         return "成功";
     }
+
+//    @RequestMapping("/ai")
+//    @ResponseBody
+//    public String ai() throws Exception {
+//        String fileUrl = "www.baidu.com";
+//        String number = "10";
+//        xunFeiAiUtils.generateShortAnswer(fileUrl, number);
+//        return "成功";
+//    }
 }

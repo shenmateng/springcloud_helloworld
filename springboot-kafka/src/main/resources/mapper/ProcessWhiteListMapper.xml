@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace=".mapper.ProcessWhiteListMapper">
+
+    <resultMap id="BaseResultMap" type="..ProcessWhiteList">
+        <result property="id" column="id" jdbcType=""/>
+        <result property="whitenType" column="whiten_type" jdbcType=""/>
+        <result property="executeUser" column="execute_user" jdbcType=""/>
+        <result property="processName" column="process_name" jdbcType=""/>
+        <result property="processPath" column="process_path" jdbcType=""/>
+        <result property="processLine" column="process_line" jdbcType=""/>
+        <result property="sourceIp" column="source_ip" jdbcType=""/>
+        <result property="localUser" column="local_user" jdbcType=""/>
+        <result property="objectType" column="object_type" jdbcType=""/>
+        <result property="objectContent" column="object_content" jdbcType=""/>
+        <result property="remark" column="remark" jdbcType=""/>
+        <result property="configUser" column="config_user" jdbcType=""/>
+        <result property="configTime" column="config_time" jdbcType=""/>
+        <result property="updateStatus" column="update_status" jdbcType=""/>
+    </resultMap>
+
+    <sql id="BaseColumn">
+         #allSqlColumn()
+    </sql>
+
+    <!--查询单个对象-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+            <include refid="BaseColumn"/>
+        from `process_white_list`
+        where `id` = #{id} 
+    </select>
+
+    <!--通过ID集合查询多条数据-->
+    <select id="queryByIds" resultMap="BaseResultMap">
+       select
+           <include refid="BaseColumn"/>
+       from `process_white_list`
+       <where>
+           <choose>
+           		<when test="ids != null and ids.size > 0">
+            		`id` in
+            		<foreach collection="ids" item="id" open="(" close=")" separator=",">
+             	 		#{id}
+            		</foreach>
+					
+           		</when>
+           		<otherwise>
+           			1 != 1
+           		</otherwise>
+           </choose>    
+       </where>
+    </select>
+    
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+            <include refid="BaseColumn"/>
+        from `process_white_list`
+        <where>
+    <if test="id != null">
+                and `id` = #{id}
+            </if>
+    <if test="whitenType != null">
+                and `whiten_type` = #{whitenType}
+            </if>
+    <if test="executeUser != null">
+                and `execute_user` = #{executeUser}
+            </if>
+    <if test="processName != null and processName != ''">
+                and `process_name` = #{processName}
+            </if>
+    <if test="processPath != null and processPath != ''">
+                and `process_path` = #{processPath}
+            </if>
+    <if test="processLine != null and processLine != ''">
+                and `process_line` = #{processLine}
+            </if>
+    <if test="sourceIp != null and sourceIp != ''">
+                and `source_ip` = #{sourceIp}
+            </if>
+    <if test="localUser != null and localUser != ''">
+                and `local_user` = #{localUser}
+            </if>
+    <if test="objectType != null">
+                and `object_type` = #{objectType}
+            </if>
+    <if test="objectContent != null and objectContent != ''">
+                and `object_content` = #{objectContent}
+            </if>
+    <if test="remark != null and remark != ''">
+                and `remark` = #{remark}
+            </if>
+    <if test="configUser != null and configUser != ''">
+                and `config_user` = #{configUser}
+            </if>
+    <if test="configTime != null">
+                and `config_time` = #{configTime}
+            </if>
+    <if test="updateStatus != null">
+                and `update_status` = #{updateStatus}
+            </if>
+    </where>
+    </select>
+
+    <!--新增可选列-->
+<insert id="insertSelective" keyProperty="id" useGeneratedKeys="true">
+ insert into `process_white_list`
+         <trim prefix="(" suffix=")" suffixOverrides=",">
+      		  <if test="id != null">
+                `id`,
+            </if>
+      		  <if test="whitenType != null">
+                `whiten_type`,
+            </if>
+      		  <if test="executeUser != null">
+                `execute_user`,
+            </if>
+      		  <if test="processName != null and processName != ''">
+                `process_name`,
+            </if>
+      		  <if test="processPath != null and processPath != ''">
+                `process_path`,
+            </if>
+      		  <if test="processLine != null and processLine != ''">
+                `process_line`,
+            </if>
+      		  <if test="sourceIp != null and sourceIp != ''">
+                `source_ip`,
+            </if>
+      		  <if test="localUser != null and localUser != ''">
+                `local_user`,
+            </if>
+      		  <if test="objectType != null">
+                `object_type`,
+            </if>
+      		  <if test="objectContent != null and objectContent != ''">
+                `object_content`,
+            </if>
+      		  <if test="remark != null and remark != ''">
+                `remark`,
+            </if>
+      		  <if test="configUser != null and configUser != ''">
+                `config_user`,
+            </if>
+      		  <if test="configTime != null">
+                `config_time`,
+            </if>
+      		  <if test="updateStatus != null">
+                `update_status`,
+            </if>
+         </trim>
+         <trim prefix="values (" suffix=")" suffixOverrides=",">
+      		  <if test="id != null">
+                #{id},
+            </if>
+      		  <if test="whitenType != null">
+                #{whitenType},
+            </if>
+      		  <if test="executeUser != null">
+                #{executeUser},
+            </if>
+      		  <if test="processName != null and processName != ''">
+                #{processName},
+            </if>
+      		  <if test="processPath != null and processPath != ''">
+                #{processPath},
+            </if>
+      		  <if test="processLine != null and processLine != ''">
+                #{processLine},
+            </if>
+      		  <if test="sourceIp != null and sourceIp != ''">
+                #{sourceIp},
+            </if>
+      		  <if test="localUser != null and localUser != ''">
+                #{localUser},
+            </if>
+      		  <if test="objectType != null">
+                #{objectType},
+            </if>
+      		  <if test="objectContent != null and objectContent != ''">
+                #{objectContent},
+            </if>
+      		  <if test="remark != null and remark != ''">
+                #{remark},
+            </if>
+      		  <if test="configUser != null and configUser != ''">
+                #{configUser},
+            </if>
+      		  <if test="configTime != null">
+                #{configTime},
+            </if>
+      		  <if test="updateStatus != null">
+                #{updateStatus},
+            </if>
+         </trim>
+    </insert>
+
+           <!--批量新增数据-->
+<insert id="insertAllColumnBatch" keyProperty="id" useGeneratedKeys="true">
+ insert into `process_white_list`
+         <trim prefix="(" suffix=") values " suffixOverrides=",">
+             
+              
+                 `whiten_type`,
+              
+                 `execute_user`,
+              
+                 `process_name`,
+              
+                 `process_path`,
+              
+                 `process_line`,
+              
+                 `source_ip`,
+              
+                 `local_user`,
+              
+                 `object_type`,
+              
+                 `object_content`,
+              
+                 `remark`,
+              
+                 `config_user`,
+              
+                 `config_time`,
+              
+                 `update_status`,
+			
+         </trim>
+    	<foreach collection="list" item="dataObject" separator=",">	
+         <trim prefix="(" suffix=")" suffixOverrides=",">
+             
+
+<if test="dataObject.whitenType != null">
+                #{dataObject.whitenType},
+          	  </if>
+          	  <if test="dataObject.whitenType == null">
+                ,
+          	  </if>
+
+<if test="dataObject.executeUser != null">
+                #{dataObject.executeUser},
+          	  </if>
+          	  <if test="dataObject.executeUser == null">
+                ,
+          	  </if>
+
+<if test="dataObject.processName != null and dataObject.processName != ''">
+                #{dataObject.processName},
+          	  </if>
+          	  <if test="dataObject.processName == null or dataObject.processName == ''">
+                ,
+          	  </if>
+
+<if test="dataObject.processPath != null and dataObject.processPath != ''">
+                #{dataObject.processPath},
+          	  </if>
+          	  <if test="dataObject.processPath == null or dataObject.processPath == ''">
+                ,
+          	  </if>
+
+<if test="dataObject.processLine != null and dataObject.processLine != ''">
+                #{dataObject.processLine},
+          	  </if>
+          	  <if test="dataObject.processLine == null or dataObject.processLine == ''">
+                ,
+          	  </if>
+
+<if test="dataObject.sourceIp != null and dataObject.sourceIp != ''">
+                #{dataObject.sourceIp},
+          	  </if>
+          	  <if test="dataObject.sourceIp == null or dataObject.sourceIp == ''">
+                ,
+          	  </if>
+
+<if test="dataObject.localUser != null and dataObject.localUser != ''">
+                #{dataObject.localUser},
+          	  </if>
+          	  <if test="dataObject.localUser == null or dataObject.localUser == ''">
+                ,
+          	  </if>
+
+<if test="dataObject.objectType != null">
+                #{dataObject.objectType},
+          	  </if>
+          	  <if test="dataObject.objectType == null">
+                ,
+          	  </if>
+
+<if test="dataObject.objectContent != null and dataObject.objectContent != ''">
+                #{dataObject.objectContent},
+          	  </if>
+          	  <if test="dataObject.objectContent == null or dataObject.objectContent == ''">
+                ,
+          	  </if>
+
+<if test="dataObject.remark != null and dataObject.remark != ''">
+                #{dataObject.remark},
+          	  </if>
+          	  <if test="dataObject.remark == null or dataObject.remark == ''">
+                ,
+          	  </if>
+
+<if test="dataObject.configUser != null and dataObject.configUser != ''">
+                #{dataObject.configUser},
+          	  </if>
+          	  <if test="dataObject.configUser == null or dataObject.configUser == ''">
+                ,
+          	  </if>
+
+<if test="dataObject.configTime != null">
+                #{dataObject.configTime},
+          	  </if>
+          	  <if test="dataObject.configTime == null">
+                ,
+          	  </if>
+
+<if test="dataObject.updateStatus != null">
+                #{dataObject.updateStatus},
+          	  </if>
+          	  <if test="dataObject.updateStatus == null">
+                ,
+          	  </if>
+
+         </trim>
+         </foreach>      
+    </insert>
+    
+       <!--批量新增数据-->
+<insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+		<if test="list != null and list.size > 0">   
+			<foreach collection="list" item="dataObject" separator=";">
+	        insert into `process_white_list`
+         <trim prefix="(" suffix=")" suffixOverrides=",">
+      		  <if test="dataObject.id != null">
+                `id`,
+            </if>
+      		  <if test="dataObject.whitenType != null">
+                `whiten_type`,
+            </if>
+      		  <if test="dataObject.executeUser != null">
+                `execute_user`,
+            </if>
+      		  <if test="dataObject.processName != null and dataObject.processName != ''">
+                `process_name`,
+            </if>
+      		  <if test="dataObject.processPath != null and dataObject.processPath != ''">
+                `process_path`,
+            </if>
+      		  <if test="dataObject.processLine != null and dataObject.processLine != ''">
+                `process_line`,
+            </if>
+      		  <if test="dataObject.sourceIp != null and dataObject.sourceIp != ''">
+                `source_ip`,
+            </if>
+      		  <if test="dataObject.localUser != null and dataObject.localUser != ''">
+                `local_user`,
+            </if>
+      		  <if test="dataObject.objectType != null">
+                `object_type`,
+            </if>
+      		  <if test="dataObject.objectContent != null and dataObject.objectContent != ''">
+                `object_content`,
+            </if>
+      		  <if test="dataObject.remark != null and dataObject.remark != ''">
+                `remark`,
+            </if>
+      		  <if test="dataObject.configUser != null and dataObject.configUser != ''">
+                `config_user`,
+            </if>
+      		  <if test="dataObject.configTime != null">
+                `config_time`,
+            </if>
+      		  <if test="dataObject.updateStatus != null">
+                `update_status`,
+            </if>
+         </trim>
+         <trim prefix="values (" suffix=")" suffixOverrides=",">
+      		  <if test="dataObject.id != null">
+                #{dataObject.id},
+            </if>
+      		  <if test="dataObject.whitenType != null">
+                #{dataObject.whitenType},
+            </if>
+      		  <if test="dataObject.executeUser != null">
+                #{dataObject.executeUser},
+            </if>
+      		  <if test="dataObject.processName != null and dataObject.processName != ''">
+                #{dataObject.processName},
+            </if>
+      		  <if test="dataObject.processPath != null and dataObject.processPath != ''">
+                #{dataObject.processPath},
+            </if>
+      		  <if test="dataObject.processLine != null and dataObject.processLine != ''">
+                #{dataObject.processLine},
+            </if>
+      		  <if test="dataObject.sourceIp != null and dataObject.sourceIp != ''">
+                #{dataObject.sourceIp},
+            </if>
+      		  <if test="dataObject.localUser != null and dataObject.localUser != ''">
+                #{dataObject.localUser},
+            </if>
+      		  <if test="dataObject.objectType != null">
+                #{dataObject.objectType},
+            </if>
+      		  <if test="dataObject.objectContent != null and dataObject.objectContent != ''">
+                #{dataObject.objectContent},
+            </if>
+      		  <if test="dataObject.remark != null and dataObject.remark != ''">
+                #{dataObject.remark},
+            </if>
+      		  <if test="dataObject.configUser != null and dataObject.configUser != ''">
+                #{dataObject.configUser},
+            </if>
+      		  <if test="dataObject.configTime != null">
+                #{dataObject.configTime},
+            </if>
+      		  <if test="dataObject.updateStatus != null">
+                #{dataObject.updateStatus},
+            </if>
+         </trim>            	
+            </foreach>    
+        </if>
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update `process_white_list`
+        <set>
+            <if test="whitenType != null">
+                `whiten_type` = #{whitenType},
+            </if>
+            <if test="executeUser != null">
+                `execute_user` = #{executeUser},
+            </if>
+            <if test="processName != null and processName != ''">
+                `process_name` = #{processName},
+            </if>
+            <if test="processPath != null and processPath != ''">
+                `process_path` = #{processPath},
+            </if>
+            <if test="processLine != null and processLine != ''">
+                `process_line` = #{processLine},
+            </if>
+            <if test="sourceIp != null and sourceIp != ''">
+                `source_ip` = #{sourceIp},
+            </if>
+            <if test="localUser != null and localUser != ''">
+                `local_user` = #{localUser},
+            </if>
+            <if test="objectType != null">
+                `object_type` = #{objectType},
+            </if>
+            <if test="objectContent != null and objectContent != ''">
+                `object_content` = #{objectContent},
+            </if>
+            <if test="remark != null and remark != ''">
+                `remark` = #{remark},
+            </if>
+            <if test="configUser != null and configUser != ''">
+                `config_user` = #{configUser},
+            </if>
+            <if test="configTime != null">
+                `config_time` = #{configTime},
+            </if>
+            <if test="updateStatus != null">
+                `update_status` = #{updateStatus},
+            </if>
+        </set>
+        where `id` = #{id}
+    </update>
+
+  <!--批量修改数据-->
+    <update id="updateBatch">
+        <if test="list != null and list.size > 0">
+             <foreach collection="list" item="dataObject" separator=";">
+       		 	update `process_white_list`
+        		<set>
+
+            		<if test="dataObject.whitenType != null">
+                        `whiten_type` = #{dataObject.whitenType},
+            		</if>
+
+            		<if test="dataObject.executeUser != null">
+                        `execute_user` = #{dataObject.executeUser},
+            		</if>
+
+            		<if test="dataObject.processName != null and dataObject.processName != ''">
+                        `process_name` = #{dataObject.processName},
+            		</if>
+
+            		<if test="dataObject.processPath != null and dataObject.processPath != ''">
+                        `process_path` = #{dataObject.processPath},
+            		</if>
+
+            		<if test="dataObject.processLine != null and dataObject.processLine != ''">
+                        `process_line` = #{dataObject.processLine},
+            		</if>
+
+            		<if test="dataObject.sourceIp != null and dataObject.sourceIp != ''">
+                        `source_ip` = #{dataObject.sourceIp},
+            		</if>
+
+            		<if test="dataObject.localUser != null and dataObject.localUser != ''">
+                        `local_user` = #{dataObject.localUser},
+            		</if>
+
+            		<if test="dataObject.objectType != null">
+                        `object_type` = #{dataObject.objectType},
+            		</if>
+
+            		<if test="dataObject.objectContent != null and dataObject.objectContent != ''">
+                        `object_content` = #{dataObject.objectContent},
+            		</if>
+
+            		<if test="dataObject.remark != null and dataObject.remark != ''">
+                        `remark` = #{dataObject.remark},
+            		</if>
+
+            		<if test="dataObject.configUser != null and dataObject.configUser != ''">
+                        `config_user` = #{dataObject.configUser},
+            		</if>
+
+            		<if test="dataObject.configTime != null">
+                        `config_time` = #{dataObject.configTime},
+            		</if>
+
+            		<if test="dataObject.updateStatus != null">
+                        `update_status` = #{dataObject.updateStatus},
+            		</if>
+       			</set>
+        			where `id` = #{dataObject.id}			
+             </foreach>
+        </if>
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from `process_white_list` where `id` = #{id}
+    </delete>
+
+    <!--通过主键集合删除多条数据-->
+    <delete id="deleteByIds">
+       delete from `process_white_list`
+       <where>
+           <choose>
+           		<when test="ids != null and ids.size > 0">
+            		`id` in
+            		<foreach collection="ids" item="id" open="(" close=")" separator=",">
+             	 		#{id}
+            		</foreach>
+           		</when>
+           		<otherwise>
+           			1 != 1
+           		</otherwise>
+           </choose>    
+       </where>
+    </delete>    
+</mapper>

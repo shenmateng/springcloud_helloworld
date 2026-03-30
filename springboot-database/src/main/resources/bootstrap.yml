@@ -5,7 +5,7 @@ spring:
     name: bmp-prm-service
   cloud:
     consul:
-      host: 8.142.22.143
+      host: 58.87.74.91
       port: 8500
       discovery:
         # 启用服务发现

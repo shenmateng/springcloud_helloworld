@@ -32,7 +32,7 @@ public class ShopifyBatchLogReqVO {
     /**
      * 平台
      */
-    @NotBlank( message= "平台不能为空")
+//    @NotBlank( message= "平台不能为空")
     private String platform;
 
     /**

@@ -18,6 +18,6 @@ public class TargetJDKClass implements TargetJDKClassInterface,TargetJDKClassInt
 
     @Override
     public void savess() {
-        System.out.println("target......save.......");
+        System.out.println("target......savess.......");
     }
 }

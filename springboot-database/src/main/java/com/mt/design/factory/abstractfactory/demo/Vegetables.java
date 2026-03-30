@@ -22,7 +22,7 @@ public class Vegetables implements Plant {
         p1.setBorder(BorderFactory.createTitledBorder("植物：蔬菜"));
         sp = new JScrollPane(p1);
         contentPane.add(sp, BorderLayout.CENTER);
-        JLabel l1 = new JLabel(new ImageIcon("D:\\wodedaima\\springcloud_helloworld\\springboot-database\\src\\main\\resources\\com\\mt\\picture\\P_Vegetables.jpg"));
+        JLabel l1 = new JLabel(new ImageIcon("/Users/mateng/projectCode/springcloud_helloworld/springboot-database/src/main/resources/com/mt/picture/P_Vegetables.jpg"));
         p1.add(l1);
         jf.pack();
         jf.setVisible(false);

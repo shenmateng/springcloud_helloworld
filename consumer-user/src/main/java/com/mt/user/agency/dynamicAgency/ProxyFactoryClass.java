@@ -1,5 +1,7 @@
 package com.mt.user.agency.dynamicAgency;
 
+import lombok.Setter;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -13,15 +15,12 @@ import java.lang.reflect.Proxy;
  * @since ：
  */
 //通过此类获取代理对象，类生成代理对象类，不仅仅生成代理对象，还生成代理对象所属的类
+@Setter
 public class ProxyFactoryClass implements InvocationHandler {
 
+    //属性设置的set方法
     //设置目标类属性---通用
     private Object obj;
-
-    //属性设置的set方法
-    public void setObj(Object obj) {
-        this.obj = obj;
-    }
 
     //类似静态代理中的整合的方法，即真正实现功能以及增加其他功能的合并位置
     @Override
@@ -60,7 +59,7 @@ public class ProxyFactoryClass implements InvocationHandler {
         pc.setObj(tc);
 
         //获取代理对象 -- 接口多态
-        Testma tci = (Testma) pc.getProxy();
+        TargetJDKClassInterface tci = (TargetJDKClassInterface) pc.getProxy();
         Object proxy = pc.getProxy();
         //代替完成功能
         tci.save();
