@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: bmp-prm-service-local
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        enabled: false
+        register: false
+      config:
+        enabled: false   # 关闭 Consul 配置中心，直接读本地 yml

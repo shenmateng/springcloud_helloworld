@@ -1,0 +1,40 @@
+# 微信企业号支付配置示例
+# 将以下配置合并到 bootstrap.yml 或 consul 配置中心
+
+wx:
+  pay:
+    # 企业微信 corpId（企业微信管理后台 -> 我的企业 -> 企业ID）
+    corp-id: ww1234567890abcdef
+
+    # 微信支付商户号（https://pay.weixin.qq.com 登录后查看）
+    mch-id: 1234567890
+
+    # APIv3 密钥（商户平台 -> 账户中心 -> API安全 -> 设置APIv3密钥）
+    api-v3-key: your_32_chars_api_v3_key_here_xxxx
+
+    # 商户API证书序列号（商户平台 -> 账户中心 -> API安全 -> 查看证书）
+    cert-serial-no: YOUR_CERT_SERIAL_NO
+
+    # 商户私钥文件路径（放在 resources 目录下，如 cert/apiclient_key.pem）
+    private-key-path: cert/apiclient_key.pem
+
+    # 应用 appId
+    # 企业微信支付：使用企业微信应用的 appId（企业微信管理后台 -> 应用管理 -> 对应应用 -> AgentId 对应的 appId）
+    app-id: wx1234567890abcdef
+
+    # 支付成功回调地址（必须是外网可访问的 HTTPS 地址）
+    notify-url: https://your-domain.com/api/wx-pay/notify/pay
+
+
+#商户号，建议用正式的，于申请成功后的开户邮件中获取，若未开户需用测试的请联系技术支持
+  mch_id=
+  #MD5签名密钥，建议用正式的，于申请成功后的开户邮件中获取，若未开户需用测试的请联系技术支持
+  key=
+  #支付接口请求地址，请联系技术支持确认
+  req_url=
+  #支付成功异步回调通知地址，商户需改为自己的
+  notify_url=/
+  #RSA签名私钥，建议用正式的，商户开发人员本地生成，若未开户需用测试的请联系技术支持
+  mchPrivateKey=
+  #RSA验签平台公钥，建议用正式的，登录商户后台查看，若未开户需用测试的请联系技术支持
+  platPublicKey=

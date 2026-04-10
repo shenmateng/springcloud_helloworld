@@ -1,0 +1,37 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: bmp-prm-service-local
+  # 禁用 Consul，本地不需要注册中心
+  cloud:
+    consul:
+      discovery:
+        enabled: false
+        register: false
+      config:
+        enabled: false
+  # 本地数据库（按实际情况修改）
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:com/mt/mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+# 开启 Mock 模式，不需要真实微信证书
+wx:
+  pay:
+    mock: true
+    corp-id: mock_corp_id
+    mch-id: mock_mch_id
+    api-v3-key: mock_api_v3_key_32chars_xxxxxxxxx
+    cert-serial-no: mock_cert_serial
+    private-key-path: cert/apiclient_key.pem
+    app-id: mock_app_id
+    notify-url: http://localhost:8088/api/wx-pay/notify/pay
