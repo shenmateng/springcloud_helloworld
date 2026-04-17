@@ -3,7 +3,7 @@ package com.fri.common;
 import com.fri.constant.Constant;
 import com.fri.utils.DateUtil;
 import com.fri.utils.MysqlUtil;
-import com.ververica.cdc.debezium.DebeziumDeserializationSchema;
+import org.apache.flink.cdc.debezium.DebeziumDeserializationSchema;
 import io.debezium.data.Envelope;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.typeinfo.BasicTypeInfo;

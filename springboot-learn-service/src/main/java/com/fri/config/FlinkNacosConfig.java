@@ -71,6 +71,11 @@ public class FlinkNacosConfig {
         Properties properties = new Properties();
         properties.put("serverAddr", SERVER_ADDR);
         properties.put("namespace", NAMESPACE);
+        // Nacos 鉴权
+        String username = CONFIG_MAP.getProperty("flink.nacos.username", "nacos");
+        String password = CONFIG_MAP.getProperty("flink.nacos.password", "nacos");
+        properties.put("username", username);
+        properties.put("password", password);
 
         String content = null;
         try {

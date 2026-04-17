@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mt.mapper.onnew.ZcMachineMapper">
+
+    <insert id="insert">
+        INSERT INTO zc_machine (
+            uuid, machine_name, mac, extranet_ip, intranet_ip,
+            online_status, os_type, operating_system, software_version,
+            install_time, update_time, if_delete, machine_type, remark
+        ) VALUES (
+            #{uuid}, #{machineName}, #{mac}, #{extranetIp}, #{intranetIp},
+            #{onlineStatus}, #{osType}, #{operatingSystem}, #{softwareVersion},
+            #{installTime}, #{updateTime}, #{ifDelete}, #{machineType}, #{remark}
+        )
+    </insert>
+
+    <select id="queryByUuid" resultType="com.mt.database.ZcMachine">
+        SELECT * FROM zc_machine WHERE uuid = #{uuid}
+    </select>
+
+</mapper>

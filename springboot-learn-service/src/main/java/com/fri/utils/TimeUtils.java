@@ -2,7 +2,7 @@ package com.fri.utils;
 
 import com.fri.domain.scanevent.BaseBean;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
