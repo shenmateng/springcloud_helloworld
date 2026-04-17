@@ -1,6 +1,7 @@
 package com.mt.service;
 
 
+import com.alibaba.fastjson.JSON;
 import com.mt.database.AspectKafkaDomain;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -36,7 +37,7 @@ public class ReceiveFileService {
 
 
     @KafkaListeners({
-            @KafkaListener(topics = {"syslog1"},groupId = "tian2"),
+            @KafkaListener(topics = {"shenmateng"},groupId = "tianyibukewei"),
 
     })
     public void ConsumerMessage(ConsumerRecord<?, ?> record , Acknowledgment ack) {
@@ -44,11 +45,26 @@ public class ReceiveFileService {
     }
 
     public void sendMessage (ConsumerRecord<?, ?> record , Acknowledgment ack) {
-        // 消费的哪个topic、partition的消息,打印出消息内容
-        AspectKafkaDomain transfer = new AspectKafkaDomain();
-        transfer.setTopical(record.topic());
-        transfer.setIfAll(record.partition());
-        System.out.println("第一个消费者----"+transfer);
-        ack.acknowledge();
+        try {
+            String value = record.value() == null ? null : record.value().toString();
+            if (value == null || value.isEmpty()) {
+                log.warn("收到空消息，topic: {}, partition: {}, offset: {}",
+                        record.topic(), record.partition(), record.offset());
+                return;
+            }
+
+            // 将消息 JSON 转换为 AspectKafkaDomain 对象
+            AspectKafkaDomain domain = JSON.parseObject(value, AspectKafkaDomain.class);
+            log.info("第一个消费者收到消息，topic: {}, partition: {}, offset: {}, domain: {}",
+                    record.topic(), record.partition(), record.offset(), domain);
+
+            // TODO: 在这里处理 domain 业务逻辑
+
+        } catch (Exception e) {
+            log.error("消息处理异常，topic: {}, offset: {}, value: {}",
+                    record.topic(), record.offset(), record.value(), e);
+        } finally {
+            ack.acknowledge();
+        }
     }
 }
